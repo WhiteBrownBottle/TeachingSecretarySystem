@@ -2,16 +2,7 @@
 # encoding: utf-8
 
 import xadmin
-from xadmin import views
-
-from .models import Student
-
-
-# X admin的全局配置信息设置
-class BaseSetting(object):
-    # 主题功能开启
-    enable_themes = True
-    use_bootswatch = True
+from .models import Student, Teacher
 
 
 class StudentAdmin(object):
@@ -22,8 +13,17 @@ class StudentAdmin(object):
     # 配置筛选字段
     list_filter = ['s_id', 's_name', 's_gender']
 
+class TeacherAdmin(object):
+
+    list_display = ['t_id', 't_name', 't_gender', 't_title']
+
+    search_fields = ['t_id', 't_name', 't_gender', 't_title']
+
+    list_filter = ['t_id', 't_name', 't_gender', 't_title']
+
 
 xadmin.site.register(Student, StudentAdmin)
+xadmin.site.register(Teacher, TeacherAdmin)
 
 
 

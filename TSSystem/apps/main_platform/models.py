@@ -12,20 +12,20 @@ class Grade(models.Model):
         ('Grade_four', '大四'),
     )
 
-    grade_name = models.CharField(null=False, blank=False, default='Grade_one', max_length=11, choices=GRADE_CHOICE, verbose_name=u'年级名')
+    grade_name = models.CharField(null=False, blank=False, default='Grade_one', max_length=11, unique=True, choices=GRADE_CHOICE, verbose_name=u'年级名')
 
     class Meta:
         verbose_name = u'年级信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.grade_name
+        return self.get_grade_name_display()
 
 
 class Class(models.Model):
 
     grade_belong = models.ForeignKey(Grade, on_delete=models.CASCADE, verbose_name=u'所属年级')
-    class_name = models.CharField(null=False, blank=False, max_length=20, default='未选班级', verbose_name=u'班级名')
+    class_name = models.CharField(null=False, blank=False, max_length=20, default='未选班级', unique=True, verbose_name=u'班级名')
 
     class Meta:
         verbose_name = u'班级信息'
