@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="eeb3dae3-2791-4874-b2df-5f550cdf8023" name="Default" comment="">
+    <list default="true" id="eeb3dae3-2791-4874-b2df-5f550cdf8023" name="Default" comment="添加DjangoUeditor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" />
       <change beforePath="$PROJECT_DIR$/TSSystem/static/css/style.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/style.css" />
@@ -403,7 +403,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527148372591</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="添加DjangoUeditor">
+      <created>1527148392375</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1527148392375</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -740,7 +747,7 @@
         <state relative-caret-position="212">
           <caret line="15" column="0" lean-forward="false" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
-            <element signature="e#41#54#0" expanded="true" />
+            <element signature="e#41#54#0" expanded="false" />
           </folding>
         </state>
       </provider>
