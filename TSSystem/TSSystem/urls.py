@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
 
     url(r'', include('main_platform.urls', namespace='main_platform')),
+    url(r'^login/$', mp_views.LoginView.as_view(), name = 'login'),
 
 ]
