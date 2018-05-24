@@ -2,71 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="eeb3dae3-2791-4874-b2df-5f550cdf8023" name="Default" comment="">
-      <change beforePath="" afterPath="$PROJECT_DIR$/TSSystem/apps/main_platform/urls.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/TeachingSecretarySystem.iml" afterPath="$PROJECT_DIR$/.idea/TeachingSecretarySystem.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/TSSystem/settings.py" afterPath="$PROJECT_DIR$/TSSystem/TSSystem/settings.py" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/TSSystem/urls.py" afterPath="$PROJECT_DIR$/TSSystem/TSSystem/urls.py" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/apps/main_platform/views.py" afterPath="$PROJECT_DIR$/TSSystem/apps/main_platform/views.py" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/apps/users/adminx.py" afterPath="$PROJECT_DIR$/TSSystem/apps/users/adminx.py" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap-theme.css" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap-theme.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap-theme.css.map" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap-theme.css.map" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap-theme.min.css" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap-theme.min.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap.css" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap.css.map" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap.css.map" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/css/bootstrap.min.css" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/css/bootstrap.min.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/fonts/glyphicons-halflings-regular.eot" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/fonts/glyphicons-halflings-regular.eot" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/fonts/glyphicons-halflings-regular.svg" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/fonts/glyphicons-halflings-regular.svg" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/fonts/glyphicons-halflings-regular.ttf" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/fonts/glyphicons-halflings-regular.ttf" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/fonts/glyphicons-halflings-regular.woff" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/fonts/glyphicons-halflings-regular.woff" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/fonts/glyphicons-halflings-regular.woff2" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/fonts/glyphicons-halflings-regular.woff2" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/js/bootstrap.js" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/js/bootstrap.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/js/bootstrap.min.js" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/js/bootstrap.min.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/bootstrap/js/npm.js" afterPath="$PROJECT_DIR$/TSSystem/static/bootstrap/js/npm.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/css/form-elements.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/css/style.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/style.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/css/font-awesome.css" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/css/font-awesome.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/css/font-awesome.min.css" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/css/font-awesome.min.css" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/FontAwesome.otf" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/FontAwesome.otf" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/fontawesome-webfont.eot" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/fontawesome-webfont.eot" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/fontawesome-webfont.svg" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/fontawesome-webfont.svg" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/fontawesome-webfont.ttf" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/fontawesome-webfont.ttf" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/fontawesome-webfont.woff" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/fontawesome-webfont.woff" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/fonts/fontawesome-webfont.woff2" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/fonts/fontawesome-webfont.woff2" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/animated.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/animated.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/bordered-pulled.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/bordered-pulled.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/core.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/core.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/fixed-width.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/fixed-width.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/font-awesome.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/font-awesome.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/icons.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/icons.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/larger.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/larger.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/list.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/list.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/mixins.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/mixins.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/path.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/path.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/rotated-flipped.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/rotated-flipped.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/stacked.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/stacked.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/less/variables.less" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/less/variables.less" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_animated.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_animated.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_bordered-pulled.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_bordered-pulled.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_core.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_core.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_fixed-width.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_fixed-width.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_icons.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_icons.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_larger.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_larger.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_list.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_list.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_mixins.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_mixins.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_path.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_path.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_rotated-flipped.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_rotated-flipped.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_stacked.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_stacked.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/_variables.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/_variables.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/font-awesome/scss/font-awesome.scss" afterPath="$PROJECT_DIR$/TSSystem/static/font-awesome/scss/font-awesome.scss" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/img/backgrounds/background.jpg" afterPath="$PROJECT_DIR$/TSSystem/static/img/backgrounds/background.jpg" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/jquery-1.11.1.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/jquery-1.11.1.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/jquery-1.11.1.min.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/jquery-1.11.1.min.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/jquery.backstretch.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/jquery.backstretch.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/jquery.backstretch.min.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/jquery.backstretch.min.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/placeholder.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/placeholder.js" />
-      <change beforePath="$PROJECT_DIR$/Web/assets/js/scripts.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/scripts.js" />
-      <change beforePath="$PROJECT_DIR$/Web/index.html" afterPath="$PROJECT_DIR$/TSSystem/templates/index.html" />
+      <change beforePath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" />
+      <change beforePath="$PROJECT_DIR$/TSSystem/static/css/style.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/style.css" />
+      <change beforePath="$PROJECT_DIR$/TSSystem/static/js/placeholder.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/placeholder.js" />
+      <change beforePath="$PROJECT_DIR$/TSSystem/templates/index.html" afterPath="$PROJECT_DIR$/TSSystem/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -335,6 +275,19 @@
               <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
               <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
               <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="extra_apps" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
+              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
+              <item name="extra_apps" type="462c0819:PsiDirectoryNode" />
+              <item name="DjangoUeditor" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
+              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
+              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
               <item name="static" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -436,7 +389,21 @@
       <option name="project" value="LOCAL" />
       <updated>1526977733849</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="增加templates和static文件夹，增添index.html">
+      <created>1527145483911</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1527145483911</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加DjangoUeditor">
+      <created>1527148372591</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1527148372591</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -447,8 +414,8 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18240343" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32904884" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18240343" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32889965" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -473,7 +440,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="更新requirements.txt" />
     <MESSAGE value="修复若干bug，增加课程模型，更新requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="修复若干bug，增加课程模型，更新requirements.txt" />
+    <MESSAGE value="增加templates和static文件夹，增添index.html" />
+    <MESSAGE value="添加DjangoUeditor" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加DjangoUeditor" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
