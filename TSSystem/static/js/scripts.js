@@ -3,7 +3,7 @@ jQuery(document).ready(function() {
     /*
         Fullscreen background
     */
-    $.backstretch("assets/img/backgrounds/background.jpg");
+    $.backstretch("static/img/backgrounds/background.jpg");
 
     /*
         Form validation
