@@ -3,10 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="eeb3dae3-2791-4874-b2df-5f550cdf8023" name="Default" comment="添加DjangoUeditor">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/form-elements.css" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/static/css/style.css" afterPath="$PROJECT_DIR$/TSSystem/static/css/style.css" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/static/js/placeholder.js" afterPath="$PROJECT_DIR$/TSSystem/static/js/placeholder.js" />
-      <change beforePath="$PROJECT_DIR$/TSSystem/templates/index.html" afterPath="$PROJECT_DIR$/TSSystem/templates/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,18 +48,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="adminx.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TSSystem/apps/users/adminx.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
-              <folding>
-                <element signature="e#41#54#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TSSystem/TSSystem/settings.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -74,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TSSystem/templates/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+            <state relative-caret-position="196">
+              <caret line="78" column="37" lean-forward="true" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
               <folding />
             </state>
           </provider>
@@ -131,16 +115,6 @@
         </entry>
       </file>
       <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TSSystem/apps/main_platform/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="350">
-              <caret line="20" column="17" lean-forward="false" selection-start-line="20" selection-start-column="17" selection-end-line="20" selection-end-column="17" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TSSystem/apps/users/models.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="288">
@@ -152,6 +126,24 @@
       </file>
       <file leaf-file-name="auth_user" pinned="false" current-in-tab="false">
         <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.auth_user">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users_student" pinned="false" current-in-tab="true">
+        <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_student">
+          <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+            <state>
+              <filtering enabled="true" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="users_teacher" pinned="false" current-in-tab="false">
+        <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_teacher">
           <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
             <state>
               <filtering enabled="true" />
@@ -258,71 +250,6 @@
               <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
               <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="apps" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="apps" type="462c0819:PsiDirectoryNode" />
-              <item name="main_platform" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="extra_apps" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="extra_apps" type="462c0819:PsiDirectoryNode" />
-              <item name="DjangoUeditor" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="font-awesome" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="TeachingSecretarySystem" type="b2602c69:ProjectViewProjectNode" />
-              <item name="TeachingSecretarySystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-              <item name="TSSystem" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -335,6 +262,7 @@
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ChangesBrowser.SHOW_FLATTEN" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -664,13 +592,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_student">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TSSystem/apps/main_platform/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -683,13 +604,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="376">
           <caret line="57" column="13" lean-forward="false" selection-start-line="57" selection-start-column="13" selection-end-line="57" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_teacher">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
@@ -796,13 +710,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.auth_user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TSSystem/apps/main_platform/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -851,9 +758,30 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TSSystem/templates/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="82" column="26" lean-forward="true" selection-start-line="82" selection-start-column="26" selection-end-line="82" selection-end-column="26" />
+        <state relative-caret-position="196">
+          <caret line="78" column="37" lean-forward="true" selection-start-line="78" selection-start-column="37" selection-end-line="78" selection-end-column="37" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.auth_user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_teacher">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://table:/d0e4791b/400bd76f-7b73-4666-8508-f736061a0342/main.users_student">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
         </state>
       </provider>
     </entry>
