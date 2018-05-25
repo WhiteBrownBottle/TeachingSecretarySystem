@@ -24,7 +24,37 @@ $.backstretch("static/img/backgrounds/background.jpg");
 // });
 
 function login() {
-    alert('测试');
+    alert('已进入login');
+    form1.username.style.borderColor = '#dddddd';
+    form1.password.style.borderColor = '#dddddd';
+    // if (document.getElementById("denglu").isclick == 1) {
+    //     $(this).find('input[type="text"], input[type="password"], textarea').each(function() {
+    //         if ($(this).val() == "") {
+    //             e.preventDefault();
+    //             $(this).addClass('input-error');
+    //         } else {
+    //             $(this).removeClass('input-error');
+    //         }
+    //     });
+    // }
+    var flag = 'y';
+    if (form1.username.value == "") {
+        form1.username.style.borderColor = '#4aaf51';
+        form1.username.focus();
+        flag = 'n';
+    }
+    if (form1.password.value == "") {
+        form1.password.style.borderColor = '#4aaf51';
+        form1.password.focus();
+        flag = 'n';
+    }
+
+    if (form2.radio1.checked == false && form2.radio2.checked == false && form2.radio3.checked == false) {
+        alert('请选择身份');
+        flag = 'n';
+    }
+    if (flag == 'n') return false;
+
     $.ajax({
         data: {
             'username': $("username").val(),

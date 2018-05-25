@@ -20,6 +20,6 @@ class LoginView(View):
 
 
     def post(self,request):
-        # return render(request, 'index.html',)
-        return HttpResponse('{"status": "fail", "msg": "用户未激活, 请先激活用户"}', content_type='application/json')
+        return render(request, 'index.html',)
+        # return HttpResponse('{"status": "fail", "msg": "用户未激活, 请先激活用户"}', content_type='application/json')
 
