@@ -24,7 +24,7 @@ $.backstretch("static/img/backgrounds/background.jpg");
 // });
 
 function login() {
-    alert('已进入login');
+    // alert('已进入login');
     form1.username.style.borderColor = '#dddddd';
     form1.password.style.borderColor = '#dddddd';
     // if (document.getElementById("denglu").isclick == 1) {
@@ -39,12 +39,12 @@ function login() {
     // }
     var flag = 'y';
     if (form1.username.value == "") {
-        form1.username.style.borderColor = '#4aaf51';
+        form1.username.style.borderColor = 'red';
         form1.username.focus();
         flag = 'n';
     }
     if (form1.password.value == "") {
-        form1.password.style.borderColor = '#4aaf51';
+        form1.password.style.borderColor = 'red';
         form1.password.focus();
         flag = 'n';
     }
