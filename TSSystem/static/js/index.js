@@ -3,40 +3,10 @@
 */
 $.backstretch("static/img/backgrounds/background.jpg");
 
-/*
-    Form validation
-*/
-// $('.login-form input[type="text"], .login-form input[type="password"], .login-form textarea').on('focus', function() {
-//     $(this).removeClass('input-error');
-// });
-
-// $('.login-form').on('submit', function(e) {
-//     if (document.getElementById("denglu").isclick == 1) {
-//         $(this).find('input[type="text"], input[type="password"], textarea').each(function() {
-//             if ($(this).val() == "") {
-//                 e.preventDefault();
-//                 $(this).addClass('input-error');
-//             } else {
-//                 $(this).removeClass('input-error');
-//             }
-//         });
-//     }
-// });
-
 function login() {
     // alert('已进入login');
     form1.username.style.borderColor = '#dddddd';
     form1.password.style.borderColor = '#dddddd';
-    // if (document.getElementById("denglu").isclick == 1) {
-    //     $(this).find('input[type="text"], input[type="password"], textarea').each(function() {
-    //         if ($(this).val() == "") {
-    //             e.preventDefault();
-    //             $(this).addClass('input-error');
-    //         } else {
-    //             $(this).removeClass('input-error');
-    //         }
-    //     });
-    // }
     var flag = 'y';
     if (form1.username.value == "") {
         form1.username.style.borderColor = 'red';
@@ -57,8 +27,8 @@ function login() {
 
     $.ajax({
         data: {
-            'username': $("username").val(),
-            'password': $("password").val(),
+            'username': document.getElementById("username").value,
+            'password': document.getElementById("password").value,
             'identify': $('input:radio:checked').val() //身份 管理员：1 教师：2 学生：3
         },
         type: "post", //提交方式
