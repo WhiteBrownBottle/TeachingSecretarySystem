@@ -1,5 +1,12 @@
 from django.shortcuts import render
 from django.views import View
+from users.models import Teacher, Student
+from django.contrib.auth.models import User
+from django.http import HttpResponseRedirect, HttpResponse
+from django.contrib.auth import authenticate, login
+from django.contrib.auth.hashers import check_password
+
+
 # Create your views here.
 
 
@@ -20,6 +27,61 @@ class LoginView(View):
 
 
     def post(self,request):
-        return render(request, 'index.html',)
-        # return HttpResponse('{"status": "fail", "msg": "用户未激活, 请先激活用户"}', content_type='application/json')
+        user_type = request.POST.get('identify', '')
+        user_name = request.POST.get('username', '')
+        user_password = request.POST.get('password', '')
+        if user_type == '1':
+            # 管理员身份
+            admin_user = authenticate(username=user_name, password=user_password)
+            if admin_user is not None:
+                login(request, admin_user)
+                return HttpResponse('{"status": "success", "msg": %s}' % (user_type), content_type='application/json')
+            else:
+                return HttpResponse('{"status": "fail", "msg": "信息错误，用户不存在"}', content_type='application/json')
+        elif user_type == '2':
+            # 教师身份
+            teacher_user = Teacher.objects.get(teacher_id = int(user_name))
+            if teacher_user is not None:
+                if check_password(user_password, teacher_user.teacher_password):
+                    request.session['user_type'] = user_type
+                    request.session['user_id'] = teacher_user.teacher_id
+                    return HttpResponse('{"status": "success", "msg": %s}' %(user_type),
+                                        content_type='application/json')
+                else:
+                    return HttpResponse('{"status": "fail", "msg": "密码错误"}', content_type='application/json')
+            else:
+                return HttpResponse('{"status": "fail", "msg": "信息错误，用户不存在"}', content_type='application/json')
+
+        elif user_type == '3':
+            #学生身份
+            student_user = Student.objects.get(student_id = int(user_name))
+            if student_user is not None:
+                if check_password(user_password, student_user.student_password):
+                    request.session['user_type'] = user_type
+                    request.session['user_id'] = student_user.student_id
+                    return HttpResponse('{"status": "success", "msg": %s}' % (user_type),
+                                        content_type='application/json')
+                else:
+                    return HttpResponse('{"status": "fail", "msg": "密码错误"}', content_type='application/json')
+            else:
+                return HttpResponse('{"status": "fail", "msg": "输入错误，用户不存在"}', content_type='application/json')
+
+
+class StudentView(View):
+
+    def get(self, request):
+        return render(request, 'stuIndex.html',)
+
+    def post(self, request):
+        return render(request, 'stuIndex.html',)
+
+
+
+
+
+
+
+
+
+
 
