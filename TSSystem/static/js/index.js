@@ -36,11 +36,9 @@ function login() {
         url: "/login/", //请求url
         success: function(data) {
             if (data.status == 'success') {
-                swal({
-                    icon: "success",
-                    text: data.msg,
-                });
-                vm_checkin.checkinDays++;
+                if(msg=="1") window.location.href="/xadmin";
+                if(msg=="2") window.location.href="/student";
+                if(msg=="3") window.location.href="/teacher";
             } else if (data.status == 'fail') {
                 swal({
                     icon: "error",
