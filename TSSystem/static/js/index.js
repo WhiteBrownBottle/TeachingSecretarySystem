@@ -36,9 +36,9 @@ function login() {
         url: "/login/", //请求url
         success: function(data) {
             if (data.status == 'success') {
-                if(msg=="1") window.location.href="/xadmin";
-                if(msg=="2") window.location.href="/student";
-                if(msg=="3") window.location.href="/teacher";
+                if(data.msg=="1") window.location.href="/xadmin";
+                if(data.msg=="2") window.location.href="/teacher";
+                if(data.msg=="3") window.location.href="/student";
             } else if (data.status == 'fail') {
                 swal({
                     icon: "error",

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SRTP首页-消息通知</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+    <script src="../../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.backstretch.min.js"></script>
+</head>
+
+<body>
+    <div style="margin: 10px 20px 0px 20px">
+        <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">追加经费</h2>
+        <form action="stuSrtpAddtionFunds.html" method="post">
+            <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold"><span style="color: red">*</span>追加经费</td>
+                        <td>
+                            <input type="text" style="background-color: white" id="jinfei">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold">追加原因</td>
+                        <td>
+                            <textarea cols="80" rows="8" style="background-color: white; resize: none" id="yuanyin"></textarea>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div align="center" style="margin-top: 20px">
+                <button type="button" class="btn btn-default" onclick="tijiao()">提交追加申请</button>
+                <button type="reset" class="btn btn-danger">重置</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript">
+    function tijiao() {
+        if (!document.getElementById("jinfei").value) { alert("请填写所有带*内容！"); return false; }
+        var msg = "确定提交吗？";
+        if (confirm(msg) == true) {
+            $.ajax({
+                data: {
+                    'jinfei': document.getElementById("jinfei").value,
+                    'yuanyin': document.getElementById("yuanyin").value,
+                },
+                type: "post", //提交方式
+                dataType: "json", //数据类型
+                url: "//", //请求url
+                success: function(data) {
+                    if (data.status == 'success') {
+
+                    } else if (data.status == 'fail') {
+
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+    }
+    </script>
+</body>
+
+</html>
