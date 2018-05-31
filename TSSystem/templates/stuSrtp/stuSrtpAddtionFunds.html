@@ -47,6 +47,7 @@
         if (!document.getElementById("jinfei").value) { alert("请填写所有带*内容！"); return false; }
         var msg = "确定提交吗？";
         if (confirm(msg) == true) {
+
             $.ajax({
                 data: {
                     'jinfei': document.getElementById("jinfei").value,
@@ -63,6 +64,9 @@
                     }
                 }
             });
+            alert("提交成功！");
+            document.getElementById("jinfei").value = null;
+            document.getElementById("yuanyin").value = null;
         } else {
             return false;
         }

@@ -11,7 +11,7 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body>
+<body onload="tongzhi()">
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -33,14 +33,29 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12 text-center">
-                <h1>标题</h1>
+                <h1 id="biaoti">标题</h1>
             </div>
         </div>
         <hr>
         <div class="row">
-            <p>内容</p>
+            <p id="neirong">内容</p>
         </div>
     </div>
+    <script type="text/javascript">
+    function tongzhi() {
+        // document.getElementById("biaoti").innerHTML = "hello";
+        // document.getElementById("neirong").innerHTML = "world";
+        $.ajax({
+            url: '//',
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                document.getElementById("biaoti").innerHTML = data.biaoti;
+                document.getElementById("neirong").innerHTML = data.neirong;
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

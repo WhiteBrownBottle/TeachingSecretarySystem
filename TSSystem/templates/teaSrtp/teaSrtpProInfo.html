@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SRTP首页-消息通知</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+    <script src="../../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.backstretch.min.js"></script>
+</head>
+
+<body onload="stuSrtpProInfo()">
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">项目信息</h2>
+    <table class="table table-hover" id="table_stuSrtpProInfo">
+        <tr style="background-color:#b2dba1">
+            <td colspan="4"><span style="font-weight: bold">项目基本信息</span></td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold; width: 10%">所属创新计划</td>
+            <td>xx</td>
+            <td style="font-weight: bold; width: 10%">项目名称</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">项目类型</td>
+            <td>xx</td>
+            <td style="font-weight: bold">项目等级</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">所属学科</td>
+            <td>xx</td>
+            <td style="font-weight: bold">所属学院</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">申请经费（元）</td>
+            <td>xx</td>
+            <td style="font-weight: bold">批准经费（元）</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">项目编号</td>
+            <td>xx</td>
+            <td style="font-weight: bold">项目周期</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">开始时间</td>
+            <td>xx</td>
+            <td style="font-weight: bold">结束时间</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">指导教师</td>
+            <td>xx</td>
+            <td style="font-weight: bold">申请人</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">申请人联系方式</td>
+            <td>xx</td>
+            <td style="font-weight: bold">申请人邮箱</td>
+            <td>xx</td>
+        </tr>
+        <tr>
+            <td style="font-weight: bold">成果形式</td>
+            <td>xx</td>
+        </tr>
+        <tr style="background-color:#b2dba1">
+            <td colspan="4"><span style="font-weight: bold">项目申请书</span></td>
+        </tr>
+        <tr>
+            <td colspan="4"><a href="#" width="200px">[xxxx]申请书.doc</a></td>
+        </tr>
+        <tr style="background-color:#b2dba1">
+            <td colspan="4"><span style="font-weight: bold">项目成员</span></td>
+        </tr>
+        <tr>
+            <td colspan="4">
+                <span style="float:left;width:40px;">xxx</span>
+                <span style="float:left;width:40px;">xxx</span>
+                <span style="float:left;width:40px;">xxx</span>
+            </td>
+        </tr>
+    </table>
+</div>
+<script type="text/javascript">
+    function stuSrtpProInfo() {
+        $.ajax({
+            url: 'data.json',
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                //方法中传入的参数data为后台获取的数据
+                for (var i in data.data) //data.data指的是数组，数组里是8个对象，i为数组的索引
+                {
+                    var temp1;
+                    temp1 ='<tr>'+  +'</tr>' '<td>' + data.data[i].jibenxinxi + '</td>' + '<td>' + data.data[i].startTime + '</td>' + '<td>' + data.data[i].is_true + '</td>' + '<td>' + data.data[i].device + '</td>';
+
+                    temp1 ='<tr>'+  +'</tr>'
+
+
+                        <td colspan="4"><span style="font-weight: bold">项目基本信息</span></td>
+                </tr>
+                <tr>
+                <td style="font-weight: bold; width: 10%">所属创新计划</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold; width: 10%">项目名称</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">项目类型</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">项目等级</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">所属学科</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">所属学院</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">申请经费（元）</td>
+                <td>xx</td>
+                <td style="font-weight: bold">批准经费（元）</td>
+                <td>xx</td>
+                </tr>
+                <tr>
+                <td style="font-weight: bold">项目编号</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">项目周期</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">开始时间</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">结束时间</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">指导教师</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">申请人</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">申请人联系方式</td>
+                    <td>xx</td>
+                    <td style="font-weight: bold">申请人邮箱</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">成果形式</td>
+                    <td>xx</td>
+                    </tr>
+                    <tr style="background-color:#b2dba1">
+                    <td colspan="4"><span style="font-weight: bold">项目申请书</span></td>
+                </tr>
+                <tr>
+                <td><a href="#" width="200px">[xxxx]申请书.doc</a></td>
+                </tr>
+                <tr style="background-color:#b2dba1">
+                    <td colspan="4"><span style="font-weight: bold">项目成员</span></td>
+                </tr>
+                <tr>
+                <td>
+                <span style="float:left;width:40px;">xxx</span>
+                    <span style="float:left;width:40px;">xxx</span>
+                    <span style="float:left;width:40px;">xxx</span>
+                    </td>
+
+
+
+                    $("#table_stuSrtpProInfo").append('<tr>' + tr + '</tr>');
+                }
+            }
+        });
+    }
+</script>
+</body>
+
+</html>

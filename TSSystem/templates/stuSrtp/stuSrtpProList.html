@@ -1,72 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
 <!-- 学生SRTP项目列表 -->
-    <head>
-        <meta charset="UTF-8">
-        <title>项目列表</title>
-        <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../static/css/style.css">
-        <script src="../../static/js/jquery-1.11.1.min.js"></script>
-        <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../../static/js/jquery.backstretch.min.js"></script>
-        <script src="../../static/js/scripts.js"></script>
-        <!-- flexigrid -->
-        <link rel="stylesheet" href="../../static/css/flexigrid.css">
-        <link rel="stylesheet" href="../../static/css/flexigrid.pack.css">
-        <script src="../../static/js/flexigrid.js"></script>
-        <script src="../../static/js/flexigrid.pack.js"></script>
-    </head>
 
-    <body>
-        <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="stuSrtpHome.html">北京科技大学SRTP管理平台</a>
-            </div>
-            <div>
-                <ul class="nav navbar-nav">
-                    <li><a href="stuSrtpHome.html">消息通知</a> </li>
-                    <li class="active"><a href="stuSrtpProList.html">项目列表</a> </li>
-                    <li><a href="stuSrtpProManage.html">项目管理</a> </li>
-                </ul>
-                <ul class="nav navbar-nav pull-right">
-                    <li id="personCenter">
-                        <a href="../personInfo/stuInfo.html" target="_blank" onclick="enterCenter()">个人中心</a>
-                    </li>
-                    <li id="exit"><a href="#">安全退出</a></li>
-                </ul>
-            </div>
-        </nav>
-        <div class="row">
-            <div class="col-md-12 text-center">
-                <h1>可申请项目列表</h1>
-            </div>
+<head>
+    <meta charset="UTF-8">
+    <title>项目列表</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+    <script src="../../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.backstretch.min.js"></script>
+</head>
+
+<body onload="ProList()">
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="stuSrtpHome.html">北京科技大学SRTP管理平台</a>
         </div>
-        <div style="margin:0 40px 0 40px">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th style="text-align:center" width="25%">学院</th>
-                        <th style="text-align:center">项目名称</th>
-                        <th style="text-align:center">指导老师</th>
-                        <th style="text-align:center">是否申请</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>计算机与通信工程学院</td>
-                        <td>xxxxxxxxxxxxxxxxx</td>
-                        <td>zzz</td>
-                        <td><button>申请</button></td>
-                    </tr>
-                    <tr>
-                        <td>自动化学院</td>
-                        <td>xxxxxxxxxxxxxxxxx</td>
-                        <td>ttt</td>
-                        <td><button>申请</button></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="stuSrtpHome.html">消息通知</a> </li>
+                <li class="active"><a href="stuSrtpProList.html">项目列表</a> </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="stuSrtpProApply.html" target="_blank">项目申请</a></li>
+                        <li class="divider" role="separator"></li>
+                        <li><a href="stuSrtpProManage.html">我的项目</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li id="personCenter">
+                    <a href="../personInfo/stuInfo.html" target="_blank" onclick="enterCenter()">个人中心</a>
+                </li>
+                <li id="exit"><a href="#">安全退出</a></li>
+            </ul>
         </div>
-    </body>
+    </nav>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>可申请项目列表</h1>
+        </div>
+    </div>
+    <div style="margin:0 40px 0 40px">
+        <table class="table table-striped" id="table_stuSrtpProList" style="table-layout:fixed">
+            <thead>
+                <tr>
+                    <th style="text-align:center" width="25%">学院</th>
+                    <th style="text-align:center">项目名称</th>
+                    <th style="text-align:center">指导老师</th>
+                    <th style="text-align:center">具体信息</th>
+                </tr>
+            </thead>
+            <tr>
+                <td style="text-align: center">计算机与通信工程学院</td>
+                <td style="text-align: center">xxxxxxxxxxxxxxxxx</td>
+                <td style="text-align: center">zzz</td>
+                <td style="text-align: center">
+                    <a href="stuSrtpSpecificInfo.html" target="_blank">
+                        <button>查看</button>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center">计算机与通信工程学院</td>
+                <td style="text-align: center">xxxxxxxxxxxxxxxxx</td>
+                <td style="text-align: center">zzz</td>
+                <td style="text-align: center">
+                    <a href="stuSrtpSpecificInfo.html" target="_blank">
+                        <button>查看</button>
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <script type="text/javascript">
+    function ProList() {
+        $.ajax({
+            url: '//',
+            type: 'get',
+            dataType: 'json',
+            success: function(data) {
+                $.ajax({
+                    url: '//',
+                    type: 'get',
+                    dataType: 'json',
+                    success: function(data) {
+                        //方法中传入的参数data为后台获取的数据
+                        //$.each(data, function (index, value) {
+                        $("#table_stuSrtpProList").empty(); //清空表格里面的所有内容
+                        $("#table_stuSrtpProList").append('<thead><tr><th style="text-align:center" width="25%">学院</th><th style="text-align:center">项目名称</th><th style="text-align:center">指导老师</th><th style="text-align:center">是否申请</th></tr></thead>');
+                        var i = 0;
+                        $.each(data, function(index, item) {
+                            i = i + 1;
+                            if (i % 6 == 0) $("#table_stuSrtpResultManage").append('<tr>');
+                            $("#table_stuSrtpResultManage").append('<td>' + item + '</td>');
+                            if (i % 6 == 5) $("#table_stuSrtpResultManage").append('<td>' + '<a href="#">删除</a>' + '</td>');
+                            if (i % 6 == 0) $("#table_stuSrtpResultManage").append('</tr>');
+                        });
+                    }
+                });
+            }
+        });
+    }
+    </script>
+</body>
 
 </html>

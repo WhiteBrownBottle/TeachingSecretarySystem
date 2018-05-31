@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SRTP首页-消息通知</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+    <script src="../../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <script language="javascript">
+        function custom_close(){
+            if(confirm("您确定要提交吗？")){
+                window.open("submitSuccess.html","_self");
+            }
+            else{
+            }
+        }
+    </script>
+<body>
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">项目发布</h2>
+    <form action="teaSrtpProPublish.html" method="post">
+        <table class="table table-hover">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目基本信息</span></td></tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">项目名称</td>
+                <td><input type="text" style="background-color: white"></td>
+                <td style="font-weight: bold; width: 10%">所属创新计划</td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">所属学科</td>
+                <td><input type="text" style="background-color: white"></td>
+                <td style="font-weight: bold">所属学院</td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">指导教师</td>
+                <td><input type="text" style="background-color: white"></td>
+                <td style="font-weight: bold">项目类型</td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">联系方式</td>
+                <td><input type="text" style="background-color: white"></td>
+                <td style="font-weight: bold">邮箱</td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">人数建议</td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目简介</span></td></tr>
+            <tr>
+                <td>
+                    <textarea cols="80" rows="8" style="background-color: white; resize: none"></textarea>
+                </td>
+            </tr>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">要求</span></td></tr>
+            <tr>
+                <td>
+                    <textarea cols="80" rows="8" style="background-color: white; resize: none"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="custom_close()">提交</button>
+    </form>
+</div>
+</body>
+</html>

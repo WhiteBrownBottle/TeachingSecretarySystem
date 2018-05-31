@@ -1,62 +1,77 @@
 <!DOCTYPE html>
 <html>
 
-  <head>
+<head>
     <meta charset=" UTF-8 ">
     <title>个人信息</title>
     <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/style.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
     <script src="../../static/js/jquery-1.11.1.min.js"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/jquery.backstretch.min.js"></script>
-    <script src="../../static/js/scripts.js"></script>
-    <!-- flexigrid -->
-    <link rel="stylesheet" href="../../static/css/flexigrid.css">
-    <link rel="stylesheet" href="../../static/css/flexigrid.pack.css">
-    <script src="../../static/js/flexigrid.js"></script>
-    <script src="../../static/js/flexigrid.pack.js"></script>
-  </head>
+</head>
 
-  <body>
+<body onload="stuInfo()">
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
-      <div>
-        <ul class="nav navbar-nav">
-          <li class="active"><a href="#">个人信息</a></li>
-        </ul>
-        <ul class="nav navbar-nav pull-right">
-          <li id="exit"><a href="#">安全退出</a></li>
-        </ul>
-      </div>
+        <div>
+            <ul class="nav navbar-nav">
+                <li><a href="#">个人信息</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="row">
-      <div class="col-md-12 text-center">
-        <h3>以下是您的个人信息</h3>
-      </div>
+        <div class="col-md-12 text-center">
+            <h3>以下是您的个人信息</h3>
+        </div>
     </div>
-    <table class="table table-hover">
-      <tbody>
-        <tr>
-          <td>姓名</td>
-          <td>xxxxxx</td>
-        </tr>
-        <tr>
-          <td>性别</td>
-          <td>xxxxxx</td>
-        </tr>
-        <tr>
-          <td>身份</td>
-          <td>学生</td>
-        </tr>
-        <tr>
-          <td>学号</td>
-          <td>xxxxxx</td>
-        </tr>
-        <tr>
-          <td>班级</td>
-          <td>xxxxxx</td>
-        </tr>
-      </tbody>
-    </table>
-  </body>
+    <div style="margin:0 30px 0 30px">
+        <table class="table table-hover" id="table_stuInfo">
+            <tr>
+                <td>姓名</td>
+                <td>xxxxxx</td>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td>xxxxxx</td>
+            </tr>
+            <tr>
+                <td>身份</td>
+                <td>学生</td>
+            </tr>
+            <tr>
+                <td>学号</td>
+                <td>xxxxxx</td>
+            </tr>
+            <tr>
+                <td>班级</td>
+                <td>xxxxxx</td>
+            </tr>
+            <tr>
+                <td>联系方式</td>
+                <td>xxxxxx</td>
+            </tr>
+            <tr>
+                <td>邮箱</td>
+                <td>xxxxxx</td>
+            </tr>
+        </table>
+    </div>
+    <a href="modify.html" target="_blank" class="btn btn-success" style="margin-left: 30px">修改密码</a>
+    <script type="text/javascript">
+    function stuInfo() {
+        var temp1, temp2, temp3, temp4, temp5, temp6, temp7;
+        //表格信息
+        temp1 = '<tr><td>姓名</td><td>' + data.xingming + '</td></tr>';
+        temp2 = '<tr><td>性别</td><td>' + data.xingbie + '</td></tr>';
+        temp3 = '<tr><td>身份</td><td>' + data.shenfen + '</td></tr>';
+        temp4 = '<tr><td>学号</td><td>' + data.xuehao + '</td></tr>';
+        temp5 = '<tr><td>班级</td><td>' + data.banji + '</td></tr>';
+        temp6 = '<tr><td>联系方式</td><td>' + data.lianxi + '</td></tr>';
+        temp7 = '<tr><td>邮箱</td><td>' + data.youxiang + '</td></tr>';
+
+        $("#table_stuInfo").append(temp1 + temp2 + temp3 + temp4 + temp5 + temp6 + temp7);
+    }
+    </script>
+</body>
 
 </html>

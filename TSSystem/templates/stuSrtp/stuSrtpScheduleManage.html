@@ -160,7 +160,6 @@
     <script type="text/javascript">
     //从数据库获取记录时间、项目进度、项目进展说明
     function jinzhanGet() {
-
         $.ajax({
             url: '//',
             type: 'get',
@@ -169,6 +168,7 @@
                 //方法中传入的参数data为后台获取的数据
                 //$.each(data, function (index, value) {
                 $("#table_stuSrtpScheduleManage").empty(); //清空表格里面的所有内容
+                $("#table_stuSrtpScheduleManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold; width: 15%">记录时间</td><td style="font-weight: bold; width: 10%">项目进度</td><td style="font-weight: bold">项目进展说明</td></tr>');
                 var i = 0;
                 $.each(data, function(index, item) {
                     i = i + 1;

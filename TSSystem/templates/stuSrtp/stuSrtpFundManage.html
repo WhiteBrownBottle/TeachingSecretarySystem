@@ -78,7 +78,6 @@
     <script type="text/javascript">
     //从数据库获取数据
     function jinfeiGet() {
-
         $.ajax({
             url: '//',
             type: 'get',
@@ -87,6 +86,7 @@
                 //方法中传入的参数data为后台获取的数据
                 //$.each(data, function (index, value) {
                 $("#table_stuSrtpFundManage").empty(); //清空表格里面的所有内容
+                $("#table_stuSrtpFundManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold;">具体支出项目摘要</td><td style="font-weight: bold;">类别</td><td style="font-weight: bold">支出金额</td><td style="font-weight: bold">支出日期</td></tr>');
                 var i = 0;
                 $.each(data, function(index, item) {
                     i = i + 1;

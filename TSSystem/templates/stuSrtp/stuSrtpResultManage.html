@@ -105,6 +105,7 @@
                 //方法中传入的参数data为后台获取的数据
                 //$.each(data, function (index, value) {
                 $("#table_stuSrtpResultManage").empty(); //清空表格里面的所有内容
+                $("#table_stuSrtpResultManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold;">成果名称</td><td style="font-weight: bold;">成果类型</td><td style="font-weight: bold">取得日期</td><td style="font-weight: bold">所有人</td><td style="font-weight: bold">成果附件</td><td style="font-weight: bold">操作</td></tr>)');
                 var i = 0;
                 $.each(data, function(index, item) {
                     i = i + 1;
