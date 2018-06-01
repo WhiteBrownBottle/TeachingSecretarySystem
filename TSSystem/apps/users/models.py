@@ -1,6 +1,7 @@
 from django.db import models
 from datetime import date
 from main_platform.models import Grade, Class
+from srtp_project.models import Project
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -20,6 +21,7 @@ class Student(models.Model):
     student_gender = models.CharField(null=False, blank=False, max_length=6, choices=GENDER_CHOICES, default='male', verbose_name=u'学生性别')
     student_birthday = models.DateField(null=True, blank=True, auto_now=True, verbose_name=u'出生年龄')
     student_class_belong = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name=u'所属班级')
+    student_srtp_join = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所参与SRTP项目')
 
     class Meta:
         verbose_name = u'学生信息'

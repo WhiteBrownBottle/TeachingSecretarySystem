@@ -67,6 +67,15 @@ class LoginView(View):
                 return HttpResponse('{"status": "fail", "msg": "输入错误，用户不存在"}', content_type='application/json')
 
 
+class ModifyView(View):
+
+    def get(self, request):
+        return render(request, 'personInfo/modify.html')
+
+    def post(self, request):
+        pass
+
+
 class StudentView(View):
 
     def get(self, request):
@@ -74,6 +83,122 @@ class StudentView(View):
 
     def post(self, request):
         return render(request, 'stuIndex.html',)
+
+
+class stuInfoView(View):
+
+    def get(self, request):
+        return render(request, 'personInfo/stuInfo.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpHomeView(View):
+
+    def get(self, request):
+        user_type = request.session['user_type']
+        print(user_type)
+        user_id =request.session['user_id']
+        print(user_id)
+        return render(request, 'stuSrtp/stuSrtpHome.html')
+
+    def post(self, request):
+        pass
+
+
+class stuStrpProListView(View):
+
+    def get(self, request):
+
+        return render(request, 'stuSrtp/stuSrtpProList.html')
+
+    def post(self, request):
+        pass
+
+
+
+class stuStrpProManageView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpProManage.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpProApplyView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpProApply.html')
+
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpProInfoView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpProInfo.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpScheduleManageView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpScheduleManage.html')
+
+    def post(self, request):
+        pass
+
+class stuSrtpFundManageView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpFundManage.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpResultManageView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpResultManage.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpAddtionFundsView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpAddtionFunds.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpMidTermApplyView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpMidTermApply.html')
+
+    def post(self, request):
+        pass
+
+
+class stuSrtpConcluApplyView(View):
+
+    def get(self, request):
+        return render(request, 'stuSrtp/stuSrtpConcluApply.html')
+
+    def post(self, request):
+        pass
+
+
 
 
 

@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'main_platform',
     'users',
     'course_arrangement',
+    'srtp_project',
 ]
 
 MIDDLEWARE = [

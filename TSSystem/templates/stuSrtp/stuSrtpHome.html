@@ -1,19 +1,21 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <!-- 学生SRTP首页 -->
     <head>
         <meta charset="UTF-8">
         <title>SRTP首页-消息通知</title>
-        <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-        <link rel="stylesheet" href="../../static/css/style.css">
-        <script src="../../static/js/jquery-1.11.1.min.js"></script>
-        <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-        <script src="../../static/js/jquery.backstretch.min.js"></script>
+        <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+        <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+
         <!-- flexigrid -->
-        <link rel="stylesheet" href="../../static/css/flexigrid.css">
-        <link rel="stylesheet" href="../../static/css/flexigrid.pack.css">
-        <script src="../../static/js/flexigrid.js"></script>
-        <script src="../../static/js/flexigrid.pack.js"></script>
+        <link rel="stylesheet" href="{% static 'css/flexigrid.css' %}">
+        <link rel="stylesheet" href="{% static 'css/flexigrid.pack.css' %}">
+        <script src="{% static 'js/flexigrid.js' %}"></script>
+        <script src="{% static 'js/flexigrid.pack.js' %}"></script>
     </head>
 
     <body>
@@ -23,20 +25,20 @@
                     <a class="navbar-brand" href="stuSrtpHome.html">北京科技大学SRTP管理平台</a>
                 </div>
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="stuSrtpHome.html">消息通知</a> </li>
-                    <li><a href="stuSrtpProList.html">项目列表</a> </li>
+                    <li class="active"><a href="{% url 'main_platform:stuSrtp_Home' %}">消息通知</a> </li>
+                    <li><a href="{% url 'main_platform:stuSrtp_Prolist' %}">项目列表</a> </li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="stuSrtpProApply.html" target="_blank">项目申请</a></li>
-                            <li class="divider" role="separator"></li>
-                            <li><a href="stuSrtpProManage.html">我的项目</a></li>
-                        </ul>
-                    </li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'main_platform:stuSrtp_ProApply' %}" target="_blank">项目申请</a></li>
+                        <li class="divider" role="separator"></li>
+                        <li><a href="{% url 'main_platform:stuSrtp_ProManage' %}">我的项目</a></li>
+                    </ul>
+                </li>
                 </ul>
                 <ul class="nav navbar-nav pull-right">
                     <li id="personCenter">
-                        <a href="../personInfo/stuInfo.html" target="_blank" onclick="enterCenter()">个人中心</a>
+                        <a href="{% url 'main_platform:stu_Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
                     </li>
                     <li id="exit"><a href="#">安全退出</a></li>
                 </ul>
@@ -51,16 +53,24 @@
             <hr>
             <div class="row">
                 <div class="list-group">
-                    <a href="stuSrtpNotification.html" class="list-group-item" target="_blank">
+                    <a href="stuSrtpNotification.html" class="list-group-item">
                         <h4 class="list-group-item-heading">2018大学生创新计划相关事宜</h4>
                         <small>2018.01.01</small>
                     </a>
-                    <a href="stuSrtpNotification.html" class="list-group-item" target="_blank">
+                    <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">2017大学生创新计划相关事宜</h4>
                         <small>2018.01.01</small>
                     </a>
-                    <a href="stuSrtpNotification.html" class="list-group-item" target="_blank">
+                    <a href="#" class="list-group-item">
                         <h4 class="list-group-item-heading">2016大学生创新计划相关事宜</h4>
+                        <small>2018.01.01</small>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">2015大学生创新计划相关事宜</h4>
+                        <small>2018.01.01</small>
+                    </a>
+                    <a href="#" class="list-group-item">
+                        <h4 class="list-group-item-heading">2014大学生创新计划相关事宜</h4>
                         <small>2018.01.01</small>
                     </a>
                 </div>
