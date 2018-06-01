@@ -1,7 +1,6 @@
 from django.db import models
 from datetime import date
 from main_platform.models import Grade, Class
-from srtp_project.models import Project
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -20,8 +19,9 @@ class Student(models.Model):
     student_password = models.CharField(null=False, blank=False, max_length=100, default=make_password('1111'), verbose_name=u'学生账号密码')
     student_gender = models.CharField(null=False, blank=False, max_length=6, choices=GENDER_CHOICES, default='male', verbose_name=u'学生性别')
     student_birthday = models.DateField(null=True, blank=True, auto_now=True, verbose_name=u'出生年龄')
+    student_phone = models.CharField(null=True, blank=True, unique=True, max_length=11, verbose_name=u'学生联系方式')
+    student_email = models.CharField(null=True, blank=True, unique=True, max_length=50, verbose_name=u'学生邮箱')
     student_class_belong = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name=u'所属班级')
-    student_srtp_join = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所参与SRTP项目')
 
     class Meta:
         verbose_name = u'学生信息'
@@ -44,6 +44,7 @@ class Teacher(models.Model):
     teacher_name = models.CharField(null=False,blank=False, max_length=20, default='某某教师', verbose_name=u'教师姓名')
     teacher_gender = models.CharField(null=False, blank=False, max_length=6, choices=GENDER_CHOICES, default='male', verbose_name=u'教师性别')
     teacher_phone = models.IntegerField(null=False, blank=False, default=11111111111, verbose_name=u'教师电话号码')
+    teacher_email = models.CharField(null=True, blank=True, unique=True, max_length=50, verbose_name=u'教师邮箱')
     teacher_title = models.CharField(null=False, blank=False, max_length=20, default='教师', verbose_name=u'教师职称')
 
     class Meta:
