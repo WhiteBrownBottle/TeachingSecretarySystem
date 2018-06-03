@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views import View
 from users.models import Teacher, Student
-from srtp_project.models import Project, Schedule
+from srtp_project.models import Project, Schedule, Fund
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -176,7 +176,6 @@ class stuSrtpScheduleManageView(View):
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             schedule_list = Schedule.objects.filter(project_belong_id = srtp_project.project_id).order_by('schedule_date')
-            print(schedule_list)
             return render(request, 'stuSrtp/stuSrtpScheduleManage.html', context={'schedule_list': schedule_list})
 
     def post(self, request):
@@ -204,20 +203,44 @@ class stuSrtpScheduleManageView(View):
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
-
-
-
-
-
-        pass
-
 class stuSrtpFundManageView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpFundManage.html')
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            fund_list = Fund.objects.filter(project_belong_id = srtp_project.project_id).order_by('fund_date')
+            return render(request, 'stuSrtp/stuSrtpFundManage.html', context={'fund_list': fund_list})
 
     def post(self, request):
-        pass
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            fund_time = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
+            if fund_time != '':
+                fund_date = datetime.datetime.strptime(fund_time, "%Y-%m-%d").date()
+            fund_name = request.POST.get('jutizhichu', '')
+            fund_type = request.POST.get('leibie', 'qt')
+            fund_num = int(request.POST.get('jine', ''))
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            fund = Fund()
+            fund.fund_name = fund_name
+            fund.fund_type = fund_type
+            fund.fund_num = fund_num
+            fund.fund_date = fund_date
+            fund.project_belong = srtp_project
+            fund.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
 
 
 class stuSrtpResultManageView(View):

@@ -11,7 +11,7 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body onload="jinfeiGet()">
+<body>
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">经费管理</h2>
         <form action="stuSrtpFundManage.html" method="post">
@@ -25,18 +25,18 @@
                         <td style="font-weight: bold">类别</td>
                         <td>
                             <select class="form-control" id="leibie">
-                                <option value="1">差旅费</option>
-                                <option value="2">实验费</option>
-                                <option value="3">资料费</option>
-                                <option value="4">实验耗材费</option>
-                                <option value="5">计算机小型存储设备费</option>
-                                <option value="6">邮寄费</option>
-                                <option value="7">论文版面费</option>
-                                <option value="8">成果鉴定费</option>
-                                <option value="9">专利申请费</option>
-                                <option value="10">文献检索费</option>
-                                <option value="11">办公费</option>
-                                <option value="12">其他费用</option>
+                                <option value="cl">差旅费</option>
+                                <option value="sy">实验费</option>
+                                <option value="zl">资料费</option>
+                                <option value="syhc">实验耗材费</option>
+                                <option value="jsjxxccsb">计算机小型存储设备费</option>
+                                <option value="yj">邮寄费</option>
+                                <option value="lwbm">论文版面费</option>
+                                <option value="cgjd">成果鉴定费</option>
+                                <option value="zlsq">专利申请费</option>
+                                <option value="wxjs">文献检索费</option>
+                                <option value="bg">办公费</option>
+                                <option value="qt">其他费用</option>
                             </select>
                         </td>
                     </tr>
@@ -71,33 +71,19 @@
                         <td style="font-weight: bold">支出金额</td>
                         <td style="font-weight: bold">支出日期</td>
                     </tr>
+                    {% for fund in fund_list %}
+                        <tr>
+                            <td>{{ fund.fund_name }}</td>
+                            <td>{{ fund.get_fund_type_display }}</td>
+                            <td>{{ fund.fund_num }}</td>
+                            <td>{{ fund.fund_date }}</td>
+                        </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>
     </div>
     <script type="text/javascript">
-    //从数据库获取数据
-    function jinfeiGet() {
-        $.ajax({
-            url: '//',
-            type: 'get',
-            dataType: 'json',
-            success: function(data) {
-                //方法中传入的参数data为后台获取的数据
-                //$.each(data, function (index, value) {
-                $("#table_stuSrtpFundManage").empty(); //清空表格里面的所有内容
-                $("#table_stuSrtpFundManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold;">具体支出项目摘要</td><td style="font-weight: bold;">类别</td><td style="font-weight: bold">支出金额</td><td style="font-weight: bold">支出日期</td></tr>');
-                var i = 0;
-                $.each(data, function(index, item) {
-                    i = i + 1;
-                    if (i % 4 == 0) $("#table_stuSrtpFundManage").append('<tr>');
-                    $("#table_stuSrtpFundManage").append('<td>' + item + '</td>');
-                    if (i % 4 == 0) $("#table_stuSrtpFundManage").append('</tr>');
-                });
-            }
-        });
-
-    }
 
     //提交给数据库，并更新页面的表格
     function jinfeiPost() {
@@ -106,30 +92,21 @@
             alert("请填写所有带*内容！");
             return false;
         }
-        //具体支出项目摘要
-        var jutizhichu = '<td>' + document.getElementById("jutizhichu").value + '</td>';
-        //类别
-        var leibie = '<td>' + document.getElementById("leibie").options[document.getElementById("leibie").options.selectedIndex].text + '</td>';
-        //支出金额
-        var jine = '<td>' + document.getElementById("jine").value + '</td>';
-        //支出日期
-        var riqi = '<td>' + document.getElementById("riqi").value + '</td>';
-        //添加进表格
-        $("#table_stuSrtpFundManage").append('<tr>' + jutizhichu + leibie + jine + riqi + '</tr>');
 
         $.ajax({
             data: {
                 'jutizhichu': document.getElementById("jutizhichu").value,
-                'leibie': document.getElementById("leibie").options[document.getElementById("leibie").options.selectedIndex].text,
+                'leibie': document.getElementById("leibie").value,
                 'jine': document.getElementById("jine").value,
                 'riqi': document.getElementById("riqi").value,
             },
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "//", //请求url
+            url: "/stuSrtpFundManage/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
-
+                    alert(data.msg)
+                    location.reload();
                 } else if (data.status == 'fail') {
 
                 }

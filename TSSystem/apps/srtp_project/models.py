@@ -41,8 +41,6 @@ class Project(models.Model):
         (False, '未通过')
     )
 
-
-
     project_id = models.AutoField(primary_key=True, unique=True, verbose_name=u'项目编号')
     project_name = models.CharField(max_length=20, blank=False, null=False, default='xx项目', verbose_name=u'项目名称')
     project_type = models.CharField(max_length=2, blank=False, null=False, choices=TYPE_CHOICE, default='cx', verbose_name=u'项目类型')
@@ -83,6 +81,68 @@ class Schedule(models.Model):
 
     def __str__(self):
         return self.schedule_detail
+
+
+class Fund(models.Model):
+    #项目经费
+
+    FUND_TYPE_CHOICE = (
+        ('cl', '差旅费'),
+        ('sy', '实验费'),
+        ('zl', '资料费'),
+        ('syhc', '实验耗材费'),
+        ('jsjxxccsb', '计算机小型存储设备费'),
+        ('yj', '邮寄费'),
+        ('lwbm', '论文版面费'),
+        ('cgjd', '成果鉴定费'),
+        ('zlsq', '专利申请费'),
+        ('bg', '办公费'),
+        ('qt', '其他费用')
+    )
+
+    project_belong = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    fund_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=u'具体支出项目摘要')
+    fund_type = models.CharField(null=False, blank=False, max_length=9, choices=FUND_TYPE_CHOICE, default='qt', verbose_name=u'经费类别')
+    fund_num = models.IntegerField(null=True, blank=True, verbose_name=u'经费支出金额')
+    fund_date = models.DateField(default=timezone.now, verbose_name=u'经费支出日期')
+
+    class Meta:
+        verbose_name = u'SRTP项目经费管理'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %d]' %(self.fund_type, self.fund_num)
+
+
+class Result(models.Model):
+    #项目成果
+
+    RESULT_TYPE_CHOICE = (
+        ('zz/zzq', '著作/著作权'),
+        ('lw', '论文'),
+        ('zl', '专利'),
+        ('sw', '实物'),
+        ('rj/tz/sj', '软件/图纸/设计'),
+        ('hjzs', '获奖证书'),
+        ('qt', '其他')
+    )
+    project_belong = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    result_name = models.CharField(blank=False, null=False, max_length=50, default='未命名成果', verbose_name=u'项目成果名称')
+    result_type = models.CharField(blank=False, null=False, max_length=8, default='qt', choices=RESULT_TYPE_CHOICE, verbose_name=u'项目成果类型')
+    result_date = models.DateField(default=timezone.now, verbose_name='项目成果日期')
+    result_master = models.CharField(blank=False, null=False, max_length=20, default='未填写', verbose_name=u'项目成果所有人')
+    result_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'项目附件名称')
+    result_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'项目附件路径')
+
+    class Meta:
+        verbose_name = u'SRTP项目成果管理'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' % (self.result_name, self.get_result_type_display)
+
+
+
 
 
 
