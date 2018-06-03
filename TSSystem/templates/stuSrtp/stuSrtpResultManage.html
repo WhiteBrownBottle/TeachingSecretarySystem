@@ -14,17 +14,17 @@
 <body>
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">成果管理</h2>
-        <form id="uploadForm" action="stuSrtpResultManage.html" method="post" enctype="multipart/form-data">
+        <form id="uploadForm" enctype="multipart/form-data">
             <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
                 <tbody>
                     <tr>
                         <td style="font-weight: bold" width="10%"><span style="color:red">*</span>成果名称</td>
                         <td>
-                            <input type="text" style="background-color: white" id="mingcheng">
+                            <input type="text" style="background-color: white" name="mingcheng" id="mingcheng">
                         </td>
                         <td style="font-weight: bold" width="10%"><span style="color:red">*</span>成果类型</td>
                         <td>
-                            <select class="form-control" id="leixing">
+                            <select class="form-control" name="leixing" id="leixing">
                                 <option value="1">著作/著作权</option>
                                 <option value="2">论文</option>
                                 <option value="3">专利</option>
@@ -43,11 +43,11 @@
                     <tr>
                         <td style="font-weight: bold"><span style="color:red">*</span>取得日期</td>
                         <td>
-                            <input type="date" style="background-color: white" id="riqi">
+                            <input type="date" style="background-color: white" name="riqi" id="riqi">
                         </td>
                         <td style="font-weight: bold"><span style="color: red">*</span>所有人</td>
                         <td>
-                            <input type="text" style="background-color: white" id="suoyouren">
+                            <input type="text" style="background-color: white" name="suoyouren" id="suoyouren">
                         </td>
                     </tr>
                     <tr>
@@ -58,7 +58,7 @@
                     <tr>
                         <td style="font-weight: bold"><span style="color: red">*</span>附件</td>
                         <td>
-                            <input type="file" id="fujian">
+                            <input type="file" name="file" id="fujian">
                         </td>
                     </tr>
                 </tbody>
@@ -97,20 +97,25 @@
     //提交给数据库，并更新页面的表格
     function chengguoPost() {
         if (!document.getElementById("mingcheng").value || !document.getElementById("riqi").value || !document.getElementById("suoyouren").value) { alert("请填写所有带*内容！"); return false; }
-        var form = new FormData(document.getElementById("uploadForm"));
+        var form_data = new FormData(document.getElementById("uploadForm"));
+        //var form_data=new FormData();
+        //var file_info=$('#fujian')[0].files[0];
+        //form_data.append('file',file_info);
 
         $.ajax({
-            data: form,
+            data: form_data,
             //{
-                // 'mingcheng': document.getElementById("mingcheng").value,
-                // 'leixing': document.getElementById("leixing").options[document.getElementById("leixing").options.selectedIndex].text,
-                // 'riqi': document.getElementById("riqi").value,
+                 //'mingcheng': document.getElementById("mingcheng").value,
+                 //'leixing': document.getElementById("leixing").options[document.getElementById("leixing").options.selectedIndex].text,
+                //'riqi': document.getElementById("riqi").value,
                 // 'suoyouren': document.getElementById("suoyouren").value,
 
             //},
             type: "post", //提交方式
-            dataType: "json", //数据类型
-            url: "//", //请求url
+            processData:false,
+            contentType:false,
+            //dataType: "json", //数据类型
+            url: "/stuSrtpResultManage/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
 
@@ -118,7 +123,7 @@
 
                 }
             }
-        });
+        })
     }
 
     //删除当前行

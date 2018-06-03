@@ -11,7 +11,7 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body onload="jinzhanGet()">
+<body>
     <form action="stuSrtpScheduleManage.html" method="post" <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">进度管理</h2>
         <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
@@ -208,6 +208,8 @@
                     alert(data.msg);
                     location.reload();
                 } else if (data.status == 'fail') {
+                    alert(data.msg);
+                    window.top.document.location.href="../index.html";
 
                 }
             }

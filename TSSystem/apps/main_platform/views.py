@@ -1,13 +1,15 @@
 from django.shortcuts import render
 from django.views import View
 from users.models import Teacher, Student
-from srtp_project.models import Project, Schedule, Fund
+from srtp_project.models import Project, Schedule, Fund, Result
+from utils.session_judge import session_judge
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 import django.utils.timezone as timezone
-import time, datetime
+import time, datetime, os
+from django.conf import settings
 
 
 
@@ -92,13 +94,10 @@ class StudentView(View):
 class stuInfoView(View):
 
     def get(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            student = Student.objects.get(student_id=user_id)
+            student = Student.objects.get(student_id=request.session['user_id'])
             return render(request, 'personInfo/stuInfo.html', context={'student': student})
 
     def post(self, request):
@@ -108,11 +107,10 @@ class stuInfoView(View):
 class stuSrtpHomeView(View):
 
     def get(self, request):
-        user_type = request.session['user_type']
-        print(user_type)
-        user_id =request.session['user_id']
-        print(user_id)
-        return render(request, 'stuSrtp/stuSrtpHome.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            return render(request, 'stuSrtp/stuSrtpHome.html')
 
     def post(self, request):
         pass
@@ -151,13 +149,10 @@ class stuSrtpProApplyView(View):
 class stuSrtpProInfoView(View):
 
     def get(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            student = Student.objects.get(student_id = user_id)
+            student = Student.objects.get(student_id = request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id = student.id)
             teacher_uid = srtp_project.project_teacher_id
             teacher = Teacher.objects.get(id = teacher_uid)
@@ -174,23 +169,17 @@ class stuSrtpProInfoView(View):
 class stuSrtpScheduleManageView(View):
 
     def get(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            student = Student.objects.get(student_id=user_id)
+            student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             schedule_list = Schedule.objects.filter(project_belong_id = srtp_project.project_id).order_by('schedule_date')
             return render(request, 'stuSrtp/stuSrtpScheduleManage.html', context={'schedule_list': schedule_list})
 
     def post(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
             schedule_time = request.POST.get('time', datetime.datetime.now().strftime("%Y-%m-%d"))
             if schedule_time != '':
@@ -199,7 +188,7 @@ class stuSrtpScheduleManageView(View):
             schedule_num = request.POST.get('select', '')
             schedule_detail = request.POST.get('jinzhan', '')
 
-            student = Student.objects.get(student_id=user_id)
+            student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             schedule = Schedule()
             schedule.schedule_date = schedule_date
@@ -213,23 +202,17 @@ class stuSrtpScheduleManageView(View):
 class stuSrtpFundManageView(View):
 
     def get(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            student = Student.objects.get(student_id=user_id)
+            student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             fund_list = Fund.objects.filter(project_belong_id = srtp_project.project_id).order_by('fund_date')
             return render(request, 'stuSrtp/stuSrtpFundManage.html', context={'fund_list': fund_list})
 
     def post(self, request):
-        user_id = request.session['user_id']
-        user_type = request.session['user_type']
-        if str(user_type) != '3':
-            del request.session
-            return render(request, 'index.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
             fund_time = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
             if fund_time != '':
@@ -237,7 +220,7 @@ class stuSrtpFundManageView(View):
             fund_name = request.POST.get('jutizhichu', '')
             fund_type = request.POST.get('leibie', '12')
             fund_num = int(request.POST.get('jine', ''))
-            student = Student.objects.get(student_id=user_id)
+            student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             fund = Fund()
             fund.fund_name = fund_name
@@ -253,10 +236,44 @@ class stuSrtpFundManageView(View):
 class stuSrtpResultManageView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpResultManage.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+
+            return render(request, 'stuSrtp/stuSrtpResultManage.html')
 
     def post(self, request):
-        pass
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            result_name = request.POST.get('mingcheng' '')
+            result_type = request.POST.get('leixing', '7')
+            result_date = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
+            if result_date != '':
+                result_date = datetime.datetime.strptime(result_date, '%Y-%m-%d').date()
+
+            result_master = request.POST.get('suoyouren', '')
+            result_file = request.FILES.get('file')
+            file_name = str(result_file)
+            print(file_name)
+            file_dir = settings.MEDIA_ROOT + '/SrtpResult/'
+            if not os.path.exists(file_dir):
+                os.makedirs(file_dir)
+            file_path = file_dir + file_name
+            open(file_path, 'wb+').write(result_file.read())
+            student = Student.objects.get(student_id=request.session['user_id'])
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            result = Result()
+            result.result_name = result_name
+            result.result_type =result_type
+            result.result_date = result_date
+            result.result_master = result_master
+            result.result_file_name = file_name
+            result.result_file_url = file_dir
+            result.project_belong = srtp_project
+            result.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
 
 
 class stuSrtpAddtionFundsView(View):
