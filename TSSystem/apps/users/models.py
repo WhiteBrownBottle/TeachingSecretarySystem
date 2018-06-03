@@ -21,6 +21,7 @@ class Student(models.Model):
     student_birthday = models.DateField(null=True, blank=True, auto_now=True, verbose_name=u'出生年龄')
     student_phone = models.CharField(null=True, blank=True, unique=True, max_length=11, verbose_name=u'学生联系方式')
     student_email = models.CharField(null=True, blank=True, unique=True, max_length=50, verbose_name=u'学生邮箱')
+    student_major = models.CharField(null=False, blank=False, max_length=20, default='计算机科学与技术', verbose_name=u'学生所属专业')
     student_class_belong = models.ForeignKey(Class, on_delete=models.CASCADE, verbose_name=u'所属班级')
 
     class Meta:

@@ -154,32 +154,18 @@
                     <td style="font-weight: bold; width: 10%">项目进度</td>
                     <td style="font-weight: bold">项目进展说明</td>
                 </tr>
+                {% for schedule in schedule_list %}
+                    <tr>
+                        <td>{{ schedule.schedule_date }}</td>
+                        <td>{{ schedule.schedule_num }}</td>
+                        <td style="word-wrap: break-word;">{{ schedule.schedule_detail }}</td>
+                    </tr>
+                {% endfor %}
+
             </tbody>
         </table>
     </div>
     <script type="text/javascript">
-    //从数据库获取记录时间、项目进度、项目进展说明
-    function jinzhanGet() {
-        $.ajax({
-            url: '//',
-            type: 'get',
-            dataType: 'json',
-            success: function(data) {
-                //方法中传入的参数data为后台获取的数据
-                //$.each(data, function (index, value) {
-                $("#table_stuSrtpScheduleManage").empty(); //清空表格里面的所有内容
-                $("#table_stuSrtpScheduleManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold; width: 15%">记录时间</td><td style="font-weight: bold; width: 10%">项目进度</td><td style="font-weight: bold">项目进展说明</td></tr>');
-                var i = 0;
-                $.each(data, function(index, item) {
-                    i = i + 1;
-                    if (i % 3 == 0) $("#table_stuSrtpScheduleManage").append('<tr>');
-                    $("#table_stuSrtpScheduleManage").append('<td>' + item + '</td>');
-                    if (i % 3 == 0) $("#table_stuSrtpScheduleManage").append('</tr>');
-                });
-            }
-        });
-
-    }
 
     //提交给数据库，并更新页面的表格
     function jinzhanPost() {
@@ -192,7 +178,7 @@
         var nowDate = new Date();
         var year = nowDate.getFullYear();
         var month = (nowDate.getMonth() + 1) > 9 ? (nowDate.getMonth() + 1) : "0" + (nowDate.getMonth() + 1);
-        var date = nowDate.getDate() > 9 ? nowDate.getDate() : "0" + nowDate.Date();
+        var date = nowDate.getDate() > 9 ? nowDate.getDate() : "0" + nowDate.getDate();
         var hours = nowDate.getHours() > 9 ? nowDate.getHours() : "0" + nowDate.getHours();
         var minutes = nowDate.getMinutes() > 9 ? nowDate.getMinutes() : "0" + nowDate.getMinutes();
         var seconds = nowDate.getSeconds() > 9 ? nowDate.getSeconds() : "0" + nowDate.getSeconds();
@@ -202,8 +188,6 @@
         //项目进展说明
         var jinzhan = '<td style="word-wrap:break-word;">' + document.getElementById("jinzhan").value + '</td>';
         //添加进表格
-        $("#table_stuSrtpScheduleManage").append('<tr>' + time + num + jinzhan + '</tr>');
-
         $.ajax({
             data: {
                 // 'year':year,
@@ -218,10 +202,11 @@
             },
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "//", //请求url
+            url: "/stuSrtpScheduleManage/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
-
+                    alert(data.msg);
+                    location.reload();
                 } else if (data.status == 'fail') {
 
                 }

@@ -21,109 +21,72 @@
             </tr>
             <tr>
                 <td style="font-weight: bold; width: 10%">所属创新计划</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_plan }}</td>
                 <td style="font-weight: bold; width: 10%">项目名称</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_name }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">项目类型</td>
-                <td>xx</td>
+                <td>{{ srtp_project.get_project_type_display }}</td>
                 <td style="font-weight: bold">项目等级</td>
-                <td>xx</td>
+                <td>{{ srtp_project.get_project_rank_display }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">所属学科</td>
-                <td>xx</td>
+                <td>{{ student.student_major }}</td>
                 <td style="font-weight: bold">所属学院</td>
-                <td>xx</td>
+                <td>{{ srtp_project.get_project_depart_display }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">申请经费（元）</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_fund_appli }}</td>
                 <td style="font-weight: bold">批准经费（元）</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_fund_approv }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">项目编号</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_id }}</td>
                 <td style="font-weight: bold">项目周期</td>
                 <td>xx</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">开始时间</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_date_begin }}</td>
                 <td style="font-weight: bold">结束时间</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_date_end }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">指导教师</td>
-                <td>xx</td>
+                <td>{{ teacher_name }}</td>
                 <td style="font-weight: bold">申请人</td>
-                <td>xx</td>
+                <td>{{ student.student_name }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">申请人联系方式</td>
-                <td>xx</td>
+                <td>{{ student.student_phone }}</td>
                 <td style="font-weight: bold">申请人邮箱</td>
-                <td>xx</td>
+                <td>{{ student.student_email }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">成果形式</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_form }}</td>
             </tr>
             <tr style="background-color:#b2dba1">
                 <td colspan="4"><span style="font-weight: bold">项目申请书</span></td>
             </tr>
             <tr>
-                <td colspan="4"><a href="#" width="200px">[xxxx]申请书.doc</a></td>
+                <td colspan="4"><a href="#" width="200px">{{ srtp_project.project_appli_name }}</a></td>
             </tr>
             <tr style="background-color:#b2dba1">
                 <td colspan="4"><span style="font-weight: bold">项目成员</span></td>
             </tr>
             <tr>
                 <td colspan="4">
-                    <span style="float:left;width:40px;">xxx</span>
-                    <span style="float:left;width:40px;">xxx</span>
-                    <span style="float:left;width:40px;">xxx</span>
+                    <span style="float:left;width:100px;">{{ srtp_project.project_member }}</span>
                 </td>
             </tr>
         </table>
     </div>
-    <script type="text/javascript">
-    function stuSrtpProInfo() {
-        // alert("message");
-
-        $.ajax({
-            url: '//',
-            type: 'get',
-            dataType: 'json',
-            success: function(data) {
-                // //方法中传入的参数data为后台获取的数据
-                // for (var i in data.data) //data.data指的是数组，数组里是8个对象，i为数组的索引
-                // {
-                var temp1, temp2, temp3, temp4, temp5, temp6, temp7, temp8, temp9, temp10, temp11, temp12, temp13, temp14;
-                //表格信息
-                temp1 = '<tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目基本信息</span></td></tr>';
-                temp2 = ' <tr><td style="font-weight: bold; width: 10%">所属创新计划</td><td>' + data.changxinjihua + '</td><td style="font-weight: bold; width: 10%">项目名称</td><td>' + data.mingcheng + '</td></tr>';
-                temp3 = '<tr><td style="font-weight: bold">项目类型</td><td>' + data.leixing + '</td><td style="font-weight: bold">项目等级</td><td>' + data.dengji + '</td></tr>';
-                temp4 = '<tr><td style="font-weight: bold">所属学科</td><td>' + data.xueke + '</td><td style="font-weight: bold">所属学院</td><td>' + data.xueyuan + '</td></tr>';
-                temp5 = '<tr><td style="font-weight: bold">申请经费（元）</td><td>' + data.shenqinjingfei + '</td><td style="font-weight: bold">批准经费（元）</td><td>' + data.pizhunjingfei + '</td></tr>';
-                temp6 = '<tr><td style="font-weight: bold">项目编号</td><td>' + data.bianhao + '</td><td style="font-weight: bold">项目周期</td><td>' + data.zhouqi + '</td></tr>';
-                temp7 = '<tr><td style="font-weight: bold">开始时间</td><td>' + data.kaishishijian + '</td><td style="font-weight: bold">结束时间</td><td>' + data.jieshushijian + '</td></tr>';
-                temp8 = '<tr><td style="font-weight: bold">指导教师</td><td>' + data.jiaoshi + '</td><td style="font-weight: bold">申请人</td><td>' + data.shenqinren + '</td></tr>';
-                temp9 = '<tr><td style="font-weight: bold">申请人联系方式</td><td>' + data.lianxi + '</td><td style="font-weight: bold">申请人邮箱</td><td>' + data.youxiang + '</td></tr>';
-                temp10 = '<tr><td style="font-weight: bold">成果形式</td><td>' + data.chengguo + '</td></tr>';
-                temp11 = '<tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目申请书</span></td></tr>';
-                temp12 = '<tr><td><a href="' + data.shenqingshu + '#" width="200px">' + data.shenqingshumingzi + '</a></td></tr>';
-                temp13 = '<tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目成员</span></td></tr>';
-                temp14 = '<tr><td><span style="float:left;width:40px;">' + data.mingzi1 + '</span><span style="float:left;width:40px;">' + data.mingzi2 + '</span><span style="float:left;width:40px;">' + data.mingzi3 + '</span></td></tr>';
-
-                $("#table_stuSrtpProInfo").append(temp1 + temp2 + temp3 + temp4 + temp5 + temp6 + temp7 + temp8 + temp9 + temp10 + temp11 + temp12 + temp13 + temp14);
-                // }
-            }
-        });
-    }
-    </script>
 </body>
 
 </html>

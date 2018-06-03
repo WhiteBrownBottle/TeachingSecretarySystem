@@ -1,10 +1,14 @@
 from django.shortcuts import render
 from django.views import View
 from users.models import Teacher, Student
+from srtp_project.models import Project, Schedule
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
+import django.utils.timezone as timezone
+import time, datetime
+
 
 
 # Create your views here.
@@ -140,7 +144,21 @@ class stuSrtpProApplyView(View):
 class stuSrtpProInfoView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpProInfo.html')
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            student = Student.objects.get(student_id = user_id)
+            srtp_project = Project.objects.get(project_appli_student_id = student.id)
+            teacher_uid = srtp_project.project_teacher_id
+            teacher = Teacher.objects.get(id = teacher_uid)
+            teacher_name = teacher.teacher_name
+            print(srtp_project)
+            return render(request, 'stuSrtp/stuSrtpProInfo.html', context={'srtp_project': srtp_project,
+                                                                           'student': student,
+                                                                           'teacher_name': teacher_name})
 
     def post(self, request):
         pass
@@ -149,9 +167,48 @@ class stuSrtpProInfoView(View):
 class stuSrtpScheduleManageView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpScheduleManage.html')
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            schedule_list = Schedule.objects.filter(project_belong_id = srtp_project.project_id).order_by('schedule_date')
+            print(schedule_list)
+            return render(request, 'stuSrtp/stuSrtpScheduleManage.html', context={'schedule_list': schedule_list})
 
     def post(self, request):
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            schedule_time = request.POST.get('time', datetime.datetime.now().strftime("%Y-%m-%d"))
+            if schedule_time != '':
+                schedule_date = datetime.datetime.strptime(schedule_time, "%Y-%m-%d %H:%M:%S").date()
+
+            schedule_num = request.POST.get('select', '')
+            schedule_detail = request.POST.get('jinzhan', '')
+
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            schedule = Schedule()
+            schedule.schedule_date = schedule_date
+            schedule.schedule_num = schedule_num
+            schedule.schedule_detail = schedule_detail
+            schedule.project_belong = srtp_project
+            schedule.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+
+
+
+
+
         pass
 
 class stuSrtpFundManageView(View):
