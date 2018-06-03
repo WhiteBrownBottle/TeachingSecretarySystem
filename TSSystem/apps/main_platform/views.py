@@ -10,6 +10,7 @@ from django.contrib.auth.hashers import check_password
 import django.utils.timezone as timezone
 import time, datetime, os
 from django.conf import settings
+from django.http import StreamingHttpResponse
 
 
 
@@ -239,8 +240,11 @@ class stuSrtpResultManageView(View):
         if session_judge(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-
-            return render(request, 'stuSrtp/stuSrtpResultManage.html')
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id = user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            result_list = Result.objects.filter(project_belong_id = srtp_project.project_id).order_by('result_date')
+            return render(request, 'stuSrtp/stuSrtpResultManage.html', context={'result_list': result_list})
 
     def post(self, request):
         if session_judge(request):
@@ -254,12 +258,15 @@ class stuSrtpResultManageView(View):
 
             result_master = request.POST.get('suoyouren', '')
             result_file = request.FILES.get('file')
-            file_name = str(result_file)
+            name = str(result_file).split('.')
+            t = time.time()
+            file_name = str(int(t)) + '.' + name[1]
             print(file_name)
             file_dir = settings.MEDIA_ROOT + '/SrtpResult/'
             if not os.path.exists(file_dir):
                 os.makedirs(file_dir)
             file_path = file_dir + file_name
+            file_relative_path = settings.MEDIA_URL + 'SrtpResult/' + file_name
             open(file_path, 'wb+').write(result_file.read())
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
@@ -268,8 +275,8 @@ class stuSrtpResultManageView(View):
             result.result_type =result_type
             result.result_date = result_date
             result.result_master = result_master
-            result.result_file_name = file_name
-            result.result_file_url = file_dir
+            result.result_file_name = str(result_file)
+            result.result_file_url = file_relative_path
             result.project_belong = srtp_project
             result.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
@@ -299,6 +306,30 @@ class stuSrtpConcluApplyView(View):
     def get(self, request):
         return render(request, 'stuSrtp/stuSrtpConcluApply.html')
 
+    def post(self, request):
+        pass
+
+
+class fileDownloadView(View):
+
+    def get(self, request):
+        def file_iterator(file_name, chunk_size=512):
+            with open(file_name) as f:
+                while True:
+                    c = f.read(chunk_size)
+                    if c:
+                        yield c
+                    else:
+                        break
+        url = str(request.get_full_path())
+        file_url = url.split('/')
+        the_file_name = settings.MEDIA_ROOT + '/' + file_url[2] + '/' + file_url[3]
+        response = StreamingHttpResponse(file_iterator(the_file_name))
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_url[3])
+        return response
+
+ # /media/SrtpResult/1528030512.txt
     def post(self, request):
         pass
 
