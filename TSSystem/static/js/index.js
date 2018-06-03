@@ -8,14 +8,14 @@ function login() {
     form1.username.style.borderColor = '#dddddd';
     form1.password.style.borderColor = '#dddddd';
     var flag = 'y';
-    if (form1.username.value == "") {
-        form1.username.style.borderColor = 'red';
-        form1.username.focus();
-        flag = 'n';
-    }
     if (form1.password.value == "") {
         form1.password.style.borderColor = 'red';
         form1.password.focus();
+        flag = 'n';
+    }
+    if (form1.username.value == "") {
+        form1.username.style.borderColor = 'red';
+        form1.username.focus();
         flag = 'n';
     }
 

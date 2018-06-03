@@ -11,10 +11,10 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body onload="chengguoGet()">
+<body>
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">成果管理</h2>
-        <form action="stuSrtpResultManage.html" method="post">
+        <form id="uploadForm" action="stuSrtpResultManage.html" method="post" enctype="multipart/form-data">
             <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
                 <tbody>
                     <tr>
@@ -94,58 +94,20 @@
         </div>
     </div>
     <script type="text/javascript">
-    //从数据库数据
-    function chengguoGet() {
-
-        $.ajax({
-            url: '//',
-            type: 'get',
-            dataType: 'json',
-            success: function(data) {
-                //方法中传入的参数data为后台获取的数据
-                //$.each(data, function (index, value) {
-                $("#table_stuSrtpResultManage").empty(); //清空表格里面的所有内容
-                $("#table_stuSrtpResultManage").append('<tr style="background-color:#b2dba1"><td style="font-weight: bold;">成果名称</td><td style="font-weight: bold;">成果类型</td><td style="font-weight: bold">取得日期</td><td style="font-weight: bold">所有人</td><td style="font-weight: bold">成果附件</td><td style="font-weight: bold">操作</td></tr>)');
-                var i = 0;
-                $.each(data, function(index, item) {
-                    i = i + 1;
-                    if (i % 6 == 0) $("#table_stuSrtpResultManage").append('<tr>');
-                    $("#table_stuSrtpResultManage").append('<td>' + item + '</td>');
-                    if (i % 6 == 5) $("#table_stuSrtpResultManage").append('<td>' + '<a href="#">删除</a>' + '</td>');
-                    if (i % 6 == 0) $("#table_stuSrtpResultManage").append('</tr>');
-                });
-            }
-        });
-
-    }
-
     //提交给数据库，并更新页面的表格
     function chengguoPost() {
         if (!document.getElementById("mingcheng").value || !document.getElementById("riqi").value || !document.getElementById("suoyouren").value) { alert("请填写所有带*内容！"); return false; }
-        //成果名称
-        var mingcheng = '<td>' + document.getElementById("mingcheng").value + '</td>';
-        //成果类型
-        var leixing = '<td>' + document.getElementById("leixing").options[document.getElementById("leixing").options.selectedIndex].text + '</td>';
-        //取得日期
-        var riqi = '<td>' + document.getElementById("riqi").value + '</td>';
-        //所有人
-        var suoyouren = '<td>' + document.getElementById("suoyouren").value + '</td>';
-        //附件
-        temp = document.getElementById("fujian").value.split("\\");
-        var fujianURL = getObjectURL(document.getElementById("fujian").files[0]); //input file的真实路径
-        var fujian = '<td>' + '<a href="' + fujianURL + '">' + temp[temp.length - 1] + '</a>' + '</td>';
-        //删除
-        var shanchu = '<td>' + '<input type="button" onclick="removeTr(this)" value="删除" />' + '</td>';
-        //添加进表格
-        $("#table_stuSrtpResultManage").append('<tr>' + mingcheng + leixing + riqi + suoyouren + fujian + shanchu + '</tr>');
+        var form = new FormData(document.getElementById("uploadForm"));
 
         $.ajax({
-            data: {
-                'mingcheng': document.getElementById("mingcheng").value,
-                'leixing': document.getElementById("leixing").options[document.getElementById("leixing").options.selectedIndex].text,
-                'riqi': document.getElementById("riqi").value,
-                'suoyouren': document.getElementById("suoyouren").value,
-            },
+            data: form,
+            //{
+                // 'mingcheng': document.getElementById("mingcheng").value,
+                // 'leixing': document.getElementById("leixing").options[document.getElementById("leixing").options.selectedIndex].text,
+                // 'riqi': document.getElementById("riqi").value,
+                // 'suoyouren': document.getElementById("suoyouren").value,
+
+            //},
             type: "post", //提交方式
             dataType: "json", //数据类型
             url: "//", //请求url
