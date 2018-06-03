@@ -92,7 +92,14 @@ class StudentView(View):
 class stuInfoView(View):
 
     def get(self, request):
-        return render(request, 'personInfo/stuInfo.html')
+        user_id = request.session['user_id']
+        user_type = request.session['user_type']
+        if str(user_type) != '3':
+            del request.session
+            return render(request, 'index.html')
+        else:
+            student = Student.objects.get(student_id=user_id)
+            return render(request, 'personInfo/stuInfo.html', context={'student': student})
 
     def post(self, request):
         pass
