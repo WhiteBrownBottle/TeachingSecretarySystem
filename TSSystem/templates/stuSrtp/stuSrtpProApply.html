@@ -23,77 +23,77 @@
                     <tr>
                         <td style="font-weight: bold; width: 10%">所属创新计划</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="jihua">
                         </td>
                         <td style="font-weight: bold; width: 10%">项目名称</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="proname">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">项目类型</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="type">
                         </td>
                         <td style="font-weight: bold">项目等级</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="rank">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">所属学科</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="xueke">
                         </td>
                         <td style="font-weight: bold">所属学院</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="xueyuan">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">申请经费（元）</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="fund">
                         </td>
                         <td style="font-weight: bold">项目周期</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="zhouqi">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">开始时间</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="begin">
                         </td>
                         <td style="font-weight: bold">结束时间</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="end">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">指导教师</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="teacher">
                         </td>
                         <td style="font-weight: bold">申请人</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="applicant">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">申请人联系方式</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="phone">
                         </td>
                         <td style="font-weight: bold">申请人邮箱</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="email">
                         </td>
                     </tr>
                     <tr>
                         <td style="font-weight: bold">成果形式</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="results">
                         </td>
                     </tr>
                     <tr style="background-color:#b2dba1">
@@ -101,7 +101,7 @@
                     </tr>
                     <tr>
                         <td>
-                            <input type="file">
+                            <input type="file" id="shu">
                         </td>
                     </tr>
                     <tr style="background-color:#b2dba1">
@@ -110,20 +110,57 @@
                     <tr>
                         <td style="font-weight: bold">学号</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="number">
                         </td>
                         <td style="font-weight: bold">姓名</td>
                         <td>
-                            <input type="text" style="background-color: white">
+                            <input type="text" style="background-color: white" id="name">
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div align="center">
-                <button type="button" class="btn btn-primary" style="width: 20%;margin-bottom: 30px">提交</button>
+                <button type="button" class="btn btn-primary" style="width: 20%;margin-bottom: 30px" onclick="submit()">提交</button>
             </div>
         </form>
     </div>
+    <script>
+    function submit() {
+        $.ajax({
+            data: {
+                'jihua': document.getElementById("jihua").value,
+                'proname': document.getElementById("proname").value,
+                'type': document.getElementById("type").value,
+                'rank': document.getElementById("rank").value,
+                'xueke': document.getElementById("xueke").value,
+                'xueyuan': document.getElementById("xueyuan").value,
+                'fund': document.getElementById("fund").value,
+                'zhouqi': document.getElementById("zhouqi").value,
+                'begin': document.getElementById("begin").value,
+                'end': document.getElementById("end").value,
+                'teacher': document.getElementById("teacher").value,
+                'applicant': document.getElementById("applicant").value,
+                'phone': document.getElementById("phone").value,
+                'email': document.getElementById("email").value,
+                'result': document.getElementById("result").value,
+                'shu': document.getElementById("shu").value,
+                'number': document.getElementById("number").value,
+                'name': document.getElementById("name").value,
+
+            },
+            type: "post", //提交方式
+            dataType: "json", //数据类型
+            url: "//", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

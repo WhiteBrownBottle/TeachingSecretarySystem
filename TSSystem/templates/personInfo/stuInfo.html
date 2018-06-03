@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 
@@ -11,7 +12,7 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body onload="stuInfo()">
+<body>
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
         <div>
             <ul class="nav navbar-nav">
@@ -28,11 +29,11 @@
         <table class="table table-hover" id="table_stuInfo">
             <tr>
                 <td>姓名</td>
-                <td>xxxxxx</td>
+                <td>{{student.student_name}}</td>
             </tr>
             <tr>
                 <td>性别</td>
-                <td>xxxxxx</td>
+                <td>{{student.get_student_gender_display}}</td>
             </tr>
             <tr>
                 <td>身份</td>
@@ -40,38 +41,23 @@
             </tr>
             <tr>
                 <td>学号</td>
-                <td>xxxxxx</td>
+                <td>{{student.student_id}}</td>
             </tr>
             <tr>
                 <td>班级</td>
-                <td>xxxxxx</td>
+                <td>{{student.student_class_belong}}</td>
             </tr>
             <tr>
                 <td>联系方式</td>
-                <td>xxxxxx</td>
+                <td>{{student.student_phone}}</td>
             </tr>
             <tr>
                 <td>邮箱</td>
-                <td>xxxxxx</td>
+                <td>{{student.student_email}}</td>
             </tr>
         </table>
     </div>
     <a href="{% url 'main_platform:Modify' %}" target="_blank" class="btn btn-success" style="margin-left: 30px">修改密码</a>
-    <script type="text/javascript">
-    function stuInfo() {
-        var temp1, temp2, temp3, temp4, temp5, temp6, temp7;
-        //表格信息
-        temp1 = '<tr><td>姓名</td><td>' + data.xingming + '</td></tr>';
-        temp2 = '<tr><td>性别</td><td>' + data.xingbie + '</td></tr>';
-        temp3 = '<tr><td>身份</td><td>' + data.shenfen + '</td></tr>';
-        temp4 = '<tr><td>学号</td><td>' + data.xuehao + '</td></tr>';
-        temp5 = '<tr><td>班级</td><td>' + data.banji + '</td></tr>';
-        temp6 = '<tr><td>联系方式</td><td>' + data.lianxi + '</td></tr>';
-        temp7 = '<tr><td>邮箱</td><td>' + data.youxiang + '</td></tr>';
-
-        $("#table_stuInfo").append(temp1 + temp2 + temp3 + temp4 + temp5 + temp6 + temp7);
-    }
-    </script>
 </body>
 
 </html>
