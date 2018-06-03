@@ -235,7 +235,7 @@ class stuSrtpFundManageView(View):
             if fund_time != '':
                 fund_date = datetime.datetime.strptime(fund_time, "%Y-%m-%d").date()
             fund_name = request.POST.get('jutizhichu', '')
-            fund_type = request.POST.get('leibie', 'qt')
+            fund_type = request.POST.get('leibie', '12')
             fund_num = int(request.POST.get('jine', ''))
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
