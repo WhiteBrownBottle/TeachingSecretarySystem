@@ -2,7 +2,6 @@
 # encoding: utf-8
 
 from django.conf.urls import url
-from django.urls import path
 
 from . import views
 
@@ -20,7 +19,7 @@ urlpatterns = [
 
     url(r'^stuSrtpHome/', views.stuSrtpHomeView.as_view(), name='stuSrtp_Home'),
     url(r'^stuSrtpProlist/', views.stuStrpProListView.as_view(), name='stuSrtp_Prolist'),
-    url(r'^stuSrtpProManage/', views.stuStrpProManageView.as_view(), name='stuSrtp_ProManage'),
+    url(r'^stuSrtpProManage/', views.stuSrtpProManageView.as_view(), name='stuSrtp_ProManage'),
     url(r'^stuSrtpProApply/', views.stuSrtpProApplyView.as_view(), name='stuSrtp_ProApply'),
 
 
@@ -32,6 +31,6 @@ urlpatterns = [
     url(r'stuSrtpMidTermApply/', views.stuSrtpMidTermApplyView.as_view(), name='stuSrtp_MidTermApply'),
     url(r'stuSrtpConcluApply/', views.stuSrtpConcluApplyView.as_view(), name='stuSrtp_ConcluApply'),
 
-    url(r'^media/\w+/\d+\.\w+', views.fileDownloadView.as_view(), name='fileDownload')
+
 
 ]
