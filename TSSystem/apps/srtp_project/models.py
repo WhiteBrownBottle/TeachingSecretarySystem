@@ -1,7 +1,8 @@
 from django.db import models
 import datetime
 import django.utils.timezone as timezone
-from users.models import Teacher, Student
+from student.models import Student
+from teacher.models import Teacher
 # Create your models here.
 
 class Project(models.Model):
@@ -56,6 +57,7 @@ class Project(models.Model):
     project_fund_approv = models.IntegerField(blank=False, null=False, default=3000, verbose_name=u'项目批准经费')
     project_date_begin = models.DateField(default=timezone.now, verbose_name=u'项目立项日期')
     project_date_end = models.DateField(default=timezone.now, verbose_name=u'项目结束日期')
+    project_period = models.CharField(null=False, blank=False, max_length=10, default='1年', verbose_name=u'项目周期')
     project_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='项目指导老师')
     project_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')
     project_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_CHOICE, verbose_name=u'项目审核状态')

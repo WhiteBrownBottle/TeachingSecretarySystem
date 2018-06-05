@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views import View
-from users.models import Teacher, Student
+from student.models import Student
+from teacher.models import Teacher
 from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 from utils.session_judge import session_judge
 from utils.file_utils import file_iterator, file_upload
@@ -169,7 +170,55 @@ class stuSrtpProApplyView(View):
         if session_judge(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            pass
+            student = Student.objects.get(student_id = request.session['user_id'])
+            member_num = int(request.POST.get('member_num', '0'))
+            stuname_list = []
+            stunumber_list = []
+            member_list = ''
+            if member_num != 0:
+                for i in range(1, member_num+1):
+                    if i > 1:
+                        if i < member_num:
+                            member_list = member_list + request.POST.get('stuname_%d' %(i), '') + '、'
+                        else:
+                            member_list += request.POST.get('stuname_%d' %(i), '')
+                    stuname_list.append(request.POST.get('stuname_%d' %(i), ''))
+                    stunumber_list.append(request.POST.get('number_%d' %(i), ''))
+            applicant_phone = request.POST.get('phone', '')
+            applicant_email = request.POST.get('email', '')
+            if student.student_name != stuname_list[0] and student.student_id != int(stunumber_list[0]) and student.student_phone != applicant_phone and student.student_email != applicant_email:
+                return HttpResponse('{"status": "fail", "msg": "申请人信息填写错误"}', content_type='application/json')
+            else:
+                srtp_project = Project()
+                srtp_project.project_appli_student = student
+                srtp_project.project_name = request.POST.get('proname', '')
+                srtp_project.project_plan = request.POST.get('jihua', '')
+                srtp_project.project_type = request.POST.get('cx', 'cx')
+                srtp_project.project_rank = request.POST.get('rank', '1')
+                srtp_project.project_depart = request.POST.get('depart', 'jt')
+                srtp_project.project_fund_appli = int(request.POST.get('fund', '3000'))
+                srtp_project.project_period = request.POST.get('zhouqi', '1年')
+                srtp_project.project_form = request.POST.get('results', '实体')
+                begin_date = request.POST.get('begin', datetime.datetime.now().strftime("%Y-%m-%d"))
+                if begin_date != '':
+                    begin_date = datetime.datetime.strptime(begin_date, "%Y-%m-%d").date()
+                one_year = datetime.datetime.now() + datetime.timedelta(days=365)
+                print(one_year)
+                end_date = request.POST.get('end', one_year.strftime("%Y-%m-%d"))
+                if end_date != '':
+                    end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+                srtp_project.project_date_begin = begin_date
+                srtp_project.project_date_end = end_date
+                teacher_name = request.POST.get('teacher', '')
+                teacher = Teacher.objects.get(teacher_name = teacher_name)
+                srtp_project.project_teacher = teacher
+                srtp_project.project_member = member_list
+                appli_file = request.FILES.get('apply_file', '')
+                file_detail = file_upload(appli_file, 'SrtpAppli')
+                srtp_project.project_appli_name = file_detail[0]
+                srtp_project.project_appli_url = file_detail[1]
+                srtp_project.save()
+                return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
 
 
 
@@ -182,9 +231,9 @@ class stuSrtpProInfoView(View):
             student = Student.objects.get(student_id = request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id = student.id)
             teacher_uid = srtp_project.project_teacher_id
+            teacher_uid = srtp_project.project_teacher_id
             teacher = Teacher.objects.get(id = teacher_uid)
             teacher_name = teacher.teacher_name
-            print(srtp_project)
             return render(request, 'stuSrtp/stuSrtpProInfo.html', context={'srtp_project': srtp_project,
                                                                            'student': student,
                                                                            'teacher_name': teacher_name})
@@ -338,7 +387,11 @@ class stuSrtpMidTermApplyView(View):
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             project_name = srtp_project.project_name
-            midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
+            try:
+                midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
+            except MidTerm.DoesNotExist:
+                midterm = None
+
             return render(request, 'stuSrtp/stuSrtpMidTermApply.html', context={'project_name': project_name,
                                                                                 'midterm': midterm})
 
@@ -369,7 +422,10 @@ class stuSrtpConcluApplyView(View):
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             project_name = srtp_project.project_name
-            conclusion = Conclusion.objects.get(project_belong_id = srtp_project.project_id)
+            try:
+                conclusion = Conclusion.objects.get(project_belong_id = srtp_project.project_id)
+            except Conclusion.DoesNotExist:
+                conclusion = None
             return render(request, 'stuSrtp/stuSrtpConcluApply.html', context={'project_name': project_name,
                                                                                'conclusion': conclusion})
 

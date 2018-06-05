@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'DjangoUeditor',
     'crispy_forms',
     'main_platform',
-    'users',
+    'student',
+    'teacher',
     'course_arrangement',
     'srtp_project',
 ]
