@@ -147,9 +147,22 @@ class Result(models.Model):
 class AddFund(models.Model):
     #Srtp追加经费
 
+    ADDFUND_CHECK_STATUS_CHOICE = (
+        ('0', '未通过'),
+        ('1', '通过'),
+    )
+
+    ADDFUND_ADD_STATUS_CHOICE = (
+        ('0', '未添加'),
+        ('1', '已添加'),
+    )
+
     project_belong = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    addfund_date = models.DateField(default=timezone.now, verbose_name=u'追加经费申请时间')
     addfund_num = models.IntegerField(null=True, blank=True, verbose_name=u'追加经费数目')
     addfund_reason = models.TextField(blank=True, null=True, verbose_name=u'追加经费理由')
+    addfund_check_status = models.CharField(null=False, blank=False, max_length=1, default='0', choices=ADDFUND_CHECK_STATUS_CHOICE, verbose_name='追加经费审核状态')
+    addfund_add_status = models.CharField(null=False, blank=False, editable=False, max_length=1, default='0', choices=ADDFUND_ADD_STATUS_CHOICE, verbose_name=u'追加经费添加状态')
 
     class Meta:
         verbose_name = u'SRTP项目追加经费'

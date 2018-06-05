@@ -42,11 +42,11 @@ class ResultAdmin(object):
 
 class AddFundAdmin(object):
 
-    list_display = ['addfund_num', 'addfund_reason', 'project_belong']
+    list_display = ['addfund_num', 'addfund_reason', 'addfund_check_status','project_belong']
 
-    search_fields = ['addfund_num', 'addfund_reason', 'project_belong']
+    search_fields = ['addfund_num', 'addfund_reason', 'addfund_check_status', 'project_belong']
 
-    list_filter = ['addfund_num', 'addfund_reason', 'project_belong']
+    list_filter = ['addfund_num', 'addfund_reason', 'addfund_check_status','project_belong']
 
 
 xadmin.site.register(Project, ProjectAdmin)

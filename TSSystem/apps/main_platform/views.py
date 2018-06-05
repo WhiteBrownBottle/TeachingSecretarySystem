@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 import django.utils.timezone as timezone
 import time, datetime, os
+from django.db.models import Q
 from django.conf import settings
 from django.http import StreamingHttpResponse
 
@@ -132,7 +133,21 @@ class stuStrpProListView(View):
 class stuSrtpProManageView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpProManage.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            addfund_checkok_list = AddFund.objects.filter(Q(project_belong_id = srtp_project.project_id)&Q(addfund_check_status = '1')&Q(addfund_add_status = '0'))
+            if addfund_checkok_list != '':
+                for addfund_checkok in addfund_checkok_list:
+                    addfund_checkok_money = addfund_checkok.addfund_num
+                    srtp_project.project_fund_approv += addfund_checkok_money
+                    addfund_checkok.addfund_add_status = '1'
+                    addfund_checkok.save()
+            srtp_project.save()
+            return render(request, 'stuSrtp/stuSrtpProManage.html')
 
     def post(self, request):
         if session_judge(request):
@@ -144,11 +159,18 @@ class stuSrtpProManageView(View):
 class stuSrtpProApplyView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpProApply.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            return render(request, 'stuSrtp/stuSrtpProApply.html')
 
 
     def post(self, request):
-        pass
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            pass
+
 
 
 class stuSrtpProInfoView(View):
@@ -298,12 +320,17 @@ class stuSrtpAddtionFundsView(View):
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
-            addfund = AddFund.objects.filter(project_belong_id = srtp_project.project_id)
-
-            return render(request, 'stuSrtp/stuSrtpAddtionFunds.html')
+            addfund_list = AddFund.objects.filter(project_belong_id = srtp_project.project_id).order_by('addfund_date')
+            return render(request, 'stuSrtp/stuSrtpAddtionFunds.html', context={'addfund_list': addfund_list})
 
     def post(self, request):
-        pass
+        if session_judge(request):
+            return render(request, 'index.html')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class stuSrtpMidTermApplyView(View):
