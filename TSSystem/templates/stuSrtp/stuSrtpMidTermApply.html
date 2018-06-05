@@ -11,23 +11,11 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body>
+<body onload="form_judge()">
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">中期检查申请</h2>
         <form id="midTermForm" enctype="multipart/form-data">
-            <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
-                <tbody>
-                    <tr>
-                        <td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>中期检查报告</td>
-                        <td>
-                            <input type="file" name="file">
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div align="left" style="margin-top: 20px">
-                <button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button>
-            </div>
+
         </form>
         <div style="margin-top: 20px">
             <table class="table table-hover">
@@ -41,7 +29,7 @@
                     <tr>
                         <td>{{ project_name }}</td>
                         <td>{{ midterm.midterm_deadline_date }}</td>
-                        <td>{{ midterm.get_midterm_check_status_display }}</td>
+                        <td id="state">{{ midterm.get_midterm_check_status_display }}</td>
                         <td>{{ midterm.get_midterm_check_point_display }}</td>
                     </tr>
                 </tbody>
@@ -49,6 +37,13 @@
         </div>
     </div>
     <script type="text/javascript">
+        function form_judge(){
+            if(document.getElementById("state").innerHTML=="未提交"){
+                $("#midTermForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>中期检查报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button></div>');
+            } else {
+                $("#midTermForm").append("您已提交中期检查申请");
+            }
+        }
     //提交给数据库，并更新页面的表格
     function midTermPost() {
         var form_data = new FormData(document.getElementById("midTermForm"));
