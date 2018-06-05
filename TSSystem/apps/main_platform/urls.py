@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'stuSrtpConcluApply/', views.stuSrtpConcluApplyView.as_view(), name='stuSrtp_ConcluApply'),
 
 
+
     url(r'^media/\w+/\d+\.\w+', views.fileDownloadView.as_view(), name='fileDownload')
 
 

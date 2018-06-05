@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import xadmin
-from .models import Project, Schedule, Fund, Result, AddFund
+from .models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 
 class ProjectAdmin(object):
 
@@ -49,8 +49,28 @@ class AddFundAdmin(object):
     list_filter = ['addfund_num', 'addfund_reason', 'addfund_check_status','project_belong']
 
 
+class MidTermAdmin(object):
+
+    list_display = ['midterm_file_name', 'midterm_deadline_date', 'midterm_check_status', 'midterm_check_point']
+
+    search_fields = ['midterm_file_name', 'midterm_deadline_date', 'midterm_check_status', 'midterm_check_point']
+
+    list_filter = ['midterm_file_name', 'midterm_deadline_date', 'midterm_check_status', 'midterm_check_point']
+
+
+class ConclusionAdmin(object):
+
+    list_display = ['conclusion_file_name', 'conclusion_deadline_date', 'conclusion_check_status', 'conclusion_check_point']
+
+    search_fields = ['conclusion_file_name', 'conclusion_deadline_date', 'conclusion_check_status', 'conclusion_check_point']
+
+    list_filter = ['conclusion_file_name', 'conclusion_deadline_date', 'conclusion_check_status', 'conclusion_check_point']
+
+
 xadmin.site.register(Project, ProjectAdmin)
 xadmin.site.register(Schedule, ScheduleAdmin)
 xadmin.site.register(Fund, FundAdmin)
 xadmin.site.register(Result, ResultAdmin)
 xadmin.site.register(AddFund, AddFundAdmin)
+xadmin.site.register(MidTerm, MidTermAdmin)
+xadmin.site.register(Conclusion, ConclusionAdmin)

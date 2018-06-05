@@ -143,7 +143,6 @@ class Result(models.Model):
         return '[%s: %s]' % (self.result_name, self.result_master)
 
 
-
 class AddFund(models.Model):
     #Srtp追加经费
 
@@ -170,6 +169,74 @@ class AddFund(models.Model):
 
     def __str__(self):
         return '[%s : %d]' %(str(self.project_belong), self.addfund_num)
+
+
+class MidTerm(models.Model):
+    #中期检查
+
+    CHECK_STATUS = (
+        ('0', '未提交'),
+        ('1', '审批中'),
+        ('2', '已通过')
+    )
+
+    CHECK_POINT = (
+        ('0', ''),
+        ('1', '教师审核'),
+        ('2', '管理员审核')
+    )
+    project_belong = models.OneToOneField(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    midterm_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件名称')
+    midterm_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件路径')
+    midterm_deadline_date = models.DateField(default=timezone.now, verbose_name=u'提交截止日期')
+    midterm_check_status = models.CharField(blank=False, null=False, choices=CHECK_STATUS, max_length=1, default='0', verbose_name=u'审核状态')
+    midterm_check_point = models.CharField(blank=False, null=False, choices=CHECK_POINT, max_length=1, default='0', verbose_name=u'审核节点')
+
+    class Meta:
+        verbose_name = u'SRTP项目中期检查'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' %(self.midterm_file_name, self.midterm_check_status)
+
+
+
+class Conclusion(models.Model):
+    #Srtp结题
+
+    CHECK_STATUS = (
+        ('0', '未提交'),
+        ('1', '审批中'),
+        ('2', '已通过')
+    )
+
+    CHECK_POINT = (
+        ('0', ''),
+        ('1', '教师审核'),
+        ('2', '管理员审核')
+    )
+    project_belong = models.OneToOneField(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    conclusion_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件名称')
+    conclusion_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件路径')
+    conclusion_deadline_date = models.DateField(default=timezone.now, verbose_name=u'提交截止日期')
+    conclusion_check_status = models.CharField(blank=False, null=False, choices=CHECK_STATUS, max_length=1, default='0',
+                                            verbose_name=u'审核状态')
+    conclusion_check_point = models.CharField(blank=False, null=False, choices=CHECK_POINT, max_length=1, default='0',
+                                           verbose_name=u'审核节点')
+
+    class Meta:
+        verbose_name = u'SRTP项目结题检查'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' %(self.conclusion_file_name, self.conclusion_check_status)
+
+
+
+
+
+
+
 
 
 

@@ -1,9 +1,9 @@
 from django.shortcuts import render
 from django.views import View
 from users.models import Teacher, Student
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 from utils.session_judge import session_judge
-from utils.file_iterator import file_iterator
+from utils.file_utils import file_iterator, file_upload
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -283,17 +283,7 @@ class stuSrtpResultManageView(View):
                 result_date = datetime.datetime.strptime(result_date, '%Y-%m-%d').date()
             result_master = request.POST.get('suoyouren', '')
             result_file = request.FILES.get('file')
-            file_name = str(result_file)
-            name = str(result_file).split('.')
-            t = time.time()
-            file_name = str(int(t)) + '.' + name[1]
-            print(file_name)
-            file_dir = settings.MEDIA_ROOT + '/SrtpResult/'
-            if not os.path.exists(file_dir):
-                os.makedirs(file_dir)
-            file_path = file_dir + file_name
-            file_relative_path = settings.MEDIA_URL + 'SrtpResult/' + file_name
-            open(file_path, 'wb+').write(result_file.read())
+            file_detail = file_upload(result_file, 'SrtpResult')
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             result = Result()
@@ -301,10 +291,8 @@ class stuSrtpResultManageView(View):
             result.result_type = result_type
             result.result_date = result_date
             result.result_master = result_master
-            result.result_file_name = file_name
-            result.result_file_url = file_dir
-            result.result_file_name = str(result_file)
-            result.result_file_url = file_relative_path
+            result.result_file_name = file_detail[0]
+            result.result_file_url = file_detail[1]
             result.project_belong = srtp_project
             result.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
@@ -330,26 +318,73 @@ class stuSrtpAddtionFundsView(View):
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            addfund_num = request.POST.get('fund', '0')
+            addfund_reason = request.POST.get('addReason', '')
+            addfund = AddFund()
+            addfund.addfund_num = int(addfund_num)
+            addfund.addfund_reason = addfund_reason
+            addfund.project_belong = srtp_project
+            addfund.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class stuSrtpMidTermApplyView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpMidTermApply.html')
+        if session_judge(request):
+            return render(request, 'index.html')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            project_name = srtp_project.project_name
+            midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
+            return render(request, 'stuSrtp/stuSrtpMidTermApply.html', context={'project_name': project_name,
+                                                                                'midterm': midterm})
 
     def post(self, request):
-        pass
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            student = Student.objects.get(student_id=request.session['user_id'])
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            midterm_file = request.FILES.get('file', '')
+            file_detail = file_upload(midterm_file, 'SrtpMidTerm')
+            midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
+            midterm.midterm_file_name = file_detail[0]
+            midterm.midterm_file_url = file_detail[1]
+            midterm.midterm_check_status = '1'
+            midterm.midterm_cehck_point = '1'
+            midterm.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class stuSrtpConcluApplyView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpConcluApply.html')
+        if session_judge(request):
+            return render(request, 'index.html')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            project_name = srtp_project.project_name
+            conclusion = Conclusion.objects.get(project_belong_id = srtp_project.project_id)
+            return render(request, 'stuSrtp/stuSrtpConcluApply.html', context={'project_name': project_name,
+                                                                               'conclusion': conclusion})
 
     def post(self, request):
-        pass
-
+        student = Student.objects.get(student_id=request.session['user_id'])
+        srtp_project = Project.objects.get(project_appli_student_id=student.id)
+        conclusion_file = request.FILES.get('file', '')
+        file_detail = file_upload(conclusion_file, 'SrtpConclusion')
+        conclusion = Conclusion.objects.get(project_belong_id=srtp_project.project_id)
+        conclusion.conclusion_file_name = file_detail[0]
+        conclusion.conclusion_file_url = file_detail[1]
+        conclusion.conclusion_check_status = '1'
+        conclusion.conclusion_check_point = '1'
+        conclusion.save()
+        return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class fileDownloadView(View):

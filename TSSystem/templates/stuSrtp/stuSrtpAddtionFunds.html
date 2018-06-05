@@ -12,10 +12,10 @@
 
 </head>
 
-<body onload="cutStr(20)">
+<body>
 <div style="margin: 10px 20px 0px 20px">
     <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">追加经费</h2>
-    <form>
+    <form method="post">
         <table  style="border-collapse: collapse; width: 96%; margin-top: 5px">
             <tbody>
             <tr>
@@ -32,13 +32,13 @@
             </tbody>
         </table>
         <div align="center" style="margin-top: 20px">
-            <button type="button" class="btn btn-default" onclick="submit()">提交追加申请</button>
+            <button type="button" class="btn btn-default" onclick="addfund_apply()">提交追加申请</button>
             <button type="reset" class="btn btn-danger">重置</button>
         </div>
     </form>
     <br>
     <div style="margin-top: 20px">
-        <table class="table table-hover" id="table1">
+        <table class="table table-hover" id="table1" style="table-layout: fixed">
             <tbody>
             <tr style="background-color:#b2dba1">
                 <td style="font-weight: bold;">申请时间</td>
@@ -51,7 +51,7 @@
                 <td>{{ addfund.addfund_date }}</td>
                 <td>{{ addfund.addfund_num }}</td>
                 <td>{{ addfund.get_addfund_check_status_display }}</td>
-                <td id="reason">{{ addfund.addfund_reason }}</td>
+                <td style="word-wrap: break-word;">{{ addfund.addfund_reason }}</td>
             </tr>
             {% endfor %}
             </tbody>
@@ -59,11 +59,8 @@
     </div>
 </div>
     <script type="text/javascript">
-    function cutStr(len){
-        var obj=document.getElementById('reason');
-        obj.innerHTML=obj.innerHTML.substring(0,len)+'…';
-    }
-    function submit(){
+
+    function addfund_apply(){
         $.ajax({
             data:{
                 'fund':document.getElementById("fund").value,

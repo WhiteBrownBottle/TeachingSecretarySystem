@@ -14,19 +14,19 @@
 <body>
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">项目结题申请</h2>
-        <form action="stuSrtpFundManage.html" method="post">
+        <form id="concluApplyForm" enctype="multipart/form-data">
             <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
                 <tbody>
                     <tr>
                         <td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>项目结题报告</td>
                         <td>
-                            <input type="file">
+                            <input type="file" name="file">
                         </td>
                     </tr>
                 </tbody>
             </table>
             <div align="left" style="margin-top: 20px">
-                <button type="button" class="btn btn-danger">提交</button>
+                <button type="button" class="btn btn-danger" onclick="concluApplyPost()">提交</button>
             </div>
         </form>
         <div style="margin-top: 20px">
@@ -39,15 +39,36 @@
                         <td style="font-weight: bold">审核节点</td>
                     </tr>
                     <tr>
-                        <td>xx</td>
-                        <td>2018-6-1</td>
-                        <td>审批中</td>
-                        <td>教务处审核</td>
+                        <td>{{ project_name }}</td>
+                        <td>{{ conclusion.conclusion_deadline_date }}</td>
+                        <td>{{ conclusion.get_conclusion_check_status_display }}</td>
+                        <td>{{ conclusion.get_conclusion_check_point_display }}</td>
                     </tr>
                 </tbody>
             </table>
         </div>
     </div>
+    <script type="text/javascript">
+    //提交给数据库，并更新页面的表格
+    function concluApplyPost() {
+        var form_data = new FormData(document.getElementById("concluApplyForm"));
+        $.ajax({
+            data: form_data,
+            type: "post", //提交方式
+            processData:false,
+            contentType:false,
+            //dataType: "json", //数据类型
+            url: "/stuSrtpConcluApply/", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                    location.reload();
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        })
+    }
+    </script>
 </body>
 <br>
 
