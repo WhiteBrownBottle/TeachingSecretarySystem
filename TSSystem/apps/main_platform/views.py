@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.views import View
 from users.models import Teacher, Student
-from srtp_project.models import Project, Schedule, Fund, Result
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund
 from utils.session_judge import session_judge
+from utils.file_iterator import file_iterator
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
@@ -10,6 +11,7 @@ from django.contrib.auth.hashers import check_password
 import django.utils.timezone as timezone
 import time, datetime, os
 from django.conf import settings
+from django.http import StreamingHttpResponse
 
 
 
@@ -242,8 +244,11 @@ class stuSrtpResultManageView(View):
         if session_judge(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-
-            return render(request, 'stuSrtp/stuSrtpResultManage.html')
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            result_list = Result.objects.filter(project_belong_id=srtp_project.project_id).order_by('result_date')
+            return render(request, 'stuSrtp/stuSrtpResultManage.html', context={'result_list': result_list})
 
     def post(self, request):
         if session_judge(request):
@@ -254,25 +259,30 @@ class stuSrtpResultManageView(View):
             result_date = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
             if result_date != '':
                 result_date = datetime.datetime.strptime(result_date, '%Y-%m-%d').date()
-
             result_master = request.POST.get('suoyouren', '')
             result_file = request.FILES.get('file')
             file_name = str(result_file)
+            name = str(result_file).split('.')
+            t = time.time()
+            file_name = str(int(t)) + '.' + name[1]
             print(file_name)
             file_dir = settings.MEDIA_ROOT + '/SrtpResult/'
             if not os.path.exists(file_dir):
                 os.makedirs(file_dir)
             file_path = file_dir + file_name
+            file_relative_path = settings.MEDIA_URL + 'SrtpResult/' + file_name
             open(file_path, 'wb+').write(result_file.read())
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
             result = Result()
             result.result_name = result_name
-            result.result_type =result_type
+            result.result_type = result_type
             result.result_date = result_date
             result.result_master = result_master
             result.result_file_name = file_name
             result.result_file_url = file_dir
+            result.result_file_name = str(result_file)
+            result.result_file_url = file_relative_path
             result.project_belong = srtp_project
             result.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
@@ -282,7 +292,15 @@ class stuSrtpResultManageView(View):
 class stuSrtpAddtionFundsView(View):
 
     def get(self, request):
-        return render(request, 'stuSrtp/stuSrtpAddtionFunds.html')
+        if session_judge(request):
+            return render(request, 'index.html')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            addfund = AddFund.objects.filter(project_belong_id = srtp_project.project_id)
+
+            return render(request, 'stuSrtp/stuSrtpAddtionFunds.html')
 
     def post(self, request):
         pass
@@ -301,6 +319,28 @@ class stuSrtpConcluApplyView(View):
 
     def get(self, request):
         return render(request, 'stuSrtp/stuSrtpConcluApply.html')
+
+    def post(self, request):
+        pass
+
+
+
+class fileDownloadView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return render(request, 'index.html')
+        else:
+
+            url = str(request.get_full_path())
+            result = Result.objects.get(result_file_url = url)
+            file_url = url.split('/')
+            the_file_name = settings.MEDIA_ROOT + '/' + file_url[2] + '/' + file_url[3]
+            response = StreamingHttpResponse(file_iterator(the_file_name))
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment; filename=%s' % str(result.result_file_name).encode('utf-8').decode('ISO-8859-1')
+            return response
+
 
     def post(self, request):
         pass

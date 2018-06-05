@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import xadmin
-from .models import Project, Schedule, Fund, Result
+from .models import Project, Schedule, Fund, Result, AddFund
 
 class ProjectAdmin(object):
 
@@ -39,7 +39,18 @@ class ResultAdmin(object):
 
     list_filter = ['result_name', 'result_type', 'result_date', 'result_master']
 
+
+class AddFundAdmin(object):
+
+    list_display = ['addfund_num', 'addfund_reason', 'project_belong']
+
+    search_fields = ['addfund_num', 'addfund_reason', 'project_belong']
+
+    list_filter = ['addfund_num', 'addfund_reason', 'project_belong']
+
+
 xadmin.site.register(Project, ProjectAdmin)
 xadmin.site.register(Schedule, ScheduleAdmin)
 xadmin.site.register(Fund, FundAdmin)
 xadmin.site.register(Result, ResultAdmin)
+xadmin.site.register(AddFund, AddFundAdmin)

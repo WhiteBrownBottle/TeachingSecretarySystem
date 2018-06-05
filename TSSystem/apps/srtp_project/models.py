@@ -140,7 +140,27 @@ class Result(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '[%s: %s]' % (self.result_name, self.get_result_type_display)
+        return '[%s: %s]' % (self.result_name, self.result_master)
+
+
+
+class AddFund(models.Model):
+    #Srtp追加经费
+
+    project_belong = models.ForeignKey(Project, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    addfund_num = models.IntegerField(null=True, blank=True, verbose_name=u'追加经费数目')
+    addfund_reason = models.TextField(blank=True, null=True, verbose_name=u'追加经费理由')
+
+    class Meta:
+        verbose_name = u'SRTP项目追加经费'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s : %d]' %(str(self.project_belong), self.addfund_num)
+
+
+
+
 
 
 
