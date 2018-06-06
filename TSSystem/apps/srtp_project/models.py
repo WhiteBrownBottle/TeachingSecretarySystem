@@ -1,8 +1,9 @@
 from django.db import models
-import datetime
+import datetime, time
 import django.utils.timezone as timezone
 from student.models import Student
 from teacher.models import Teacher
+
 # Create your models here.
 
 class Project(models.Model):
@@ -50,7 +51,7 @@ class Project(models.Model):
     project_depart = models.CharField(max_length=3, blank=False, null=False, choices=DEPART_CHOICE, default='jt', verbose_name=u'项目所属学院')
     project_plan = models.CharField(max_length=10, blank=True, null=False, default="%d年创新计划" % (datetime.datetime.now().year), verbose_name=u'项目所属创新计划')
     project_form = models.CharField(max_length=40, blank=False, null=False, default='实体', verbose_name=u'项目成果形式')
-    project_appli_student = models.OneToOneField(Student, on_delete=models.CASCADE, verbose_name='项目申请人')
+    project_appli_student = models.OneToOneField(Student, blank=True, null=True, on_delete=models.CASCADE, verbose_name='项目申请人')
     project_appli_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书名称')
     project_appli_url = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书路径')
     project_fund_appli = models.IntegerField(blank=False, null=False, default=3000, verbose_name=u'项目申请经费')
@@ -202,7 +203,6 @@ class MidTerm(models.Model):
         return '[%s: %s]' %(self.midterm_file_name, self.midterm_check_status)
 
 
-
 class Conclusion(models.Model):
     #Srtp结题
 
@@ -233,6 +233,37 @@ class Conclusion(models.Model):
     def __str__(self):
         return '[%s: %s]' %(self.conclusion_file_name, self.conclusion_check_status)
 
+
+class Notification(models.Model):
+    #Srtp消息通知
+
+    notifi_id = models.IntegerField(default=int(time.time()), verbose_name=u'通知id')
+    notifi_date = models.DateField(default=timezone.now, verbose_name=u'通知发布时间')
+    notifi_title = models.CharField(blank=False, null=False, max_length=50, default='未命名消息通知', verbose_name=u'通知标题')
+    notifi_content = models.TextField(blank=True, null=True, verbose_name=u'通知内容')
+
+    class Meta:
+        verbose_name = u'SRTP项目消息通知'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%d: %s]' %(self.notifi_id, self.notifi_title)
+
+
+
+class NotifiFile(models.Model):
+    #Srtp消息通知附件
+
+    notifi_belong = models.ForeignKey(Notification, on_delete=models.CASCADE, verbose_name=u'所属通知')
+    notifi_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'通知附件名称')
+    notifi_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'通知附件路径')
+
+    class Meta:
+        verbose_name = u'SRTP项目通知附件'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.notifi_file_name
 
 
 

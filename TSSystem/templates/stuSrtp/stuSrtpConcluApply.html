@@ -50,8 +50,8 @@
     </div>
     <script type="text/javascript">
         function form_judge(){
-            if(document.getElementById("state").innerHTML=="未提交"){
-                $("#concluApplyForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>中期检查报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button></div>');
+            if(document.getElementById("state").innerHTML=="未提交"|| document.getElementById("state").innerHTML==""){
+                $("#concluApplyForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>项目结题报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button></div>');
             } else {
                 $("#concluApplyForm").append("您已提交项目结题申请");
             }
@@ -66,7 +66,7 @@
             processData:false,
             contentType:false,
             //dataType: "json", //数据类型
-            url: "/stuSrtpConcluApply/", //请求url
+            url: "/stu/SrtpConcluApply/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
                     location.reload();

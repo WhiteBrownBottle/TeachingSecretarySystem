@@ -38,7 +38,7 @@
     </div>
     <script type="text/javascript">
         function form_judge(){
-            if(document.getElementById("state").innerHTML=="未提交"){
+            if(document.getElementById("state").innerHTML=="未提交" || document.getElementById("state").innerHTML==""){
                 $("#midTermForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>中期检查报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button></div>');
             } else {
                 $("#midTermForm").append("您已提交中期检查申请");
@@ -53,7 +53,7 @@
             processData:false,
             contentType:false,
             //dataType: "json", //数据类型
-            url: "/stuSrtpMidTermApply/", //请求url
+            url: "/stu/SrtpMidTermApply/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
                     location.reload();

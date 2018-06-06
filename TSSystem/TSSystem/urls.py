@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^ueditor/',include('DjangoUeditor.urls' )),
     url(r'', include('main_platform.urls', namespace='main_platform')),
     url(r'^login/$', mp_views.LoginView.as_view(), name = 'login'),
+    url(r'^stu/', include('student.urls'), name='student')
 
 ]

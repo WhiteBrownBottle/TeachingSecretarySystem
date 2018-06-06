@@ -16,23 +16,23 @@
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="stuSrtpHome.html">北京科技大学SRTP管理平台</a>
+                <a class="navbar-brand" href="{% url 'student:Srtp_ProManage' %}">北京科技大学SRTP管理平台</a>
             </div>
             <ul class="nav navbar-nav">
-                <li><a href="{% url 'main_platform:stuSrtp_Home' %}">消息通知</a> </li>
-                <li><a href="{% url 'main_platform:stuSrtp_Prolist' %}">项目列表</a> </li>
+                <li><a href="{% url 'student:Srtp_Home' %}">消息通知</a> </li>
+                <li><a href="{% url 'student:Srtp_Prolist' %}">项目列表</a> </li>
                 <li class="active" class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
                     <ul class="dropdown-menu">
-                        <li><a href="{% url 'main_platform:stuSrtp_ProApply' %}" target="_blank">项目申请</a></li>
+                        <li><a href="{% url 'student:Srtp_ProApply' %}" target="_blank">项目申请</a></li>
                         <li class="divider" role="separator"></li>
-                        <li><a href="{% url 'main_platform:stuSrtp_ProManage' %}">我的项目</a></li>
+                        <li><a href="{% url 'student:Srtp_ProManage' %}">我的项目</a></li>
                     </ul>
                 </li>
             </ul>
             <ul class="nav navbar-nav pull-right">
                 <li id="personCenter">
-                    <a href="{% url 'main_platform:stu_Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+                    <a href="{% url 'student:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
                 </li>
                 <li id="exit"><a href="#">安全退出</a></li>
             </ul>
@@ -41,21 +41,21 @@
     <div class="row">
         <div class="col-sm-1 col-md-1 sidebar">
             <ul class="nav nav-sidebar">
-                <li><a href="{% url 'main_platform:stuSrtp_ProInfo' %}" target="mainFrame">项目信息</a></li>
+                <li><a href="{% url 'student:Srtp_ProInfo' %}" target="mainFrame">项目信息</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="{% url 'main_platform:stuSrtp_ScheduleManage' %}" target="mainFrame">进度管理</a></li>
-                <li><a href="{% url 'main_platform:stuSrtp_FundManage' %}" target="mainFrame">经费管理</a></li>
-                <li><a href="{% url 'main_platform:stuSrtp_ResultManage' %}" target="mainFrame">成果管理</a></li>
-                <li><a href="{% url 'main_platform:stuSrtp_AddtionFunds' %}" target="mainFrame">追加经费</a></li>
+                <li><a href="{% url 'student:Srtp_ScheduleManage' %}" target="mainFrame">进度管理</a></li>
+                <li><a href="{% url 'student:Srtp_FundManage' %}" target="mainFrame">经费管理</a></li>
+                <li><a href="{% url 'student:Srtp_ResultManage' %}" target="mainFrame">成果管理</a></li>
+                <li><a href="{% url 'student:Srtp_AddtionFunds' %}" target="mainFrame">追加经费</a></li>
             </ul>
             <ul class="nav nav-sidebar">
-                <li><a href="{% url 'main_platform:stuSrtp_MidTermApply' %}" target="mainFrame">中期检查申请</a></li>
-                <li><a href="{% url 'main_platform:stuSrtp_ConcluApply' %}" target="mainFrame">项目结题申请</a></li>
+                <li><a href="{% url 'student:Srtp_MidTermApply' %}" target="mainFrame">中期检查申请</a></li>
+                <li><a href="{% url 'student:Srtp_ConcluApply' %}" target="mainFrame">项目结题申请</a></li>
             </ul>
         </div>
         <div class="col-sm-11 col-sm-offset-1 col-md-11 col-sm-offset-1">
-            <iframe name="mainFrame" width="95%" height="550px" scrolling="auto" frameborder="0" src="{% url 'main_platform:stuSrtp_ProInfo' %}" style="margin-left: 20px;"></iframe>
+            <iframe name="mainFrame" width="95%" height="550px" scrolling="auto" frameborder="0" src="{% url 'student:Srtp_ProInfo' %}" style="margin-left: 20px;"></iframe>
         </div>
     </div>
     <script type="text/javascript">
@@ -64,7 +64,7 @@
             data:{'test':"test"},
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "/stuSrtpProManage/", //请求url
+            url: "/stu/SrtpProManage/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
                 } else if (data.status == 'fail') {
