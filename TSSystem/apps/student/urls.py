@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^Info/', views.stuInfoView.as_view(), name='Info'),
 
     url(r'^SrtpHome/', views.stuSrtpHomeView.as_view(), name='Srtp_Home'),
-    url(r'^SrtpProlist/', views.stuStrpProListView.as_view(), name='Srtp_Prolist'),
+    url(r'^SrtpProlist/', views.stuSrtpProListView.as_view(), name='Srtp_Prolist'),
     url(r'^SrtpProManage/', views.stuSrtpProManageView.as_view(), name='Srtp_ProManage'),
     url(r'^SrtpProApply/', views.stuSrtpProApplyView.as_view(), name='Srtp_ProApply'),
 
@@ -25,6 +25,7 @@ urlpatterns = [
     url(r'^SrtpMidTermApply/', views.stuSrtpMidTermApplyView.as_view(), name='Srtp_MidTermApply'),
     url(r'^SrtpConcluApply/', views.stuSrtpConcluApplyView.as_view(), name='Srtp_ConcluApply'),
 
-    url(r'^SrtpNotification/(?P<notifi_id>\d+)/$', views.stuSrtpNotifiView.as_view(), name='Srtp_Notifi')
+    url(r'^SrtpNotification/(?P<notifi_id>\d+)/$', views.stuSrtpNotifiView.as_view(), name='Srtp_Notifi'),
+    url(r'^SrtpSpecificInfo/(?P<project_id>\d+)/$', views.stuSrtpSpecificInfoView.as_view(), name='Srtp_SpecificInfo'),
 
 ]

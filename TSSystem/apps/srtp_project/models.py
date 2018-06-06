@@ -38,7 +38,12 @@ class Project(models.Model):
         ('gg', '高等工程师学院')
     )
 
-    STATUS_CHOICE = (
+    STATUS_APPLY_CHOICE = (
+        (True, '已申请'),
+        (False, '未申请')
+    )
+
+    STATUS_CHECK_CHOICE = (
         (True, '通过'),
         (False, '未通过')
     )
@@ -61,7 +66,10 @@ class Project(models.Model):
     project_period = models.CharField(null=False, blank=False, max_length=10, default='1年', verbose_name=u'项目周期')
     project_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name='项目指导老师')
     project_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')
-    project_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_CHOICE, verbose_name=u'项目审核状态')
+    project_check_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_CHECK_CHOICE, verbose_name=u'项目审核状态')
+    project_apply_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_APPLY_CHOICE, verbose_name=u'项目申请状态')
+
+
 
     class Meta:
         verbose_name = u'SRTP项目信息'
@@ -237,7 +245,7 @@ class Conclusion(models.Model):
 class Notification(models.Model):
     #Srtp消息通知
 
-    notifi_id = models.IntegerField(default=int(time.time()), verbose_name=u'通知id')
+    notifi_id = models.IntegerField(default=int(time.time()), unique=True, verbose_name=u'通知id')
     notifi_date = models.DateField(default=timezone.now, verbose_name=u'通知发布时间')
     notifi_title = models.CharField(blank=False, null=False, max_length=50, default='未命名消息通知', verbose_name=u'通知标题')
     notifi_content = models.TextField(blank=True, null=True, verbose_name=u'通知内容')

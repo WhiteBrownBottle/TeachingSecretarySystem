@@ -12,7 +12,7 @@
     <script src="../../static/js/jquery.backstretch.min.js"></script>
 </head>
 
-<body onload="ProList()">
+<body >
     <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
@@ -53,58 +53,59 @@
                     <th style="text-align:center">具体信息</th>
                 </tr>
             </thead>
+            {% for  project in project_list.object_list %}
             <tr>
-                <td style="text-align: center">计算机与通信工程学院</td>
-                <td style="text-align: center">xxxxxxxxxxxxxxxxx</td>
-                <td style="text-align: center">zzz</td>
+                <td style="text-align: center">{{project.get_project_depart_display}}</td>
+                <td style="text-align: center">{{ project.project_name }}</td>
+                <td style="text-align: center">{{ project.project_teacher }}</td>
                 <td style="text-align: center">
-                    <a href="stuSrtpSpecificInfo.html" target="_blank">
+                    <a href="{% url 'student:Srtp_SpecificInfo' project.project_id %}" target="_blank">
                         <button>查看</button>
                     </a>
                 </td>
             </tr>
-            <tr>
-                <td style="text-align: center">计算机与通信工程学院</td>
-                <td style="text-align: center">xxxxxxxxxxxxxxxxx</td>
-                <td style="text-align: center">zzz</td>
-                <td style="text-align: center">
-                    <a href="stuSrtpSpecificInfo.html" target="_blank">
-                        <button>查看</button>
-                    </a>
-                </td>
-            </tr>
+            {% endfor %}
+
         </table>
+        <div class="row">
+            <div align="center">
+                <ul class="pagination">
+
+                            {% if project_list.has_previous %}
+                                <li class="long">
+                                    <a href="?{{ project_list.previous_page_number.querystring }}" class="btn btn-primary">上一页</a>
+                                </li>
+                            {% endif %}
+
+                            {% for page in project_list.pages %}
+
+                            {% if page %}
+                                {% ifequal page project_list.number %}
+                                <li class="active">
+                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                                </li>
+                                {% endifequal %}
+                            {% else %}
+                            <li class="none">
+                                <a href="" class="btn btn-primary">...</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if project_list.has_next %}
+                                <li class="long">
+                                <a href="?{{ project_list.next_page_number.querystring }}" class="btn btn-primary">下一页</a>
+                                </li>
+                            {% endif %}
+                            </ul>
+            </div>
+        </div>
+
     </div>
-    <script type="text/javascript">
-    function ProList() {
-        $.ajax({
-            url: '//',
-            type: 'get',
-            dataType: 'json',
-            success: function(data) {
-                $.ajax({
-                    url: '//',
-                    type: 'get',
-                    dataType: 'json',
-                    success: function(data) {
-                        //方法中传入的参数data为后台获取的数据
-                        //$.each(data, function (index, value) {
-                        $("#table_stuSrtpProList").empty(); //清空表格里面的所有内容
-                        $("#table_stuSrtpProList").append('<thead><tr><th style="text-align:center" width="25%">学院</th><th style="text-align:center">项目名称</th><th style="text-align:center">指导老师</th><th style="text-align:center">是否申请</th></tr></thead>');
-                        var i = 0;
-                        $.each(data, function(index, item) {
-                            i = i + 1;
-                            if (i % 6 == 0) $("#table_stuSrtpResultManage").append('<tr>');
-                            $("#table_stuSrtpResultManage").append('<td>' + item + '</td>');
-                            if (i % 6 == 5) $("#table_stuSrtpResultManage").append('<td>' + '<a href="#">删除</a>' + '</td>');
-                            if (i % 6 == 0) $("#table_stuSrtpResultManage").append('</tr>');
-                        });
-                    }
-                });
-            }
-        });
-    }
-    </script>
 </body>
 
 </html>

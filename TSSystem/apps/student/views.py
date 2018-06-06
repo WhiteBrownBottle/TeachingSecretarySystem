@@ -93,8 +93,10 @@ class stuInfoView(View):
             return render(request, 'personInfo/stuInfo.html', context={'student': student})
 
     def post(self, request):
-        pass
-
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            return render(request, 'stuSrtp/stuSrtpProManage.html')
 
 class stuSrtpHomeView(View):
 
@@ -105,7 +107,7 @@ class stuSrtpHomeView(View):
             all_notification = Notification.objects.all().order_by("-notifi_date")
             # 分页：
             try:
-                page = request.GET.get('page', '1')
+                page = int(request.GET.get('page', '1'))
             except PageNotAnInteger:
                 page = 1
             p = Paginator(all_notification, 5, request=request)
@@ -113,8 +115,10 @@ class stuSrtpHomeView(View):
             return render(request, 'stuSrtp/stuSrtpHome.html', context={'notification_list': notification_list})
 
     def post(self, request):
-        pass
-
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            return render(request, 'stuSrtp/stuSrtpProManage.html')
 
 class stuSrtpNotifiView(View):
 
@@ -126,9 +130,6 @@ class stuSrtpNotifiView(View):
             return render(request, 'stuSrtp/stuSrtpNotification.html', context={'notification': notification})
 
 
-
-
-
     def post(self, request, notifi_id):
         if session_judge(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
@@ -136,14 +137,47 @@ class stuSrtpNotifiView(View):
             notification = Notification.objects.get(notifi_id=int(notifi_id))
             return render(request, 'stuSrtp/stuSrtpNotification.html', context={'notification': notification})
 
-class stuStrpProListView(View):
+
+class stuSrtpProListView(View):
 
     def get(self, request):
-
-        return render(request, 'stuSrtp/stuSrtpProList.html')
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            try:
+                all_project = Project.objects.filter(Q(project_check_status = True) & Q(project_apply_status = False)).order_by('project_id')
+            except Project.DoesNotExist:
+                all_project = None
+            try:
+                page = int(request.GET.get('page', '1'))
+            except PageNotAnInteger:
+                page = 1
+            p = Paginator(all_project, 5, request=request)
+            project_list = p.page(page)
+            return render(request, 'stuSrtp/stuSrtpProList.html', context={'project_list': project_list})
 
     def post(self, request):
-        pass
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            return render(request, 'stuSrtp/stuSrtpProManage.html')
+
+
+class stuSrtpSpecificInfoView(View):
+
+    def get(self, request, project_id):
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            project = Project.objects.get(project_id =int(project_id))
+            return render(request, 'stuSrtp/stuSrtpSpecificInfo.html', context={'project': project})
+
+    def post(self, request, project_id):
+        if session_judge(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            project = Project.objects.get(project_id =int(project_id))
+            return render(request, 'stuSrtp/stuSrtpSpecificInfo.html', context={'project': project})
 
 
 class stuSrtpProManageView(View):
@@ -232,6 +266,7 @@ class stuSrtpProApplyView(View):
                 file_detail = file_upload(appli_file, 'SrtpAppli')
                 srtp_project.project_appli_name = file_detail[0]
                 srtp_project.project_appli_url = file_detail[1]
+                srtp_project.project_apply_status = True
                 srtp_project.save()
                 return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
 
@@ -401,8 +436,11 @@ class stuSrtpMidTermApplyView(View):
             try:
                 midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
             except MidTerm.DoesNotExist:
-                midterm = None
-
+                midterm  = MidTerm()
+                midterm.midterm_check_status = '0'
+                midterm.midterm_cehck_point = '0'
+                midterm.project_belong = srtp_project
+                midterm.save()
             return render(request, 'stuSrtp/stuSrtpMidTermApply.html', context={'project_name': project_name,
                                                                                 'midterm': midterm})
 
@@ -440,7 +478,11 @@ class stuSrtpConcluApplyView(View):
             try:
                 conclusion = Conclusion.objects.get(project_belong_id = srtp_project.project_id)
             except Conclusion.DoesNotExist:
-                conclusion = None
+                conclusion = Conclusion()
+                conclusion.conclusion_check_status = '0'
+                conclusion.conclusion_check_point = '0'
+                conclusion.project_belong = srtp_project
+                conclusion.save()
             return render(request, 'stuSrtp/stuSrtpConcluApply.html', context={'project_name': project_name,
                                                                                'conclusion': conclusion})
 
