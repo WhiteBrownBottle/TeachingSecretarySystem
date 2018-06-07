@@ -3,7 +3,7 @@ from django.views import View
 from student.models import Student
 from teacher.models import Teacher
 from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
-from utils.session_judge import session_judge
+from utils.session_judge import session_judge, session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
@@ -94,13 +94,19 @@ class StudentView(View):
     def post(self, request):
         return render(request, 'stuIndex.html',)
 
+
+class TeacherView(View):
+
+    def get(self, request):
+        return render(request, 'teaIndex.html',)
+
+    def post(self, request):
+        return render(request, 'teaIndex.html',)
+
+
 class fileDownloadView(View):
 
     def get(self, request):
-        if session_judge(request):
-            return render(request, 'index.html')
-        else:
-
             url = str(request.get_full_path())
             file_url = url.split('/')
             file_name = '未知错误'

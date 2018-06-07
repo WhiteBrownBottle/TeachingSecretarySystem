@@ -98,6 +98,7 @@ class stuInfoView(View):
         else:
             return render(request, 'stuSrtp/stuSrtpProManage.html')
 
+
 class stuSrtpHomeView(View):
 
     def get(self, request):
@@ -283,7 +284,6 @@ class stuSrtpProInfoView(View):
             teacher = Teacher.objects.get(id = teacher_uid)
             teacher_name = teacher.teacher_name
             return render(request, 'stuSrtp/stuSrtpProInfo.html', context={'srtp_project': srtp_project,
-                                                                           'student': student,
                                                                            'teacher_name': teacher_name})
 
     def post(self, request):

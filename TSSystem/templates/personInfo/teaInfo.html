@@ -37,11 +37,11 @@
       <tbody>
         <tr>
           <td>姓名</td>
-          <td>xxxxxx</td>
+          <td>{{ teacher.teacher_name }}</td>
         </tr>
         <tr>
           <td>性别</td>
-          <td>xxxxxx</td>
+          <td>{{ teacher.get_teacher_gender_display }}</td>
         </tr>
         <tr>
           <td>身份</td>
@@ -49,11 +49,15 @@
         </tr>
         <tr>
           <td>工号</td>
-          <td>xxxxxx</td>
+          <td>{{ teacher.teacher_id }}</td>
         </tr>
         <tr>
-          <td>班级</td>
-          <td>xxxxxx</td>
+          <td>联系方式</td>
+          <td>{{ teacher.teacher_phone }}</td>
+        </tr>
+        <tr>
+          <td>电子邮箱</td>
+          <td>{{ teacher.teacher_email }}</td>
         </tr>
       </tbody>
     </table>

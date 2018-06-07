@@ -33,7 +33,7 @@
             </tr>
             <tr>
                 <td style="font-weight: bold">所属学科</td>
-                <td>{{ student.student_major }}</td>
+                <td>{{ srtp_project.project_appli_student.student_major }}</td>
                 <td style="font-weight: bold">所属学院</td>
                 <td>{{ srtp_project.get_project_depart_display }}</td>
             </tr>
@@ -47,7 +47,7 @@
                 <td style="font-weight: bold">项目编号</td>
                 <td>{{ srtp_project.project_id }}</td>
                 <td style="font-weight: bold">项目周期</td>
-                <td>xx</td>
+                <td>{{ srtp_project.project_period }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">开始时间</td>
@@ -59,13 +59,13 @@
                 <td style="font-weight: bold">指导教师</td>
                 <td>{{ teacher_name }}</td>
                 <td style="font-weight: bold">申请人</td>
-                <td>{{ student.student_name }}</td>
+                <td>{{ srtp_project.project_appli_student.student_name }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">申请人联系方式</td>
-                <td>{{ student.student_phone }}</td>
+                <td>{{ srtp_project.project_appli_student.student_phone }}</td>
                 <td style="font-weight: bold">申请人邮箱</td>
-                <td>{{ student.student_email }}</td>
+                <td>{{ srtp_project.project_appli_student.student_email }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">成果形式</td>

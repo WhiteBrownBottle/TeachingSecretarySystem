@@ -1,3 +1,4 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,31 +9,75 @@
     <script src="../../static/js/jquery-1.11.1.min.js"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/jquery.backstretch.min.js"></script>
+
+</head>
+
 <body>
-<div style="margin: 10px 20px 0px 20px">
-    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">追加经费</h2>
-    <form action="stuSrtpAddtionFunds.html" method="post">
-        <table  style="border-collapse: collapse; width: 96%; margin-top: 5px">
-            <tbody>
-            <tr>
-                <td style="font-weight: bold"><span style="color: red">*</span>追加经费</td>
-                <td><input type="text" style="background-color: white"></td>
-            </tr>
-            <tr><td><br></td></tr>
-            <tr>
-                <td style="font-weight: bold">追加原因</td>
-                <td>
-                    <textarea cols="80" rows="8" style="background-color: white; resize: none"></textarea>
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div align="center" style="margin-top: 20px">
-            <button type="submit" class="btn btn-default">提交追加申请</button>
-            <button type="reset" class="btn btn-danger">重置</button>
+    <div style="margin: 10px 20px 0px 20px">
+        <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">追加经费</h2>
+        <form method="post">
+            <table  style="border-collapse: collapse; width: 96%; margin-top: 5px">
+                <tbody>
+                <tr>
+                    <td style="font-weight: bold"><span style="color: red">*</span>追加经费</td>
+                    <td><input type="text" style="background-color: white" id="fund"></td>
+                </tr>
+                <tr><td><br></td></tr>
+                <tr>
+                    <td style="font-weight: bold">追加原因</td>
+                    <td>
+                        <textarea cols="80" rows="8" style="background-color: white; resize: none" id="addReason"></textarea>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <div align="center" style="margin-top: 20px">
+                <button type="button" class="btn btn-default" onclick="addfund_apply()">提交追加申请</button>
+                <button type="reset" class="btn btn-danger">重置</button>
+            </div>
+        </form>
+        <br>
+        <div style="margin-top: 20px">
+            <table class="table table-hover" id="table1" style="table-layout: fixed">
+                <tbody>
+                <tr style="background-color:#b2dba1">
+                    <td style="font-weight: bold;">申请时间</td>
+                    <td style="font-weight: bold;">追加经费(元)</td>
+                    <td style="font-weight: bold">审核状态</td>
+                    <td style="font-weight: bold; width: 40%">追加原因</td>
+                </tr>
+                {% for addfund in addfund_list %}
+                <tr>
+                    <td>{{ addfund.addfund_date }}</td>
+                    <td>{{ addfund.addfund_num }}</td>
+                    <td>{{ addfund.get_addfund_check_status_display }}</td>
+                    <td style="word-wrap: break-word;">{{ addfund.addfund_reason }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </form>
-</div>
+    </div>
+
+    <script type="text/javascript">
+    function addfund_apply(){
+        $.ajax({
+            data:{
+                'fund':document.getElementById("fund").value,
+                'addReason':document.getElementById("addReason").value,
+            },
+            type: "post", //提交方式
+            dataType: "json", //数据类型
+            url: "//", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                    location.reload();
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        });
+    }
+    </script>
 </body>
-<br>
 </html>
