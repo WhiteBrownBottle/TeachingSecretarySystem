@@ -17,7 +17,7 @@
                 <li><a href="stuInfo.html" target="_blank">个人信息</a></li>
             </ul>
             <ul class="nav navbar-nav pull-right">
-                <li id="exit"><a href="#">安全退出</a></li>
+                <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
             </ul>
         </div>
     </nav>
@@ -64,11 +64,11 @@
     function modify() {
         var reset = document.getElementById('reset');
         var oldpass = document.getElementById('oldpass');
-        var newpass = document.getElementsByTagName('newpass');
+        var newpass = document.getElementById('newpass');
         var confirmpass = document.getElementById('confirmpass');
 
         if (newpass.value != confirmpass.value) {
-            passModifyMess.innerHTML = "* 两次输入的新密码不一致，请重新输入！";
+            alert("两次输入的新密码不一致，请重新输入！");
             newpass.value = '';
             confirmpass.value = '';
             newpass.focus();
@@ -82,12 +82,18 @@
             },
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "//", //请求url
+            url: "/modify/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
+                    if(data.user_type == '2'){
+                        window.top.document.location.href="{% url 'teacher:Srtp_Home' %}";
+                    }
+                    else if(data.user_type == '3'){
+                        window.top.document.location.href="{% url 'student:Srtp_Home' %}";
+                    }
 
                 } else if (data.status == 'fail') {
-
+                    alert(data.msg)
                 }
             }
         });

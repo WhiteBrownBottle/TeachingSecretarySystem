@@ -37,7 +37,7 @@
             <li id="personCenter">
                 <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
             </li>
-            <li id="exit"><a href="#">安全退出</a></li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
         </ul>
     </div>
 </nav>
@@ -55,7 +55,9 @@
     <hr>
         <div class="row">
             <h3 id="fujian">附件</h3>
-            <a style="color: blue" href="" target="_blank">无</a>
+            {% for notifi_file in notifi_file_list %}
+                <a style="color: blue" href="/media/{{ notifi_file.notifi_file_url }}" target="_blank">{{ notifi_file.notifi_file_name }}</a>
+            {% endfor %}
         </div>
 </div>
 </body>

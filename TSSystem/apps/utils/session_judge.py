@@ -5,7 +5,6 @@
 
 def session_judge(request):
     if 'user_id' in request.session and 'user_type' in request.session:
-        user_id = request.session['user_id']
         user_type = request.session['user_type']
     else:
         del request.session
@@ -19,7 +18,6 @@ def session_judge(request):
 
 def session_judge_teacher(request):
     if 'user_id' in request.session and 'user_type' in request.session:
-        user_id = request.session['user_id']
         user_type = request.session['user_type']
     else:
         del request.session

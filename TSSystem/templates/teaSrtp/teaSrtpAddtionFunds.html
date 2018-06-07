@@ -1,15 +1,15 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>SRTP首页-消息通知</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
-
+    <title>追加经费ß</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
 
 <body>
@@ -68,7 +68,7 @@
             },
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "//", //请求url
+            url: "/tea/SrtpAddtionFunds/{{ srtp_project.project_id }}/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
                     location.reload();

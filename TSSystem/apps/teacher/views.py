@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification, NotifiFile
 from utils.session_judge import session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from django.http import HttpResponse
@@ -122,7 +122,7 @@ class teaSrtpProManageView(View):
             return render(request, 'teaSrtp/teaSrtpProManage.html', context={'srtp_project': srtp_project,
                                                                              'project_view_list': project_view_list})
 
-    def post(self, request):
+    def post(self, request, project_id):
         if session_judge_teacher(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
@@ -135,7 +135,7 @@ class teaSrtpProInfoView(View):
         if session_judge_teacher(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
-            srtp_project = Project.objects.get(project_id=project_id)
+            srtp_project = Project.objects.get(project_id = project_id)
             teacher_uid = srtp_project.project_teacher_id
             teacher = Teacher.objects.get(id = teacher_uid)
             teacher_name = teacher.teacher_name
@@ -148,8 +148,15 @@ class teaSrtpProInfoView(View):
 
 class teaSrtpScheduleManageView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+            if session_judge_teacher(request):
+                return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            else:
+                srtp_project = Project.objects.get(project_id = project_id)
+                schedule_list = Schedule.objects.filter(project_belong_id=srtp_project.project_id).order_by(
+                    'schedule_date')
+                return render(request, 'teaSrtp/teaSrtpScheduleManage.html', context={'srtp_project': srtp_project,
+                                                                                      'schedule_list': schedule_list})
 
     def post(self, request):
         pass
@@ -157,8 +164,14 @@ class teaSrtpScheduleManageView(View):
 
 class teaSrtpFundManageView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            srtp_project = Project.objects.get(project_id = project_id)
+            fund_list = Fund.objects.filter(project_belong_id = srtp_project.project_id).order_by('fund_date')
+            return render(request, 'teaSrtp/teaSrtpFundManage.html', context={'srtp_project': srtp_project,
+                                                                              'fund_list': fund_list})
 
     def post(self, request):
         pass
@@ -166,8 +179,14 @@ class teaSrtpFundManageView(View):
 
 class teaSrtpResultManageView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            srtp_project = Project.objects.get(project_id=project_id)
+            result_list = Result.objects.filter(project_belong_id=srtp_project.project_id).order_by('result_date')
+            return render(request, 'teaSrtp/teaSrtpResultManage.html', context={'srtp_project': srtp_project,
+                                                                                'result_list': result_list})
 
     def post(self, request):
         pass
@@ -175,38 +194,119 @@ class teaSrtpResultManageView(View):
 
 class teaSrtpAddtionFundsView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+        if session_judge_teacher(request):
+            return render(request, 'index.html')
+        else:
+            srtp_project = Project.objects.get(project_id=project_id)
+            addfund_list = AddFund.objects.filter(project_belong_id = srtp_project.project_id).order_by('addfund_date')
+            return render(request, 'teaSrtp/teaSrtpAddtionFunds.html', context={'srtp_project': srtp_project,
+                                                                                'addfund_list': addfund_list})
 
-    def post(self, request):
-        pass
+    def post(self, request, project_id):
+        if session_judge_teacher(request):
+            return render(request, 'index.html')
+        else:
+            srtp_project = Project.objects.get(project_id=project_id)
+            addfund_num = request.POST.get('fund', '0')
+            addfund_reason = request.POST.get('addReason', '')
+            addfund = AddFund()
+            addfund.addfund_num = int(addfund_num)
+            addfund.addfund_reason = addfund_reason
+            addfund.project_belong = srtp_project
+            addfund.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class teaSrtpMidTermApplyView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+        if session_judge_teacher(request):
+            return render(request, 'index.html')
+        else:
+            srtp_project = Project.objects.get(project_id = project_id)
+            project_name = srtp_project.project_name
+            try:
+                midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
+            except MidTerm.DoesNotExist:
+                midterm  = MidTerm()
+                midterm.midterm_check_status = '0'
+                midterm.midterm_cehck_point = '0'
+                midterm.project_belong = srtp_project
+                midterm.save()
+            return render(request, 'teaSrtp/teaSrtpMidTermApply.html', context={'srtp_project': srtp_project,
+                                                                                'midterm': midterm})
 
-    def post(self, request):
-        pass
+    def post(self, request, project_id):
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            srtp_project = Project.objects.get(project_id = project_id)
+            midterm = MidTerm.objects.get(project_belong_id = project_id)
+            midterm.midterm_check_point = '2'
+            midterm.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class teaSrtpConcluApplyView(View):
 
-    def get(self, request):
-        pass
+    def get(self, request, project_id):
+        if session_judge_teacher(request):
+            return render(request, 'index.html')
+        else:
+            srtp_project = Project.objects.get(project_id = project_id)
+            project_name = srtp_project.project_name
+            try:
+                conclusion = Conclusion.objects.get(project_belong_id = srtp_project.project_id)
+            except Conclusion.DoesNotExist:
+                conclusion = Conclusion()
+                conclusion.conclusion_check_status = '0'
+                conclusion.conclusion_check_point = '0'
+                conclusion.project_belong = srtp_project
+                conclusion.save()
+            return render(request, 'teaSrtp/teaSrtpConcluApply.html', context={'srtp_project': srtp_project,
+                                                                               'conclusion': conclusion})
 
-    def post(self, request):
-        pass
+    def post(self, request, project_id):
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            srtp_project = Project.objects.get(project_id = project_id)
+            conclusion = Conclusion.objects.get(project_belong_id = project_id)
+            conclusion.conclusion_check_point = '2'
+            conclusion.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
 class teaSrtpProPublishView(View):
 
     def get(self, request):
-        pass
+        if session_judge_teacher(request):
+            return render(request, 'index.html')
+        else:
+            return render(request, 'teaSrtp/teaSrtpProPublish.html')
 
     def post(self, request):
-        pass
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            srtp_project = Project()
+            srtp_project.project_name = request.POST.get('proname', '')
+            srtp_project.project_plan = request.POST.get('jihua', '')
+            srtp_project.project_subject = request.POST.get('xk', '')
+            srtp_project.project_depart = request.POST.get('depart', 'jt')
+            teacher_name = request.POST.get('teacher', '')
+            teacher = Teacher.objects.get(teacher_name = teacher_name)
+            teacher.teacher_phone = request.POST.get('phone', '')
+            teacher.teacher_email = request.POST.get('email', '')
+            srtp_project.project_teacher = teacher
+            srtp_project.project_type = request.POST.get('type', 'cx')
+            srtp_project.project_suggest_people_num = request.POST.get('suggest_people_num', '')
+            srtp_project.project_intro = request.POST.get('intro', '')
+            srtp_project.project_check_status = True
+            teacher.save()
+            srtp_project.save()
+            return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
 
 
 class teaSrtpNotifiView(View):
@@ -224,8 +324,13 @@ class teaSrtpNotifiView(View):
             except Project.DoesNotExist:
                 project_view_list = None
             notification = Notification.objects.get(notifi_id = int(notifi_id))
+            try:
+                notifi_file_list = NotifiFile.objects.filter(notifi_belong = notification)
+            except Notification.DoesNotExist:
+                notifi_file_list = None
             return render(request, 'teaSrtp/teaSrtpNotification.html', context={'notification': notification,
-                                                                                'project_view_list': project_view_list})
+                                                                                'project_view_list': project_view_list,
+                                                                                'notifi_file_list': notifi_file_list})
 
 
     def post(self, request, notifi_id):

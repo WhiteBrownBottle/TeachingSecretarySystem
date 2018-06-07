@@ -150,6 +150,9 @@ PAGINATION_SETTINGS = {
 
 EACHPAGE_NUMBER = 5
 
+DEFAULT_FILE_STORAGE = "utils.customfilefield.storage.FileStorage"
+
+
 
 
 

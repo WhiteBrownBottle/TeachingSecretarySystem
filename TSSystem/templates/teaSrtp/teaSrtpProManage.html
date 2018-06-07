@@ -19,9 +19,9 @@
             <a class="navbar-brand" href="{% url 'teacher:Srtp_Home' %}">北京科技大学SRTP管理平台</a>
         </div>
         <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'teacher:Srtp_Home' %}">消息通知</a> </li>
+            <li><a href="{% url 'teacher:Srtp_Home' %}">消息通知</a> </li>
             <li><a href="{% url 'teacher:Srtp_Prolist' %}">项目列表</a> </li>
-            <li class="dropdown">
+            <li class="dropdown; active">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="{% url 'teacher:Srtp_ProPublish' %}" target="_blank">项目发布</a></li>
@@ -37,7 +37,7 @@
             <li id="personCenter">
                 <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
             </li>
-            <li id="exit"><a href="#">安全退出</a></li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
         </ul>
     </div>
 </nav>
@@ -68,7 +68,7 @@
                 data:{'test':"test"},
                 type: "post", //提交方式
                 dataType: "json", //数据类型
-                url: "/tea/SrtpProManage//", //请求url
+                url: "/tea/SrtpProManage/{{ srtp_project.project_id }}/", //请求url
                 success: function(data) {
                     if (data.status == 'success') {
                     } else if (data.status == 'fail') {

@@ -51,7 +51,7 @@
     <script type="text/javascript">
         function form_judge(){
             if(document.getElementById("state").innerHTML=="未提交"|| document.getElementById("state").innerHTML==""){
-                $("#concluApplyForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>项目结题报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="midTermPost()">提交</button></div>');
+                $("#concluApplyForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>项目结题报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="concluApplyPost()">提交</button></div>');
             } else {
                 $("#concluApplyForm").append("您已提交项目结题申请");
             }

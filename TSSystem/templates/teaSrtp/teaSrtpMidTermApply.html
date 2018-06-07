@@ -1,13 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>SRTP首页-消息通知</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <title>项目管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
 
 <body onload="midPassJudge()">
@@ -25,13 +27,13 @@
                     <td style="font-weight: bold">操作</td>
                 </tr>
                 <tr>
-                    <td>xx</td>
-                    <td>2018-6-1</td>
-                    <td><a style="color: blue" href="#" target="_blank">xxxx.pdf</a></td>
-                    <td>审核中</td>
-                    <td id="midState">教务处审核</td>
+                    <td>{{ srtp_project.project_name }}</td>
+                    <td>{{ midterm.midterm_deadline_date }}</td>
+                    <td><a style="color: blue" href="{{ midterm.midterm_file_url }}" target="_blank">{{ midterm.midterm_file_name }}</a></td>
+                    <td>{{ midterm.get_midterm_check_status_display }}</td>
+                    <td id="midState">{{ midterm.get_midterm_check_point_display }}</td>
                     <td id="midPass">
-                        //<button type="button"  onclick="midPassTeacher()">通过</button>
+
                     </td>
                 </tr>
                 </tbody>
@@ -42,27 +44,31 @@
         function midPassJudge(){
             if(document.getElementById("midState").innerHTML=="教务处审核"){
                 document.getElementById("midPass").innerHTML = "您已通过";
-            } else {
+            } else if(document.getElementById("midState").innerHTML=="教师审核"){
                 document.getElementById("midPass").innerHTML = '<button type="button"  onclick="midPassTeacher()">通过</button>';
+            } else {
+                document.getElementById("midPass").innerHTML = "";
             }
         }
 
         function midPassTeacher(){
-            $.ajax({
-                data:{
-                    'mid_pass':"midterm teacher pass"
-                },
-                type: "post", //提交方式
-                dataType: "json", //数据类型
-                url: "//", //请求url
-                success: function(data) {
-                    if (data.status == 'success') {
-                        location.reload();
-                    } else if (data.status == 'fail') {
+            if (confirm("确认通过吗？")) {
+                $.ajax({
+                    data: {
+                        'mid_pass': "midterm teacher pass"
+                    },
+                    type: "post", //提交方式
+                    dataType: "json", //数据类型
+                    url: "/tea/SrtpMidTermApply/{{ srtp_project.project_id }}/", //请求url
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            location.reload();
+                        } else if (data.status == 'fail') {
 
+                        }
                     }
-                }
-            })
+                })
+            }
         }
     </script>
 </body>

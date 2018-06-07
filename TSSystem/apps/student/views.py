@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification, NotifiFile
 from utils.session_judge import session_judge
 from utils.file_utils import file_iterator, file_upload
 from django.http import HttpResponse
@@ -127,8 +127,14 @@ class stuSrtpNotifiView(View):
         if session_judge(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
+
             notification = Notification.objects.get(notifi_id = int(notifi_id))
-            return render(request, 'stuSrtp/stuSrtpNotification.html', context={'notification': notification})
+            try:
+                notifi_file_list = NotifiFile.objects.filter(notifi_belong = notification)
+            except Notification.DoesNotExist:
+                notifi_file_list = None
+            return render(request, 'stuSrtp/stuSrtpNotification.html', context={'notification': notification,
+                                                                                'notifi_file_list': notifi_file_list})
 
 
     def post(self, request, notifi_id):
@@ -245,6 +251,7 @@ class stuSrtpProApplyView(View):
                 srtp_project.project_plan = request.POST.get('jihua', '')
                 srtp_project.project_type = request.POST.get('cx', 'cx')
                 srtp_project.project_rank = request.POST.get('rank', '1')
+                srtp_project.project_subject = request.POST.get('xueke','')
                 srtp_project.project_depart = request.POST.get('depart', 'jt')
                 srtp_project.project_fund_appli = int(request.POST.get('fund', '3000'))
                 srtp_project.project_period = request.POST.get('zhouqi', '1年')
@@ -459,7 +466,7 @@ class stuSrtpMidTermApplyView(View):
             midterm.midterm_file_name = file_detail[0]
             midterm.midterm_file_url = file_detail[1]
             midterm.midterm_check_status = '1'
-            midterm.midterm_cehck_point = '1'
+            midterm.midterm_check_point = '1'
             midterm.project_belong = srtp_project
             midterm.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')

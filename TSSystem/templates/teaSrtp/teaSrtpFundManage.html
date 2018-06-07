@@ -1,13 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>SRTP首页-消息通知</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <title>经费管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
 
 <body>
@@ -24,11 +26,15 @@
                 <td style="font-weight: bold">支出日期</td>
             </tr>
             <tr>
-                <td>xx</td>
-                <td>xx</td>
-                <td>xx</td>
-                <td>xx</td>
-                <td>xx</td>
+                {% for fund in fund_list %}
+                    <tr>
+                        <td>{{ srtp_project.project_name }}</td>
+                        <td>{{ fund.fund_name }}</td>
+                        <td>{{ fund.get_fund_type_display }}</td>
+                        <td>{{ fund.fund_num }}</td>
+                        <td>{{ fund.fund_date }}</td>
+                    </tr>
+                {% endfor %}
             </tr>
             </tbody>
         </table>

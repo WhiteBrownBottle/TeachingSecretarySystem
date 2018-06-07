@@ -1,13 +1,15 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>SRTP首页-消息通知</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <title>项目管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
 
 <body onload="conPassJudge()">
@@ -25,11 +27,11 @@
                     <td style="font-weight: bold">操作</td>
                 </tr>
                 <tr>
-                    <td>xx</td>
-                    <td>2018-6-1</td>
-                    <td><a style="color: blue" href="#" target="_blank">xxxx.pdf</a></td>
-                    <td>审批中</td>
-                    <td id="conState">教务处审核</td>
+                    <td>{{ srtp_project.project_name }}</td>
+                    <td>{{ conclusion.conclusion_deadline_date }}</td>
+                    <td><a style="color: blue" href="{{ conclusion.conclusion_file_url }}" target="_blank">{{ conclusion.conclusion_file_name }}</a></td>
+                    <td>{{ conclusion.get_conclusion_check_status_display }}</td>
+                    <td id="conState">{{ conclusion.get_conclusion_check_point_display }}</td>
                     <td id="conPass">
 
                     </td>
@@ -42,8 +44,10 @@
         function conPassJudge(){
             if(document.getElementById("conState").innerHTML=="教务处审核"){
                 document.getElementById("conPass").innerHTML = "您已通过";
+            } else if(document.getElementById("conState").innerHTML=="教师审核"){
+                document.getElementById("conPass").innerHTML = '<button type="button"  onclick="conPassTeacher()">通过</button>';
             } else {
-                document.getElementById("conPass").innerHTML = '<button type="button"  onclick="conPassTeachera()">通过</button>';
+                document.getElementById("conPass").innerHTML = "";
             }
         }
 
@@ -54,7 +58,7 @@
                 },
                 type: "post", //提交方式
                 dataType: "json", //数据类型
-                url: "//", //请求url
+                url: "/tea/SrtpConcluApply/{{ srtp_project.project_id }}/", //请求url
                 success: function(data) {
                     if (data.status == 'success') {
                         location.reload();

@@ -3,6 +3,7 @@ import datetime, time
 import django.utils.timezone as timezone
 from student.models import Student
 from teacher.models import Teacher
+from utils.customfilefield.storage import FileStorage
 
 # Create your models here.
 
@@ -68,7 +69,8 @@ class Project(models.Model):
     project_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')
     project_check_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_CHECK_CHOICE, verbose_name=u'项目审核状态')
     project_apply_status = models.BooleanField(blank=False, null=False, default=False, choices=STATUS_APPLY_CHOICE, verbose_name=u'项目申请状态')
-
+    project_suggest_people_num = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='人数建议')
+    project_subject = models.CharField(null=True, blank=True, max_length=20, default="暂未填写", verbose_name='项目所属学科')
 
 
     class Meta:
@@ -263,8 +265,8 @@ class NotifiFile(models.Model):
     #Srtp消息通知附件
 
     notifi_belong = models.ForeignKey(Notification, on_delete=models.CASCADE, verbose_name=u'所属通知')
-    notifi_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'通知附件名称')
-    notifi_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'通知附件路径')
+    notifi_file_name = models.CharField(blank=True, null=True, max_length=100, default='暂未命名' , verbose_name=u'通知附件名称')
+    notifi_file_url = models.FileField(blank=True, null=True, unique=True, upload_to='SrtpNotification/', default='', verbose_name=u'通知附件路径')
 
     class Meta:
         verbose_name = u'SRTP项目通知附件'
@@ -272,6 +274,13 @@ class NotifiFile(models.Model):
 
     def __str__(self):
         return self.notifi_file_name
+
+    def save(self, *args, **kwargs):
+        notifi_file_url = str(self.notifi_file_url)
+        self.notifi_file_name = notifi_file_url
+        super(NotifiFile, self).save(*args, **kwargs)
+
+
 
 
 

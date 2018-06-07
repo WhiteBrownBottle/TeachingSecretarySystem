@@ -18,21 +18,43 @@
                 <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目基本信息</span></td></tr>
                 <tr>
                     <td style="font-weight: bold; ">项目名称</td>
-                    <td><input type="text" style="background-color: white" name="name"></td>
+                    <td><input type="text" style="background-color: white" name="proname"></td>
                     <td style="font-weight: bold; ">所属创新计划</td>
-                    <td><input type="text" style="background-color: white" name="plan"></td>
+                    <td><input type="text" style="background-color: white" name="jihua"></td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold">所属学科</td>
-                    <td><input type="text" style="background-color: white" name="subject"></td>
+                    <td><input type="text" style="background-color: white" name="xk"></td>
                     <td style="font-weight: bold">所属学院</td>
-                    <td><input type="text" style="background-color: white" name="depart"></td>
+                    <td>
+                        <select name="depart" style="width: 40%;height: 28px">
+                            <option value="tm" name="tm">土木与资源工程学院</option>
+                            <option value="yj" name="yj">冶金与生态工程学院</option>
+                            <option value="cl" name="cl">材料科学与工程学院</option>
+                            <option value="jx" name="jx">机械工程学院</option>
+                            <option value="nh" name="nh">能源与环境工程学院</option>
+                            <option value="zdh" name="zdh">自动化学院</option>
+                            <option value="jt" name="jt">计算机与通信工程学院</option>
+                            <option value="sl" name="sl">数理学院</option>
+                            <option value="hs" name="hs">化学与生物工程学院</option>
+                            <option value="jg" name="jg">东凌经济管理学院</option>
+                            <option value="wf" name="wf">文法学院</option>
+                            <option value="mks" name="mks">马克思主义学院</option>
+                            <option value="wgy" name="wgy">外国语学院</option>
+                            <option value="gg" name="gg">高等工程师学院</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold">指导教师</td>
                     <td><input type="text" style="background-color: white" name="teacher"></td>
                     <td style="font-weight: bold">项目类型</td>
-                    <td><input type="text" style="background-color: white" name="type"></td>
+                    <td>
+                        <select name="type" style="width: 40%;height: 28px">
+                            <option value="cx" name="cx">创新</option>
+                            <option value="cy" name="cy">创业</option>
+                        </select>
+                    </td>
                 </tr>
                 <tr>
                     <td style="font-weight: bold">联系方式</td>
@@ -42,7 +64,7 @@
                 </tr>
                 <tr>
                     <td style="font-weight: bold">人数建议</td>
-                    <td><input type="text" style="background-color: white" name="people_number"> 人</td>
+                    <td><input type="text" style="background-color: white" name="suggest_people_num"> 人</td>
                 </tr>
             </table>
 
@@ -76,10 +98,11 @@
                     processData: false,
                      contentType: false,
                     //dataType: "json", //数据类型
-                    url: "//", //请求url
+                    url: "/tea/SrtpProPublish/", //请求url
                     success: function(data) {
                         if (data.status == 'success') {
-                                window.open("submitSuccess.html","_self");
+                            alert("提交成功！");
+                            window.close();
                         } else if (data.status == 'fail') {
 
                         }

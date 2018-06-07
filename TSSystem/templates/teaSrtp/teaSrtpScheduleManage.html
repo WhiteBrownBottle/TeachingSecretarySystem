@@ -1,14 +1,17 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <title>SRTP首页-消息通知</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <title>进度管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
+
 <body>
 <div style="margin-top: 20px">
     <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">进度管理</h2>
@@ -21,10 +24,12 @@
             <td style="font-weight: bold">项目进展说明</td>
         </tr>
         <tr>
-            <td>xx</td>
-            <td>xx</td>
-            <td>xx</td>
-            <td>xx</td>
+            {% for schedule in schedule_list %}
+            <td>{{ srtp_project.project_name }}</td>
+            <td>{{ schedule.schedule_date }}</td>
+            <td>{{ schedule.schedule_num }}</td>
+            <td style="word-wrap: break-word;">{{ schedule.schedule_detail }}</td>
+            {% endfor %}
         </tr>
 </body>
 <br>
