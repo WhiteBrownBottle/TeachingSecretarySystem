@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>毕业设计论文</title>
+    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+    <script src="../../static/js/jquery-1.11.1.min.js"></script>
+    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="../../static/js/jquery.backstretch.min.js"></script>
+</head>
+
+<body>
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'teacher:Gra_Home' %}">计通学院毕业设计管理平台</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'teacher:Gra_Home' %}">消息通知</a> </li>
+                    <li><a href="{% url 'teacher:Gra_Modelfile' %}">模板文件</a> </li>
+                    <li><a href="{% url 'teacher:Gra_Proposal' %}">开题报告</a> </li>
+                    <li><a href="{% url 'teacher:Gra_Midterm' %}">中期检查</a> </li>
+                    <li><a href="{% url 'teacher:Gra_Paper' %}">毕业设计论文</a> </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li id="personCenter">
+                        <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+                    </li>
+                    <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+                </ul>
+            </div>
+        </nav>
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>毕业设计论文</h1>
+        </div>
+    </div>
+    <div style="margin: 10px 20px 0px 20px">
+        <div style="margin-top: 20px">
+            <table class="table table-hover" id="table_stuSrtpResultManage" style="table-layout:fixed">
+                <tbody>
+                    <tr style="background-color:#b2dba1">
+                        <td style="font-weight: bold;text-align:center;width: 20%">学生姓名</td>
+                        <td style="font-weight: bold;text-align:center">毕业设计论文报告文件</td>
+                        <td style="font-weight: bold;text-align:center">Download</td>
+                    </tr>
+                {% for dissertation in dissertation_list %}
+                    <tr>
+                        <td style="text-align: left;text-align:center">{{ dissertation.student_belong.student_name }}</td>
+                        <td style="text-align: left">{{ dissertation.file_name }}</td>
+                        <td style="text-align: center">
+                            <a href="{{ dissertation.file_url }}" target="_blank">下载</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<br>
+
+</html>

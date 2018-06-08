@@ -3,7 +3,7 @@
 
 import xadmin
 from xadmin import views
-from .models import Class, Grade
+from .models import Class, Grade, Notification, NotifiFile
 
 
 # X admin的全局配置信息设置
@@ -35,9 +35,29 @@ class GradeAdmin(object):
 
     list_filter = ['grade_name']
 
+class NotificationAdmin(object):
+
+    list_display = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
+
+    search_fields = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
+
+    list_filter = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
+
+
+class NotifiFileAdmin(object):
+
+    list_display = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
+
+    search_fields = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
+
+    list_filter = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
+
+
 
 xadmin.site.register(Class, ClassAdmin)
 xadmin.site.register(Grade, GradeAdmin)
+xadmin.site.register(Notification, NotificationAdmin)
+xadmin.site.register(NotifiFile, NotifiFileAdmin)
 xadmin.site.register(views.CommAdminView, GlobalSetting)
 xadmin.site.register(views.BaseAdminView, BaseSetting)
 

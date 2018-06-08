@@ -24,4 +24,12 @@ urlpatterns = [
     url(r'^SrtpNotification/(?P<notifi_id>\d+)/$', views.teaSrtpNotifiView.as_view(), name='Srtp_Notifi'),
     url(r'^SrtpSpecificInfo/(?P<project_id>\d+)/$', views.teaSrtpSpecificInfoView.as_view(), name='Srtp_SpecificInfo'),
 
+
+    url(r'^GraHome/$', views.teaGraHomeView.as_view(), name='Gra_Home'),
+    url(r'^GraNotification/(?P<notifi_id>\d+)/$', views.teaGraNotifiView.as_view(), name='Gra_Notifi'),
+    url(r'^GraModelfile/$', views.teaGraModelfileView.as_view(), name='Gra_Modelfile'),
+    url(r'^GraProposal/$', views.teaGraProposalView.as_view(), name='Gra_Proposal'),
+    url(r'^GraMidterm/$', views.teaGraMidtermView.as_view(), name='Gra_Midterm' ),
+    url(r'^GraPaper/$', views.teaGraPaperView.as_view(), name='Gra_Paper'),
+
 ]

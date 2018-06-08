@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification, NotifiFile
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
+from main_platform.models import Notification, NotifiFile
+from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
 from utils.session_judge import session_judge
 from utils.file_utils import file_iterator, file_upload
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 import time, datetime, os
@@ -87,14 +89,14 @@ class stuInfoView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id=request.session['user_id'])
             return render(request, 'personInfo/stuInfo.html', context={'student': student})
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'stuSrtp/stuSrtpProManage.html')
 
@@ -103,7 +105,7 @@ class stuSrtpHomeView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             all_notification = Notification.objects.all().order_by("-notifi_date")
             # 分页：
@@ -117,15 +119,16 @@ class stuSrtpHomeView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'stuSrtp/stuSrtpProManage.html')
+
 
 class stuSrtpNotifiView(View):
 
     def get(self, request, notifi_id):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
 
             notification = Notification.objects.get(notifi_id = int(notifi_id))
@@ -139,7 +142,7 @@ class stuSrtpNotifiView(View):
 
     def post(self, request, notifi_id):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             notification = Notification.objects.get(notifi_id=int(notifi_id))
             return render(request, 'stuSrtp/stuSrtpNotification.html', context={'notification': notification})
@@ -149,7 +152,7 @@ class stuSrtpProListView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             try:
                 all_project = Project.objects.filter(Q(project_check_status = True) & Q(project_apply_status = False)).order_by('project_id')
@@ -165,7 +168,7 @@ class stuSrtpProListView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'stuSrtp/stuSrtpProManage.html')
 
@@ -174,14 +177,14 @@ class stuSrtpSpecificInfoView(View):
 
     def get(self, request, project_id):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             project = Project.objects.get(project_id =int(project_id))
             return render(request, 'stuSrtp/stuSrtpSpecificInfo.html', context={'project': project})
 
     def post(self, request, project_id):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             project = Project.objects.get(project_id =int(project_id))
             return render(request, 'stuSrtp/stuSrtpSpecificInfo.html', context={'project': project})
@@ -191,7 +194,7 @@ class stuSrtpProManageView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -208,7 +211,7 @@ class stuSrtpProManageView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
 
@@ -217,14 +220,14 @@ class stuSrtpProApplyView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             return render(request, 'stuSrtp/stuSrtpProApply.html')
 
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id = request.session['user_id'])
             member_num = int(request.POST.get('member_num', '0'))
@@ -283,7 +286,7 @@ class stuSrtpProInfoView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id = request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id = student.id)
@@ -301,7 +304,7 @@ class stuSrtpScheduleManageView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
@@ -310,7 +313,7 @@ class stuSrtpScheduleManageView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             schedule_time = request.POST.get('time', datetime.datetime.now().strftime("%Y-%m-%d"))
             if schedule_time != '':
@@ -334,7 +337,7 @@ class stuSrtpFundManageView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
@@ -343,7 +346,7 @@ class stuSrtpFundManageView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             fund_time = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
             if fund_time != '':
@@ -367,7 +370,7 @@ class stuSrtpResultManageView(View):
 
     def get(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -377,7 +380,7 @@ class stuSrtpResultManageView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             result_name = request.POST.get('mingcheng' '')
             result_type = request.POST.get('leixing', '7')
@@ -405,7 +408,7 @@ class stuSrtpAddtionFundsView(View):
 
     def get(self, request):
         if session_judge(request):
-            return render(request, 'index.html')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -415,7 +418,7 @@ class stuSrtpAddtionFundsView(View):
 
     def post(self, request):
         if session_judge(request):
-            return render(request, 'index.html')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -434,7 +437,7 @@ class stuSrtpMidTermApplyView(View):
 
     def get(self, request):
         if session_judge(request):
-            return render(request, 'index.html')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -443,7 +446,7 @@ class stuSrtpMidTermApplyView(View):
             try:
                 midterm = MidTerm.objects.get(project_belong_id = srtp_project.project_id)
             except MidTerm.DoesNotExist:
-                midterm  = MidTerm()
+                midterm = MidTerm()
                 midterm.midterm_check_status = '0'
                 midterm.midterm_cehck_point = '0'
                 midterm.project_belong = srtp_project
@@ -453,7 +456,7 @@ class stuSrtpMidTermApplyView(View):
 
     def post(self, request):
         if session_judge(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             student = Student.objects.get(student_id=request.session['user_id'])
             srtp_project = Project.objects.get(project_appli_student_id=student.id)
@@ -476,7 +479,7 @@ class stuSrtpConcluApplyView(View):
 
     def get(self, request):
         if session_judge(request):
-            return render(request, 'index.html')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             student = Student.objects.get(student_id=user_id)
@@ -494,19 +497,173 @@ class stuSrtpConcluApplyView(View):
                                                                                'conclusion': conclusion})
 
     def post(self, request):
-        student = Student.objects.get(student_id=request.session['user_id'])
-        srtp_project = Project.objects.get(project_appli_student_id=student.id)
-        conclusion_file = request.FILES.get('file', '')
-        file_detail = file_upload(conclusion_file, 'SrtpConclusion')
-        try:
-            conclusion = Conclusion.objects.get(project_belong_id=srtp_project.project_id)
-        except Conclusion.DoesNotExist:
-            conclusion = Conclusion()
-        conclusion.conclusion_file_name = file_detail[0]
-        conclusion.conclusion_file_url = file_detail[1]
-        conclusion.conclusion_check_status = '1'
-        conclusion.conclusion_check_point = '1'
-        conclusion.project_belong = srtp_project
-        conclusion.save()
-        return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            student = Student.objects.get(student_id=request.session['user_id'])
+            srtp_project = Project.objects.get(project_appli_student_id=student.id)
+            conclusion_file = request.FILES.get('file', '')
+            file_detail = file_upload(conclusion_file, 'SrtpConclusion')
+            try:
+                conclusion = Conclusion.objects.get(project_belong_id=srtp_project.project_id)
+            except Conclusion.DoesNotExist:
+                conclusion = Conclusion()
+            conclusion.conclusion_file_name = file_detail[0]
+            conclusion.conclusion_file_url = file_detail[1]
+            conclusion.conclusion_check_status = '1'
+            conclusion.conclusion_check_point = '1'
+            conclusion.project_belong = srtp_project
+            conclusion.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+
+class stuGraHomeView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            all_notification = Notification.objects.all().order_by("-notifi_date")
+            # 分页：
+            try:
+                page = int(request.GET.get('page', '1'))
+            except PageNotAnInteger:
+                page = 1
+            p = Paginator(all_notification, 5, request=request)
+            notification_list = p.page(page)
+            return render(request, 'stuGra/stuGraHome.html', context={'notification_list': notification_list})
+
+    def post(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            self.get(request)
+
+
+class stuGraNotifiView(View):
+
+    def get(self, request, notifi_id):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+
+            notification = Notification.objects.get(notifi_id = int(notifi_id))
+            try:
+                notifi_file_list = NotifiFile.objects.filter(notifi_belong = notification)
+            except Notification.DoesNotExist:
+                notifi_file_list = None
+            return render(request, 'stuGra/stuGraNotification.html', context={'notification': notification,
+                                                                                'notifi_file_list': notifi_file_list})
+
+
+    def post(self, request, notifi_id):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            notification = Notification.objects.get(notifi_id=int(notifi_id))
+            return render(request, 'stuGra/stuGraNotification.html', context={'notification': notification})
+
+
+class stuGraModelfileView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+
+        else:
+            modelfile_list = ModelFile.objects.all().order_by('id')
+            return render(request, 'stuGra/stuGraModelfiledownload.html', context={'modelfile_list': modelfile_list})
+
+    def post(self, request):
+        pass
+
+
+class stuGraProposalView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id = user_id)
+            openingreport_list = OpeningReport.objects.filter(student_belong_id = student.id).order_by('file_date')
+            return render(request, 'stuGra/stuGraProposal.html', context={'openingreport_list':openingreport_list })
+
+    def post(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            student = Student.objects.get(student_id = request.session['user_id'])
+            openingreport = OpeningReport()
+            teacher_name = request.POST.get('tea_name', '')
+            teacher = Teacher.objects.get(teacher_name = teacher_name)
+            proposal_file = request.FILES.get('kaiti_file', '')
+            file_detail = file_upload(proposal_file, 'GradOpening')
+            openingreport.file_name = file_detail[0]
+            openingreport.file_url = file_detail[1]
+            openingreport.student_belong = student
+            openingreport.teacher_to = teacher
+            openingreport.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class stuGraMidtermView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            midtermreport_list = MidtermReport.objects.filter(student_belong_id=student.id).order_by('file_date')
+            return render(request, 'stuGra/stuGraMidterm.html', context={'midtermreport_list': midtermreport_list})
+
+    def post(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            student = Student.objects.get(student_id = request.session['user_id'])
+            midtermreport = MidtermReport()
+            teacher_name = request.POST.get('tea_name', '')
+            teacher = Teacher.objects.get(teacher_name = teacher_name)
+            midterm_file = request.FILES.get('mid_file', '')
+            file_detail = file_upload(midterm_file, 'GradMidterm')
+            midtermreport.file_name = file_detail[0]
+            midtermreport.file_url = file_detail[1]
+            midtermreport.student_belong = student
+            midtermreport.teacher_to = teacher
+            midtermreport.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class stuGraPaperView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            student = Student.objects.get(student_id=user_id)
+            dissertation_list = Dissertation.objects.filter(student_belong_id=student.id).order_by('file_date')
+            return render(request, 'stuGra/stuGraPaper.html', context={'dissertation_list': dissertation_list})
+
+    def post(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            student = Student.objects.get(student_id = request.session['user_id'])
+            dissertation = Dissertation()
+            teacher_name = request.POST.get('tea_name', '')
+            teacher = Teacher.objects.get(teacher_name = teacher_name)
+            dessertation_file = request.FILES.get('biye_file', '')
+            file_detail = file_upload(dessertation_file, 'GradDissertation')
+            dissertation.file_name = file_detail[0]
+            dissertation.file_url = file_detail[1]
+            dissertation.student_belong = student
+            dissertation.teacher_to = teacher
+            dissertation.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
 

@@ -1,0 +1,1 @@
+default_app_config = 'graduation_design.apps.GraduationDesignConfig'

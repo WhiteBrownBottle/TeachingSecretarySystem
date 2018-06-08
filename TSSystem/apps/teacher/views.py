@@ -2,15 +2,18 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion,Notification, NotifiFile
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
+from main_platform.models import Notification, NotifiFile
+from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
 from utils.session_judge import session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 import time, datetime, os
 from django.db.models import Q
-from pure_pagination import PageNotAnInteger, Paginator# Create your views here.
+from pure_pagination import PageNotAnInteger, Paginator
+# Create your views here.
 
 
 class teaInfoView(View):
@@ -357,3 +360,144 @@ class teaSrtpSpecificInfoView(View):
         else:
             project = Project.objects.get(project_id =int(project_id))
             return render(request, 'teaSrtp/teaSrtpSpecificInfo.html', context={'project': project})
+
+
+class teaGraHomeView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            all_notification = Notification.objects.all().order_by("-notifi_date")
+            # 分页：
+            try:
+                page = int(request.GET.get('page', '1'))
+            except PageNotAnInteger:
+                page = 1
+            p = Paginator(all_notification, 5, request=request)
+            notification_list = p.page(page)
+            return render(request, 'teaGra/teaGraHome.html', context={'notification_list': notification_list})
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            self.get(request)
+
+
+class teaGraNotifiView(View):
+
+    def get(self, request, notifi_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+
+            notification = Notification.objects.get(notifi_id = int(notifi_id))
+            try:
+                notifi_file_list = NotifiFile.objects.filter(notifi_belong = notification)
+            except Notification.DoesNotExist:
+                notifi_file_list = None
+            return render(request, 'teaGra/teaGraNotification.html', context={'notification': notification,
+                                                                                'notifi_file_list': notifi_file_list})
+
+
+    def post(self, request, notifi_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            notification = Notification.objects.get(notifi_id=int(notifi_id))
+            return render(request, 'teaGra/teaGraNotification.html', context={'notification': notification})
+
+
+class teaGraModelfileView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+
+        else:
+            modelfile_list = ModelFile.objects.all().order_by('id')
+            return render(request, 'teaGra/teaGraModelfiledownload.html', context={'modelfile_list': modelfile_list})
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+
+        else:
+            modelfile_list = ModelFile.objects.all().order_by('id')
+            return render(request, 'teaGra/teaGraModelfiledownload.html', context={'modelfile_list': modelfile_list})
+
+
+class teaGraProposalView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id = user_id)
+            openingreport_list = OpeningReport.objects.filter(teacher_to_id = teacher.id).order_by('file_date')
+            return render(request, 'teaGra/teaGraProposal.html', context={'openingreport_list':openingreport_list })
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            openingreport = OpeningReport()
+            proposal_file = request.FILES.get('kaiti_file', '')
+            file_detail = file_upload(proposal_file, 'GradOpeningCollection')
+            openingreport.file_name = file_detail[0]
+            openingreport.file_url = file_detail[1]
+            openingreport.teacher_to = teacher
+            openingreport.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class teaGraMidtermView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            midtermreport_list = MidtermReport.objects.filter(teacher_to_id = teacher.id).order_by('file_date')
+            return render(request, 'teaGra/teaGraMidterm.html', context={'midtermreport_list': midtermreport_list})
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            midtermreport = MidtermReport()
+            midterm_file = request.FILES.get('mid_file', '')
+            file_detail = file_upload(midterm_file, 'GradMidtermCollection')
+            midtermreport.file_name = file_detail[0]
+            midtermreport.file_url = file_detail[1]
+            midtermreport.teacher_to = teacher
+            midtermreport.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class teaGraPaperView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            dissertation_list = Dissertation.objects.filter(teacher_to_id = teacher.id).order_by('file_date')
+            return render(request, 'teaGra/teaGraPaper.html', context={'dissertation_list': dissertation_list})
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            dissertation_list = Dissertation.objects.filter(teacher_to_id = teacher.id).order_by('file_date')
+            return render(request, 'teaGra/teaGraPaper.html', context={'dissertation_list': dissertation_list})

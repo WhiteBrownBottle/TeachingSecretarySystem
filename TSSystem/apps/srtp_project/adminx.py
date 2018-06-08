@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import xadmin
-from .models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion, Notification,NotifiFile
+from .models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 
 class ProjectAdmin(object):
 
@@ -67,22 +67,6 @@ class ConclusionAdmin(object):
     list_filter = ['conclusion_file_name', 'conclusion_deadline_date', 'conclusion_check_status', 'conclusion_check_point']
 
 
-class NotificationAdmin(object):
-
-    list_display = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
-
-    search_fields = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
-
-    list_filter = ['notifi_id', 'notifi_date', 'notifi_title', 'notifi_content']
-
-
-class NotifiFileAdmin(object):
-
-    list_display = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
-
-    search_fields = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
-
-    list_filter = ['notifi_belong', 'notifi_file_name', 'notifi_file_url']
 
 xadmin.site.register(Project, ProjectAdmin)
 xadmin.site.register(Schedule, ScheduleAdmin)
@@ -91,5 +75,4 @@ xadmin.site.register(Result, ResultAdmin)
 xadmin.site.register(AddFund, AddFundAdmin)
 xadmin.site.register(MidTerm, MidTermAdmin)
 xadmin.site.register(Conclusion, ConclusionAdmin)
-xadmin.site.register(Notification, NotificationAdmin)
-xadmin.site.register(NotifiFile, NotifiFileAdmin)
+

@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion, NotifiFile
+from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
+from main_platform.models import Notification, NotifiFile
+from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
 from utils.session_judge import session_judge, session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
-from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password, make_password
@@ -54,7 +55,7 @@ class LoginView(View):
             teacher_user = Teacher.objects.get(teacher_id = int(user_name))
             if teacher_user is not None:
                 if check_password(user_password, teacher_user.teacher_password):
-                    request.session['user_type'] = user_type
+                    request.session['user_type'] = make_password(user_type)
                     request.session['user_id'] = teacher_user.teacher_id
                     return HttpResponse('{"status": "success", "msg": %s}' %(user_type),
                                         content_type='application/json')
@@ -68,7 +69,7 @@ class LoginView(View):
             student_user = Student.objects.get(student_id = int(user_name))
             if student_user is not None:
                 if check_password(user_password, student_user.student_password):
-                    request.session['user_type'] = user_type
+                    request.session['user_type'] = make_password(user_type)
                     request.session['user_id'] = student_user.student_id
                     return HttpResponse('{"status": "success", "msg": %s}' % (user_type),
                                         content_type='application/json')
@@ -103,8 +104,8 @@ class ModifyView(View):
             user_id = request.session['user_id']
         else:
             del request.session
-            return HttpResponse('{"status": "fail", "msg": "身份错误"}', content_type='application/json')
-        if str(user_type) == '2':
+            return HttpResponseRedirect('/')
+        if check_password('2', user_type):
             try:
                 teacher = Teacher.objects.get(teacher_id=user_id)
             except Teacher.DoesNotExist:
@@ -117,7 +118,7 @@ class ModifyView(View):
                 return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % (user_type), content_type='application/json')
             else:
                 return HttpResponse('{"status": "fail", "msg": "原密码不匹配"}', content_type='application/json')
-        elif str(user_type) == '3':
+        elif check_password('3', user_type):
             try:
                 student = Student.objects.get(student_id=user_id)
             except Teacher.DoesNotExist:
@@ -133,30 +134,49 @@ class ModifyView(View):
 
         else:
             del request.session
-            return render(request, 'index.html', )
+            return HttpResponseRedirect('/')
 
 
 class StudentView(View):
 
     def get(self, request):
-        return render(request, 'stuIndex.html',)
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'stuIndex.html',)
 
     def post(self, request):
-        return render(request, 'stuIndex.html',)
-
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'stuIndex.html',)
 
 class TeacherView(View):
 
     def get(self, request):
-        return render(request, 'teaIndex.html',)
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'teaIndex.html',)
 
     def post(self, request):
-        return render(request, 'teaIndex.html',)
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'teaIndex.html',)
+
 
 
 class fileDownloadView(View):
 
     def get(self, request):
+        if 'user_id' in request.session and 'user_type' in request.session:
+            user_type = request.session['user_type']
+            user_id = request.session['user_id']
+        else:
+            del request.session
+            return HttpResponseRedirect('/')
+        if check_password('2', user_type) or check_password('3', user_type):
             url = str(request.get_full_path())
             file_url = url.split('/')
             file_name = '未知错误'
@@ -177,12 +197,37 @@ class fileDownloadView(View):
                 special_url = url_list[2] + '/' + url_list[3]
                 file = NotifiFile.objects.get(notifi_file_url = special_url)
                 file_name = file.notifi_file_name
+            elif file_url[2] == 'GradModelfile':
+                url_list = url.split('/')
+                special_url = url_list[2] + '/' + url_list[3]
+                file = ModelFile.objects.get(file_url=special_url)
+                file_name = file.file_name
+            elif file_url[2] == 'GraOpening':
+                file = OpeningReport.objects.get(file_url=url)
+                file_name = file.file_name
+            elif file_url[2] == 'GradMidterm':
+                file = MidtermReport.objects.get(file_url=url)
+                file_name = file.file_name
+            elif file_url[2] == 'GradDissertation':
+                file = Dissertation.objects.get(file_url=url)
+                file_name = file.file_name
+            elif file_url[2] == 'GraOpeningCollection':
+                file = OpeningReport.objects.get(file_url=url)
+                file_name = file.file_name
+            elif file_url[2] == 'GradMidtermCollection':
+                file = Dissertation.objects.get(file_url=url)
+                file_name = file.file_name
+
+
             the_file_name = settings.MEDIA_ROOT + '/' + file_url[2] + '/' + file_url[3]
             response = StreamingHttpResponse(file_iterator(the_file_name))
             response['Content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment; filename=%s' % str(file_name).encode(
                 'utf-8').decode('ISO-8859-1')
             return response
+        else:
+            del request.session
+            return HttpResponseRedirect('/')
 
 
     def post(self, request):

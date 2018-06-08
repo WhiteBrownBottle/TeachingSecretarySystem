@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>毕业设计文档管理系统首页-消息通知</title>
+        <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
+        <script src="../../static/js/jquery-1.11.1.min.js"></script>
+        <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../../static/js/jquery.backstretch.min.js"></script>
+    </head>
+
+    <body>
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="{% url 'student:Gra_Home' %}">计通学院毕业设计管理平台</a>
+                </div>
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="{% url 'student:Gra_Home' %}">消息通知</a> </li>
+                    <li><a href="{% url 'student:Gra_Modelfile' %}">模板文件</a> </li>
+                    <li><a href="{% url 'student:Gra_Proposal' %}">开题报告</a> </li>
+                    <li><a href="{% url 'student:Gra_Midterm' %}">中期检查</a> </li>
+                    <li><a href="{% url 'student:Gra_Paper' %}">毕业设计论文</a> </li>
+                </ul>
+                <ul class="nav navbar-nav pull-right">
+                    <li id="personCenter">
+                        <a href="{% url 'student:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+                    </li>
+                    <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h1>通知公告</h1>
+                </div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="list-group">
+                    {% for notification in notification_list.object_list %}
+                    <a href="{% url 'student:Gra_Notifi' notification.notifi_id %}" class="list-group-item">
+                        <h4 class="list-group-item-heading">{{ notification.notifi_title }}</h4>
+                        <small>{{ notification.notifi_date }}</small>
+                    </a>
+                    {% endfor %}
+                </div>
+                <div align="center">
+{#                    <nav class="pagination">#}
+{#                        <div class="pageturn">#}
+                            <ul class="pagination">
+
+                            {% if notification_list.has_previous %}
+                                <li class="long">
+                                    <a href="?{{ notification_list.previous_page_number.querystring }}" class="btn btn-primary">上一页</a>
+                                </li>
+                            {% endif %}
+
+                            {% for page in notification_list.pages %}
+
+                            {% if page %}
+                                {% ifequal page notification_list.number %}
+                                <li class="active">
+                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                                </li>
+                                {% else %}
+                                <li>
+                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                                </li>
+                                {% endifequal %}
+                            {% else %}
+                            <li class="none">
+                                <a href="" class="btn btn-primary">...</a>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+
+                            {% if notification_list.has_next %}
+                                <li class="long">
+                                <a href="?{{ notification_list.next_page_number.querystring }}" class="btn btn-primary">下一页</a>
+                                </li>
+                            {% endif %}
+                            </ul>
+{#                        </div>#}
+{#                    </nav>#}
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>

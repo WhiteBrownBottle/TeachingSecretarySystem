@@ -74,7 +74,7 @@ class Project(models.Model):
 
 
     class Meta:
-        verbose_name = u'SRTP项目信息'
+        verbose_name = u'项目信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -89,7 +89,7 @@ class Schedule(models.Model):
     schedule_detail = models.TextField(blank=False, null=False, default='缺少说明，请补充', verbose_name=u'项目进展说明')
 
     class Meta:
-        verbose_name = u'SRTP项目进度'
+        verbose_name = u'项目进度'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -121,7 +121,7 @@ class Fund(models.Model):
     fund_date = models.DateField(default=timezone.now, verbose_name=u'经费支出日期')
 
     class Meta:
-        verbose_name = u'SRTP项目经费管理'
+        verbose_name = u'经费管理'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -149,7 +149,7 @@ class Result(models.Model):
     result_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'项目附件路径')
 
     class Meta:
-        verbose_name = u'SRTP项目成果管理'
+        verbose_name = u'成果管理'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -177,7 +177,7 @@ class AddFund(models.Model):
     addfund_add_status = models.CharField(null=False, blank=False, editable=False, max_length=1, default='0', choices=ADDFUND_ADD_STATUS_CHOICE, verbose_name=u'追加经费添加状态')
 
     class Meta:
-        verbose_name = u'SRTP项目追加经费'
+        verbose_name = u'追加经费'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -206,7 +206,7 @@ class MidTerm(models.Model):
     midterm_check_point = models.CharField(blank=False, null=False, choices=CHECK_POINT, max_length=1, default='0', verbose_name=u'审核节点')
 
     class Meta:
-        verbose_name = u'SRTP项目中期检查'
+        verbose_name = u'中期检查'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -237,48 +237,14 @@ class Conclusion(models.Model):
                                            verbose_name=u'审核节点')
 
     class Meta:
-        verbose_name = u'SRTP项目结题检查'
+        verbose_name = u'结题检查'
         verbose_name_plural = verbose_name
 
     def __str__(self):
         return '[%s: %s]' %(self.conclusion_file_name, self.conclusion_check_status)
 
 
-class Notification(models.Model):
-    #Srtp消息通知
 
-    notifi_id = models.IntegerField(default=int(time.time()), unique=True, verbose_name=u'通知id')
-    notifi_date = models.DateField(default=timezone.now, verbose_name=u'通知发布时间')
-    notifi_title = models.CharField(blank=False, null=False, max_length=50, default='未命名消息通知', verbose_name=u'通知标题')
-    notifi_content = models.TextField(blank=True, null=True, verbose_name=u'通知内容')
-
-    class Meta:
-        verbose_name = u'SRTP项目消息通知'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return '[%d: %s]' %(self.notifi_id, self.notifi_title)
-
-
-
-class NotifiFile(models.Model):
-    #Srtp消息通知附件
-
-    notifi_belong = models.ForeignKey(Notification, on_delete=models.CASCADE, verbose_name=u'所属通知')
-    notifi_file_name = models.CharField(blank=True, null=True, max_length=100, default='暂未命名' , verbose_name=u'通知附件名称')
-    notifi_file_url = models.FileField(blank=True, null=True, unique=True, upload_to='SrtpNotification/', default='', verbose_name=u'通知附件路径')
-
-    class Meta:
-        verbose_name = u'SRTP项目通知附件'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.notifi_file_name
-
-    def save(self, *args, **kwargs):
-        notifi_file_url = str(self.notifi_file_url)
-        self.notifi_file_name = notifi_file_url
-        super(NotifiFile, self).save(*args, **kwargs)
 
 
 
