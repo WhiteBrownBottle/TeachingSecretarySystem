@@ -41,7 +41,7 @@
             <div class="row">
                 <div class="list-group">
                     {% for notification in notification_list.object_list %}
-                    <a href="{% url 'student:Gra_Notifi' notification.notifi_id %}" class="list-group-item">
+                    <a href="{% url 'teacher:Gra_Notifi' notification.notifi_id %}" class="list-group-item">
                         <h4 class="list-group-item-heading">{{ notification.notifi_title }}</h4>
                         <small>{{ notification.notifi_date }}</small>
                     </a>

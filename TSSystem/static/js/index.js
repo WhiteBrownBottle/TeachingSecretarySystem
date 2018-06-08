@@ -19,7 +19,7 @@ function login() {
         flag = 'n';
     }
 
-    if (form2.radio1.checked == false && form2.radio2.checked == false && form2.radio3.checked == false) {
+    if (document.getElementById("radio1").checked == false && document.getElementById("radio2").checked == false && document.getElementById("radio3").checked == false) {
         alert('请选择身份');
         flag = 'n';
     }
@@ -40,11 +40,12 @@ function login() {
                 if(data.msg=="2") window.location.href="/teacher";
                 if(data.msg=="3") window.location.href="/student";
             } else if (data.status == 'fail') {
-                swal({
-                    icon: "error",
-                    text: data.msg,
-                });
+                alert(data.msg);
             }
         }
     });
+}
+
+function forgetPassword() {
+    alert("请联系管理员！");
 }

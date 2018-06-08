@@ -49,7 +49,7 @@ class LoginView(View):
                 login(request, admin_user)
                 return HttpResponse('{"status": "success", "msg": %s}' % (user_type), content_type='application/json')
             else:
-                return HttpResponse('{"status": "fail", "msg": "信息错误，用户不存在"}', content_type='application/json')
+                return HttpResponse('{"status": "fail", "msg": "信息错误"}', content_type='application/json')
         elif user_type == '2':
             # 教师身份
             teacher_user = Teacher.objects.get(teacher_id = int(user_name))
