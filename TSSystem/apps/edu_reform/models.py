@@ -26,6 +26,7 @@ class EduProject(models.Model):
     eduproject_appli_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书名称')
     eduproject_appli_url = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书路径')
     eduproject_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')
+    eduproject_select_result = models.CharField(null=True, blank=True, max_length=20, default="暂无", verbose_name='项目评选结果')
 
     class Meta:
         verbose_name = u'教改/教研/教材项目信息'
@@ -79,3 +80,63 @@ class EduConclusion(models.Model):
 
     def __str__(self):
         return '[%s: %s]' %(self.educonclusion_file_name, self.educonclusion_check_status)
+
+
+class EduFund(models.Model):
+    #项目经费
+
+    FUND_TYPE_CHOICE = (
+        ('1', '差旅费'),
+        ('2', '实验费'),
+        ('3', '资料费'),
+        ('4', '实验耗材费'),
+        ('5', '计算机小型存储设备费'),
+        ('6', '邮寄费'),
+        ('7', '论文版面费'),
+        ('8', '成果鉴定费'),
+        ('9', '专利申请费'),
+        ('10', '文件检索费'),
+        ('11', '办公费'),
+        ('12', '其他费用')
+    )
+
+    eduproject_belong = models.ForeignKey(EduProject, on_delete=models.CASCADE, verbose_name=u'所属教改/教研/教材项目')
+    edufund_name = models.CharField(null=True, blank=True, max_length=100, verbose_name=u'具体支出项目摘要')
+    edufund_type = models.CharField(null=False, blank=False, max_length=9, choices=FUND_TYPE_CHOICE, default='12', verbose_name=u'经费类别')
+    edufund_num = models.IntegerField(null=True, blank=True, verbose_name=u'经费支出金额')
+    edufund_date = models.DateField(default=timezone.now, verbose_name=u'经费支出日期')
+
+    class Meta:
+        verbose_name = u'经费管理'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %d]' %(self.edufund_type, self.edufund_num)
+
+
+class EduResult(models.Model):
+    #项目成果
+
+    RESULT_TYPE_CHOICE = (
+        ('1', '著作/著作权'),
+        ('2', '论文'),
+        ('3', '专利'),
+        ('4', '实物'),
+        ('5', '软件/图纸/设计'),
+        ('6', '获奖证书'),
+        ('7', '其他')
+    )
+    eduproject_belong = models.ForeignKey(EduProject, on_delete=models.CASCADE, verbose_name=u'所属srtp项目')
+    eduresult_name = models.CharField(blank=False, null=False, max_length=50, default='未命名成果', verbose_name=u'项目成果名称')
+    eduresult_type = models.CharField(blank=False, null=False, max_length=8, default='7', choices=RESULT_TYPE_CHOICE, verbose_name=u'项目成果类型')
+    eduresult_date = models.DateField(default=timezone.now, verbose_name='项目成果日期')
+    eduresult_master = models.CharField(blank=False, null=False, max_length=20, default='未填写', verbose_name=u'项目成果所有人')
+    eduresult_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'项目附件名称')
+    eduresult_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'项目附件路径')
+
+    class Meta:
+        verbose_name = u'成果管理'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' % (self.eduresult_name, self.eduresult_master)

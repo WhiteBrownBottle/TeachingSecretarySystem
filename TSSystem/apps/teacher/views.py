@@ -5,7 +5,7 @@ from teacher.models import Teacher
 from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 from main_platform.models import Notification, NotifiFile
 from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
-from edu_reform.models import EduProject, EduMidTerm, EduConclusion
+from edu_reform.models import EduProject, EduMidTerm, EduConclusion, EduFund, EduResult
 from utils.session_judge import session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from django.http import HttpResponse, HttpResponseRedirect
@@ -21,7 +21,7 @@ class teaInfoView(View):
 
     def get(self, request):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             teacher = Teacher.objects.get(teacher_id=request.session['user_id'])
             return render(request, 'personInfo/teaInfo.html', context={'teacher': teacher})
@@ -38,7 +38,7 @@ class teaSrtpHomeView(View):
 
     def get(self, request):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id=user_id)
@@ -60,7 +60,7 @@ class teaSrtpHomeView(View):
 
     def post(self, request):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
 
             return render(request, 'teaSrtp/teaSrtpProManage.html')
@@ -70,7 +70,7 @@ class teaSrtpProListView(View):
 
     def get(self, request):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id=user_id)
@@ -104,7 +104,7 @@ class teaSrtpProManageView(View):
 
     def get(self, request, project_id):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id=user_id)
@@ -350,7 +350,7 @@ class teaSrtpSpecificInfoView(View):
 
     def get(self, request, project_id):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             project = Project.objects.get(project_id =int(project_id))
             return render(request, 'teaSrtp/teaSrtpSpecificInfo.html', context={'project': project})
@@ -594,7 +594,7 @@ class eduReformHomeView(View):
 
     def get(self, request):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id = user_id)
@@ -641,7 +641,7 @@ class eduReformManageView(View):
 
     def get(self, request, eduproject_id):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id = user_id)
@@ -680,7 +680,7 @@ class eduReformMidTermApplyView(View):
 
     def post(self, request, eduproject_id):
         if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+            return HttpResponseRedirect('/')
         else:
             edu_project = EduProject.objects.get(eduproject_id = eduproject_id)
             edumidterm_file = request.FILES.get('file', '')
@@ -694,3 +694,74 @@ class eduReformMidTermApplyView(View):
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
+class eduReformFundManageView(View):
+
+    def get(self, request, eduproject_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            teacher = Teacher.objects.get(teacher_id = request.session['user_id'])
+            edu_project = EduProject.objects.get(eduproject_person_in_charge_id = teacher.id)
+            edufund_list = EduFund.objects.filter(eduproject_belong_id = edu_project.eduproject_id).order_by('edufund_date')
+            return render(request, 'eduReform/eduReformFundManage.html', context={'edufund_list': edufund_list,
+                                                                                  'edu_project': edu_project})
+
+    def post(self, request, eduproject_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            edufund_time = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
+            if edufund_time != '':
+                edufund_date = datetime.datetime.strptime(edufund_time, "%Y-%m-%d").date()
+            edufund_name = request.POST.get('jutizhichu', '')
+            edufund_type = request.POST.get('leibie', '12')
+            edufund_num = int(request.POST.get('jine', ''))
+            teacher = Teacher.objects.get(teacher_id=request.session['user_id'])
+            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
+            edufund = EduFund()
+            edufund.edufund_name = edufund_name
+            edufund.edufund_type = edufund_type
+            edufund.edufund_num = edufund_num
+            edufund.edufund_date = edufund_date
+            edufund.eduproject_belong = edu_project
+            edufund.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class eduReformResultManageView(View):
+
+    def get(self, request, eduproject_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id=user_id)
+            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
+            eduresult_list = EduResult.objects.filter(eduproject_belong_id=edu_project.eduproject_id).order_by('eduresult_date')
+            return render(request, 'eduReform/eduReformResultManage.html', context={'eduresult_list': eduresult_list,
+                                                                                    'edu_project': edu_project})
+
+    def post(self, request, eduproject_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            eduresult_name = request.POST.get('mingcheng' '')
+            eduresult_type = request.POST.get('leixing', '7')
+            eduresult_date = request.POST.get('riqi', datetime.datetime.now().strftime("%Y-%m-%d"))
+            if eduresult_date != '':
+                eduresult_date = datetime.datetime.strptime(eduresult_date, '%Y-%m-%d').date()
+            eduresult_master = request.POST.get('suoyouren', '')
+            eduresult_file = request.FILES.get('file')
+            edufile_detail = file_upload(eduresult_file, 'EduResult')
+            teacher = Teacher.objects.get(teacher_id=request.session['user_id'])
+            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
+            eduresult = EduResult()
+            eduresult.eduresult_name = eduresult_name
+            eduresult.eduresult_type = eduresult_type
+            eduresult.eduresult_date = eduresult_date
+            eduresult.eduresult_master = eduresult_master
+            eduresult.eduresult_file_name = edufile_detail[0]
+            eduresult.eduresult_file_url = edufile_detail[1]
+            eduresult.eduproject_belong = edu_project
+            eduresult.save()
+            return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')

@@ -1,20 +1,21 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
-    <title>经费管理</title>
-    <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../../static/css/stuSrtpProManage.css">
-    <script src="../../static/js/jquery-1.11.1.min.js"></script>
-    <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
-    <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <title>教师首页</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
 </head>
 
 <body>
     <div style="margin: 10px 20px 0px 20px">
         <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">经费管理</h2>
-        <form action="stuSrtpFundManage.html" method="post">
+        <form method="post">
             <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
                 <tbody>
                     <tr>
@@ -71,25 +72,20 @@
                         <td style="font-weight: bold">支出金额</td>
                         <td style="font-weight: bold">支出日期</td>
                     </tr>
-                    {% for fund in fund_list %}
+                    {% for edufund in edufund_list %}
                         <tr>
-                            <td>{{ fund.fund_name }}</td>
-                            <td>{{ fund.get_fund_type_display }}</td>
-                            <td>{{ fund.fund_num }}</td>
-                            <td>{{ fund.fund_date }}</td>
+                            <td>{{ edufund.edufund_name }}</td>
+                            <td>{{ edufund.get_edufund_type_display }}</td>
+                            <td>{{ edufund.edufund_num }}</td>
+                            <td>{{ edufund.edufund_date }}</td>
                         </tr>
                     {% endfor %}
-{#                    <tr style="background-color:#b2dba1">#}
-{#                        <td style="font-weight: bold;">经费总计</td>#}
-{#                        <td style="font-weight: bold;"></td>#}
-{#                        <td style="font-weight: bold;" id="fundSum"></td>#}
-{#                        <td style="font-weight: bold;"></td>#}
-{#                    </tr>#}
                 </tbody>
             </table>
         </div>
     </div>
     <script type="text/javascript">
+
     //提交给数据库，并更新页面的表格
     function jinfeiPost() {
         //如果有内容为空，则提示
@@ -107,10 +103,10 @@
             },
             type: "post", //提交方式
             dataType: "json", //数据类型
-            url: "/stu/SrtpFundManage/", //请求url
+            url: "/tea/EduReformFundManage/{{ edu_project.eduproject_id }}/", //请求url
             success: function(data) {
                 if (data.status == 'success') {
-                    alert(data.msg)
+                    alert(data.msg);
                     location.reload();
                 } else if (data.status == 'fail') {
 

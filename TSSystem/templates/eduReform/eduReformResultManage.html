@@ -1,0 +1,159 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>教师首页</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body>
+    <div style="margin: 10px 20px 0px 20px">
+        <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">成果管理</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <table style="border-collapse: collapse; width: 96%; margin-top: 5px">
+                <tbody>
+                    <tr>
+                        <td style="font-weight: bold" width="10%"><span style="color:red">*</span>成果名称</td>
+                        <td>
+                            <input type="text" style="background-color: white" name="mingcheng" id="mingcheng">
+                        </td>
+                        <td style="font-weight: bold" width="10%"><span style="color:red">*</span>成果类型</td>
+                        <td>
+                            <select class="form-control" name="leixing" id="leixing">
+                                <option value="1">著作/著作权</option>
+                                <option value="2">论文</option>
+                                <option value="3">专利</option>
+                                <option value="4">实物</option>
+                                <option value="5">软件/图纸/设计</option>
+                                <option value="6">获奖证书</option>
+                                <option value="7">其他</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold"><span style="color:red">*</span>取得日期</td>
+                        <td>
+                            <input type="date" style="background-color: white" name="riqi" id="riqi">
+                        </td>
+                        <td style="font-weight: bold"><span style="color: red">*</span>所有人</td>
+                        <td>
+                            <input type="text" style="background-color: white" name="suoyouren" id="suoyouren">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: bold"><span style="color: red">*</span>附件</td>
+                        <td>
+                            <input type="file" name="file" id="fujian">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div align="right" style="margin-top: 20px">
+                <button type="button" class="btn btn-default" onclick="chengguoPost()">保存</button>
+                <button type="reset" class="btn btn-danger">重置</button>
+            </div>
+        </form>
+        <div style="margin-top: 20px">
+            <table class="table table-hover" id="table_stuSrtpResultManage" style="table-layout:fixed">
+                <tbody>
+                    <tr style="background-color:#b2dba1">
+                        <td style="font-weight: bold;">成果名称</td>
+                        <td style="font-weight: bold;">成果类型</td>
+                        <td style="font-weight: bold">取得日期</td>
+                        <td style="font-weight: bold">所有人</td>
+                        <td style="font-weight: bold">成果附件</td>
+                        <td style="font-weight: bold">操作</td>
+                    </tr>
+                    {% for eduresult in eduresult_list %}
+                    <tr>
+                        <td>{{ eduresult.eduresult_name }}</td>
+                        <td>{{ eduresult.get_eduresult_type_display }}</td>
+                        <td>{{ eduresult.eduresult_date }}</td>
+                        <td>{{ eduresult.eduresult_master }}</td>
+                        <td><a style="color: blue" href="{{ eduresult.eduresult_file_url }}" target="_blank">{{ eduresult.eduresult_file_name }}</a></td>
+                        <td>
+                            <input type="button" onclick="removeTr(this)" value="删除" />
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script type="text/javascript">
+    //提交给数据库，并更新页面的表格
+    function chengguoPost() {
+        if (!document.getElementById("mingcheng").value || !document.getElementById("riqi").value || !document.getElementById("suoyouren").value) { alert("请填写所有带*内容！"); return false; }
+        var form_data = new FormData(document.getElementById("uploadForm"));
+
+        $.ajax({
+            data: form_data,
+            type: "post", //提交方式
+            processData:false,
+            contentType:false,
+            //dataType: "json", //数据类型
+            url: "/tea/EduReformResultManage/{{ edu_project.eduproject_id }}/", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                    alert("保存成功！");
+                    location.reload();
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        })
+    }
+
+    //删除当前行
+    function getParent(el, parentTag) {
+        do {
+            el = el.parentNode;
+        } while (el && el.tagName !== parentTag);
+        return el;
+    }
+
+    function removeTr(el) {
+        var msg = "确定要删除吗？";
+        if (confirm(msg) == true) {
+            el = getParent(el, 'TR');
+            var rowIndex = el.rowIndex;
+            el = getParent(el, 'TABLE');
+            el.deleteRow(rowIndex);
+        } else {
+            return false;
+        }
+    }
+
+    //获取文件真实路径
+    function getObjectURL(file) {
+        var url = null;
+        if (window.createObjcectURL != undefined) {
+            url = window.createOjcectURL(file);
+        } else if (window.URL != undefined) {
+            url = window.URL.createObjectURL(file);
+        } else if (window.webkitURL != undefined) {
+            url = window.webkitURL.createObjectURL(file);
+        }
+        return url;
+    }
+    </script>
+</body>
+<br>
+
+</html>

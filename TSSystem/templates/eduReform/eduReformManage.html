@@ -33,6 +33,7 @@
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
+            <li><a href="{% url 'main_platform:teaIndex' %}">首页</a></li>
             <li id="personCenter">
                 <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
             </li>
@@ -49,11 +50,32 @@
             <li><a href="{% url 'teacher:EduReform_MidTermApply' edu_project.eduproject_id %}" target="mainFrame">中期检查申请</a></li>
             <li><a href="{% url 'teacher:EduReform_ConcluApply' edu_project.eduproject_id %}" target="mainFrame">项目结题申请</a></li>
         </ul>
+
+        <ul class="nav nav-sidebar">
+            <li><a href="{% url 'teacher:EduReform_FundManage' edu_project.eduproject_id %}" target="mainFrame">经费管理</a></li>
+            <li><a href="{% url 'teacher:EduReform_ResultManage' edu_project.eduproject_id %}" target="mainFrame">成果管理</a></li>
+        </ul>
     </div>
     <div class="col-sm-11 col-sm-offset-1 col-md-11 col-sm-offset-1">
         <iframe name="mainFrame" width="95%" height="500px" scrolling="auto" frameborder="0" src="{% url 'teacher:EduReform_Info' edu_project.eduproject_id %}" style="margin-left: 20px;"></iframe>
     </div>
 </div>
+    <script type="text/javascript">
+    document.onclick = function() {
+        $.ajax({
+            data:{'test':"test"},
+            type: "post", //提交方式
+            dataType: "json", //数据类型
+            url: "/tea/EduReformManage/{{ edu_project.eduproject_id }}/", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                } else if (data.status == 'fail') {
+                    window.top.document.location.href="{% url 'main_platform:index' %}";
+                }
+            }
+        });
+    }
+    </script>
 </body>
 
 </html>

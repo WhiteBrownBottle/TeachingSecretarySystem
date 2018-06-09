@@ -38,6 +38,8 @@ urlpatterns = [
 
     url(r'^EduReformInfo/(?P<eduproject_id>\d+)/$', views.eduReformInfoView.as_view(), name='EduReform_Info'),
     url(r'^EduReformMidTermApply/(?P<eduproject_id>\d+)/$', views.eduReformMidTermApplyView.as_view(), name='EduReform_MidTermApply'),
-    url(r'^EduReformConcluApply/(?P<eduproject_id>\d+)/$', views.eduReformConcluApplyView.as_view(), name='EduReform_ConcluApply')
+    url(r'^EduReformConcluApply/(?P<eduproject_id>\d+)/$', views.eduReformConcluApplyView.as_view(), name='EduReform_ConcluApply'),
+    url(r'^EduReformFundManage/(?P<eduproject_id>\d+)/$', views.eduReformFundManageView.as_view(), name='EduReform_FundManage'),
+    url(r'^EduReformResultManage/(?P<eduproject_id>\d+)/$', views.eduReformResultManageView.as_view(), name='EduReform_ResultManage')
 
 ]
