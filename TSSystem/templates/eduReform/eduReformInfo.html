@@ -28,7 +28,7 @@
                 <td style="font-weight: bold">申请经费（元）</td>
                 <td>{{ edu_project.eduproject_fund_appli }}</td>
                 <td style="font-weight: bold; width: 10%">类别</td>
-                <td>{{ edu_project.eduproject_type }}</td>
+                <td>{{ edu_project.get_eduproject_type_display }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold">起始日期</td>
@@ -41,7 +41,7 @@
                 <td style="font-weight: bold">姓名</td>
                 <td>{{ teacher.teacher_name }}</td>
                 <td style="font-weight: bold; width: 10%">性别</td>
-                <td>{{ teacher.teacher_gender }}</td>
+                <td>{{ teacher.get_teacher_gender_display }}</td>
             </tr>
             <tr>
                 <td style="font-weight: bold; width: 10%">出生日期</td>

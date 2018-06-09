@@ -53,21 +53,25 @@ class LoginView(View):
                 return HttpResponse('{"status": "fail", "msg": "信息错误"}', content_type='application/json')
         elif user_type == '2':
             # 教师身份
-            teacher_user = Teacher.objects.get(teacher_id = int(user_name))
-            if teacher_user is not None:
-                if check_password(user_password, teacher_user.teacher_password):
-                    request.session['user_type'] = make_password(user_type)
-                    request.session['user_id'] = teacher_user.teacher_id
-                    return HttpResponse('{"status": "success", "msg": %s}' %(user_type),
-                                        content_type='application/json')
-                else:
-                    return HttpResponse('{"status": "fail", "msg": "密码错误"}', content_type='application/json')
-            else:
+            try:
+                teacher_user = Teacher.objects.get(teacher_id = int(user_name))
+            except Teacher.DoesNotExist:
                 return HttpResponse('{"status": "fail", "msg": "信息错误，用户不存在"}', content_type='application/json')
+            if check_password(user_password, teacher_user.teacher_password):
+                request.session['user_type'] = make_password(user_type)
+                request.session['user_id'] = teacher_user.teacher_id
+                return HttpResponse('{"status": "success", "msg": %s}' % (user_type),
+                                    content_type='application/json')
+            else:
+                return HttpResponse('{"status": "fail", "msg": "密码错误"}', content_type='application/json')
+
 
         elif user_type == '3':
             #学生身份
-            student_user = Student.objects.get(student_id = int(user_name))
+            try:
+                student_user = Student.objects.get(student_id = int(user_name))
+            except Student.DoesNotExist:
+                return HttpResponse('{"status": "fail", "msg": "信息错误，用户不存在"}', content_type='application/json')
             if student_user is not None:
                 if check_password(user_password, student_user.student_password):
                     request.session['user_type'] = make_password(user_type)
@@ -76,8 +80,7 @@ class LoginView(View):
                                         content_type='application/json')
                 else:
                     return HttpResponse('{"status": "fail", "msg": "密码错误"}', content_type='application/json')
-            else:
-                return HttpResponse('{"status": "fail", "msg": "输入错误，用户不存在"}', content_type='application/json')
+
 
 
 class LogoutView(View):
@@ -216,7 +219,7 @@ class fileDownloadView(View):
                 file = OpeningReport.objects.get(file_url=url)
                 file_name = file.file_name
             elif file_url[2] == 'GradMidtermCollection':
-                file = Dissertation.objects.get(file_url=url)
+                file = MidtermReport.objects.get(file_url=url)
                 file_name = file.file_name
             elif file_url[2] == 'EduReformApply':
                 file = EduProject.objects.get(eduproject_appli_url=url)
