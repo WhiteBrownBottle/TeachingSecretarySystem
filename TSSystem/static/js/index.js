@@ -40,7 +40,7 @@ function login() {
                 if(data.msg=="2") window.location.href="/teacher";
                 if(data.msg=="3") window.location.href="/student";
             } else if (data.status == 'fail') {
-                alert(data.msg);
+                swal(data.msg,"","error");
             }
         }
     });
