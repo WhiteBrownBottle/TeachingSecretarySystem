@@ -1,0 +1,81 @@
+from django.db import models
+import datetime, time
+import django.utils.timezone as timezone
+from student.models import Student
+from teacher.models import Teacher
+from utils.customfilefield.storage import FileStorage
+# Create your models here.
+
+class EduProject(models.Model):
+    #教改/教研/教材项目数据模型
+    TYPE_CHOICE = (
+        ('zd', '重点'),
+        ('zdzx', '重点专项'),
+        ('ms', '面上'),
+    )
+
+
+    eduproject_id = models.AutoField(primary_key=True, unique=True, verbose_name=u'项目编号')
+    eduproject_name = models.CharField(max_length=20, blank=False, null=False, default='xx项目', verbose_name=u'项目名称')
+    eduproject_belong_unit = models.CharField(max_length=20, blank=False, null=False, default='xx单位', verbose_name=u'申请单位')
+    eduproject_fund_appli = models.IntegerField(blank=False, null=False, default=3000, verbose_name=u'项目申请经费')
+    eduproject_type = models.CharField(max_length=2, blank=False, null=False, choices=TYPE_CHOICE, default='zd', verbose_name=u'项目类别')
+    eduproject_date_begin = models.DateField(default=timezone.now, verbose_name=u'起始日期')
+    eduproject_date_end = models.DateField(default=timezone.now, verbose_name=u'结束日期')
+    eduproject_person_in_charge = models.OneToOneField(Teacher, blank=True, null=True, on_delete=models.CASCADE, verbose_name='项目负责人')
+    eduproject_appli_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书名称')
+    eduproject_appli_url = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书路径')
+    eduproject_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')
+
+    class Meta:
+        verbose_name = u'教改/教研/教材项目信息'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%d:%s]' %(self.eduproject_id, self.eduproject_name)
+
+
+class EduMidTerm(models.Model):
+    #中期检查
+
+    CHECK_STATUS = (
+        ('0', '未提交'),
+        ('1', '审批中'),
+        ('2', '已通过')
+    )
+
+    eduproject_belong = models.OneToOneField(EduProject, on_delete=models.CASCADE, verbose_name=u'所属教改/教研/教材项目')
+    edumidterm_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件名称')
+    edumidterm_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件路径')
+    edumidterm_deadline_date = models.DateField(default=timezone.now, verbose_name=u'提交截止日期')
+    edumidterm_check_status = models.CharField(blank=False, null=False, choices=CHECK_STATUS, max_length=1, default='0', verbose_name=u'审核状态')
+
+    class Meta:
+        verbose_name = u'教改/教研/教材项目中期检查'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' %(self.edumidterm_file_name, self.edumidterm_check_status)
+
+class EduConclusion(models.Model):
+    #项目结题
+
+    CHECK_STATUS = (
+        ('0', '未提交'),
+        ('1', '审批中'),
+        ('2', '已通过')
+    )
+
+    eduproject_belong = models.OneToOneField(EduProject, on_delete=models.CASCADE, verbose_name=u'所属教改/教研/教材项目')
+    educonclusion_file_name = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件名称')
+    educonclusion_file_url = models.CharField(blank=True, null=True, max_length=100, verbose_name=u'文件路径')
+    educonclusion_deadline_date = models.DateField(default=timezone.now, verbose_name=u'提交截止日期')
+    educonclusion_check_status = models.CharField(blank=False, null=False, choices=CHECK_STATUS, max_length=1, default='0',
+                                            verbose_name=u'审核状态')
+
+    class Meta:
+        verbose_name = u'教改/教研/教材项目结题'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '[%s: %s]' %(self.educonclusion_file_name, self.educonclusion_check_status)

@@ -15,7 +15,7 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="{% url 'teacher:Srtp_Home' %}">北京科技大学SRTP管理平台</a>
+            <a class="navbar-brand" href="{% url 'teacher:Srtp_Home' %}">计通学院SRTP管理平台</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="active"><a href="{% url 'teacher:Srtp_Home' %}">消息通知</a> </li>
@@ -57,44 +57,39 @@
             {% endfor %}
         </div>
         <div align="center">
-{#                    <nav class="pagination">#}
-{#                        <div class="pageturn">#}
-                            <ul class="pagination">
+            <ul class="pagination">
+            {% if notification_list.has_previous %}
+                <li class="long">
+                    <a href="?{{ notification_list.previous_page_number.querystring }}" class="btn btn-primary">上一页</a>
+                </li>
+            {% endif %}
 
-                            {% if notification_list.has_previous %}
-                                <li class="long">
-                                    <a href="?{{ notification_list.previous_page_number.querystring }}" class="btn btn-primary">上一页</a>
-                                </li>
-                            {% endif %}
+            {% for page in notification_list.pages %}
 
-                            {% for page in notification_list.pages %}
+            {% if page %}
+                {% ifequal page notification_list.number %}
+                <li class="active">
+                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                </li>
+                {% endifequal %}
+            {% else %}
+            <li class="none">
+                <a href="" class="btn btn-primary">...</a>
+            </li>
+            {% endif %}
+            {% endfor %}
 
-                            {% if page %}
-                                {% ifequal page notification_list.number %}
-                                <li class="active">
-                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
-                                </li>
-                                {% else %}
-                                <li>
-                                    <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
-                                </li>
-                                {% endifequal %}
-                            {% else %}
-                            <li class="none">
-                                <a href="" class="btn btn-primary">...</a>
-                            </li>
-                            {% endif %}
-                            {% endfor %}
-
-                            {% if notification_list.has_next %}
-                                <li class="long">
-                                <a href="?{{ notification_list.next_page_number.querystring }}" class="btn btn-primary">下一页</a>
-                                </li>
-                            {% endif %}
-                            </ul>
-{#                        </div>#}
-{#                    </nav>#}
-                </div>
+            {% if notification_list.has_next %}
+                <li class="long">
+                <a href="?{{ notification_list.next_page_number.querystring }}" class="btn btn-primary">下一页</a>
+                </li>
+            {% endif %}
+            </ul>
+        </div>
     </div>
 </div>
 </body>

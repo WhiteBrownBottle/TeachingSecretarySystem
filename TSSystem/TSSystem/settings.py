@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'srtp_project',
     'graduation_design',
     'pure_pagination',
+    'edu_reform'
 ]
 
 MIDDLEWARE = [

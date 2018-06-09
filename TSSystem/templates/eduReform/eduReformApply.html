@@ -1,0 +1,150 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>项目申请</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body>
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">项目申请</h2>
+    <form method="post" name="applyForm" id="applyForm">
+        <table class="table table-hover" name="eduReformTable" id="eduReformTable">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目基本信息</span></td></tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">项目名称</td>
+                <td><input type="text" style="background-color: white" name="pro_name"></td>
+                <td style="font-weight: bold; width: 10%">申请单位</td>
+                <td><input type="text" style="background-color: white" name="work_unit"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">申请经费（元）</td>
+                <td><input type="text" style="background-color: white" name="fund"></td>
+                <td style="font-weight: bold;">类别</td>
+                <td ><select class="form-control" style="width: 50% " name="type">
+                    <option value="zd" name="zd">重点</option>
+                    <option value="zdzx" name="zdzx">重点专项</option>
+                    <option value="ms" name="ms">面上</option>
+                </select> </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">起始日期</td>
+                <td><input  type="date" style="background-color: white" name="begin_date" id="begin_date"></td>
+                <td style="font-weight: bold">结束日期</td>
+                <td><input  type="date" style="background-color: white" name="end_date" id="end_date"></td>
+            </tr>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目负责人简况</span></td></tr>
+            <tr>
+                <td style="font-weight: bold">姓名</td>
+                <td><input type="text" style="background-color: white" name="peopleName_1"></td>
+                <td style="font-weight: bold; width: 10%">性别</td>
+                <td ><select class="form-control" style="width: 50% " name="gender">
+                    <option value="male" name="male">男</option>
+                    <option value="female" name="female">女</option>
+                </select> </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">出生日期</td>
+                <td><input  type="date" style="background-color: white" name="birth_date"></td>
+                <td style="font-weight: bold; width: 10%">所从事专业</td>
+                <td><input type="text" style="background-color: white" name="major"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">职称</td>
+                <td><input  type="text" style="background-color: white" name="title"></td>
+                <td style="font-weight: bold; width: 10%">职务</td>
+                <td><input type="text" style="background-color: white" name="peopleDuty_1"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">手机</td>
+                <td><input  type="text" style="background-color: white" name="phone"></td>
+                <td style="font-weight: bold; width: 10%">邮箱</td>
+                <td><input type="text" style="background-color: white" name="email"></td>
+            </tr>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">教育教学改革与研究项目申请书</span></td></tr>
+            <tr><td><input type="file" name="apply_file" id="apply_file"></td></tr>
+            <tr style="background-color:#b2dba1"><td colspan="4"><span style="font-weight: bold">项目组主要成员</span></td></tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">姓名</td>
+                <td><input  type="text" style="background-color: white" name="peopleName_2"></td>
+                <td style="font-weight: bold; width: 10%">职务</td>
+                <td><input  type="text" style="background-color: white" name="peopleDuty_2"></td>
+            </tr>
+            </tbody>
+        </table>
+    </form>
+    <div>
+        <button type="button" class="btn btn-success" style="width: 15%;margin-bottom: 30px;" onclick="add_member()">增加成员</button>
+        <button type="button" class="btn btn-primary" style="width: 15%;margin-bottom: 30px;margin-left: 25%" onclick="edu_reform_apply()">提交</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var member_num=2;
+    function add_member(){
+        if(member_num >= 5){
+            alert("每个项目最多只能有5个成员（包括申请人）！");
+            return false;
+        }
+        member_num = member_num + 1;
+        $("#eduReformTable").append('<tr><td style="font-weight: bold; width: 10%">姓名</td><td><input  type="text" style="background-color: white" name="peopleName_'+ member_num +'"></td><td style="font-weight: bold; width: 10%">职务</td><td><input  type="text" style="background-color: white" name="peopleDuty_'+member_num +'"></td></tr>');
+    }
+
+    function edu_reform_apply() {
+        for(var i=0;i<document.getElementById("applyForm").elements.length-1;i++)
+        {
+           if(document.getElementById("applyForm").elements[i].value=="")
+           {
+              alert("未填写所有内容！");
+              document.getElementById("applyForm").elements[i].focus();
+              return false;
+           }
+        }
+        if(document.getElementById("apply_file").value=='') {
+            alert("未上传申请书！");
+            return false;
+        }
+
+        var beginDate=$("#begin_date").val();
+        var endDate=$("#end_date").val();
+        var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+        var d2 = new Date(endDate.replace(/\-/g, "\/"));
+        if(d1 >=d2)
+        {
+            alert("起始日期不能等于或大于结束日期！");
+            return false;
+        }
+
+        if (confirm("确认提交吗？")) {
+            var form_data = new FormData(document.getElementById("applyForm"));
+            form_data.append('member_num',member_num);
+            $.ajax({
+                data: form_data,
+                type: "post", //提交方式
+                processData: false,
+                 contentType: false,
+                //dataType: "json", //数据类型
+                url: "/tea/EduReformApply/", //请求url
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            alert("提交成功！");
+                            window.close();
+                        } else if (data.status == 'fail') {
+
+                    }
+                }
+            });
+        } else {
+        return false;
+        }
+    }
+</script>
+</body>
+</html>

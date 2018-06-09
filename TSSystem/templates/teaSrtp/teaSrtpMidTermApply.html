@@ -62,6 +62,7 @@
                     url: "/tea/SrtpMidTermApply/{{ srtp_project.project_id }}/", //请求url
                     success: function (data) {
                         if (data.status == 'success') {
+                            alert("提交成功！");
                             location.reload();
                         } else if (data.status == 'fail') {
 

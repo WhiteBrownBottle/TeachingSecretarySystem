@@ -1,0 +1,76 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>教师首页</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body onload="state_judge()">
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px">项目结题申请</h2>
+    <form method="post" id="concluApplyForm">
+
+    </form>
+    <div style="margin-top: 20px">
+        <table class="table table-hover">
+            <tbody>
+            <tr style="background-color:#b2dba1">
+                <td style="font-weight: bold;">项目名称</td>
+                <td style="font-weight: bold;">提交截止时间</td>
+                <td style="font-weight: bold;">项目结题报告</td>
+                <td style="font-weight: bold">审核状态</td>
+            </tr>
+            <tr>
+                <td>{{ edu_project.eduproject_name }}</td>
+                <td>{{ educonclusion.educonclusion_deadline_date }}</td>
+                {% if educonclusion.educonclusion_file_name %}
+                <td><a style="color: blue" href="{{ educonclusion.educonclusion_file_url }}" target="_blank">{{ educonclusion.educonclusion_file_name }}</a></td>
+                {% else %}
+                    <td></td>
+                {% endif %}
+                <td id="state">{{ educonclusion.get_educonclusion_check_status_display }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript">
+    function state_judge(){
+        if(document.getElementById("state").innerHTML=="未提交" || document.getElementById("state").innerHTML==""){
+            $("#concluApplyForm").append('<table style="border-collapse: collapse; width: 96%; margin-top: 5px"><tbody><tr><td style="font-weight: bold; width: 10%;"><span style="color: red">*</span>中期检查报告</td><td><input type="file" name="file"></td></tr></tbody></table><div align="left" style="margin-top: 20px"><button type="button" class="btn btn-danger" onclick="concluApplyPost()">提交</button></div>');
+        } else {
+            $("#concluApplyForm").append("您已提交项目结题申请");
+        }
+    }
+
+    //提交给数据库，并更新页面的表格
+    function concluApplyPost() {
+        var form_data = new FormData(document.getElementById("concluApplyForm"));
+        $.ajax({
+            data: form_data,
+            type: "post", //提交方式
+            processData:false,
+            contentType:false,
+            //dataType: "json", //数据类型
+            url: "/tea/EduReformConcluApply/{{ edu_project.eduproject_id }}/", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                    alert("提交成功！");
+                    location.reload();
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        })
+    }
+</script>
+</body>
+<br>
+</html>

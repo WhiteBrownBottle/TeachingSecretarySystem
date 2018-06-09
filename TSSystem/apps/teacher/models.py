@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import date
+import django.utils.timezone as timezone
 from main_platform.models import Grade, Class
 from django.contrib.auth.models import AbstractUser
 from django.contrib.auth.hashers import make_password, check_password
@@ -20,6 +21,9 @@ class Teacher(models.Model):
     teacher_phone = models.IntegerField(null=False, blank=False, default=11111111111, verbose_name=u'教师电话号码')
     teacher_email = models.CharField(null=True, blank=True, unique=True, max_length=50, verbose_name=u'教师邮箱')
     teacher_title = models.CharField(null=False, blank=False, max_length=20, default='教师', verbose_name=u'教师职称')
+    teacher_birth_date = models.DateField(default=timezone.now, verbose_name=u'出生日期')
+    teacher_major = models.CharField(null=False, blank=False, max_length=20, default='暂未填写', verbose_name=u'教师专业')
+    teacher_duty = models.CharField(null=False, blank=False, max_length=20, default='暂未填写', verbose_name=u'教师职务')
 
     class Meta:
         verbose_name = u'教师信息'

@@ -5,6 +5,7 @@ from teacher.models import Teacher
 from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
 from main_platform.models import Notification, NotifiFile
 from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
+from edu_reform.models import EduProject, EduMidTerm, EduConclusion
 from utils.session_judge import session_judge, session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from django.http import HttpResponseRedirect, HttpResponse
@@ -217,7 +218,15 @@ class fileDownloadView(View):
             elif file_url[2] == 'GradMidtermCollection':
                 file = Dissertation.objects.get(file_url=url)
                 file_name = file.file_name
-
+            elif file_url[2] == 'EduReformApply':
+                file = EduProject.objects.get(eduproject_appli_url=url)
+                file_name = file.eduproject_appli_name
+            elif file_url[2] == 'EduMidTerm':
+                file = EduMidTerm.objects.get(edumidterm_file_url=url)
+                file_name = file.edumidterm_file_name
+            elif file_url[2] == 'EduConclusion':
+                file = EduConclusion.objects.get(educonclusion_file_url=url)
+                file_name = file.educonclusion_file_name
 
             the_file_name = settings.MEDIA_ROOT + '/' + file_url[2] + '/' + file_url[3]
             response = StreamingHttpResponse(file_iterator(the_file_name))

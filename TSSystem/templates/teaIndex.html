@@ -22,12 +22,25 @@
 </head>
 
 <body style="font-family: sans-serif; margin: 0; background-image: url(bg.jpg)">
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'main_platform:teaIndex' %}">(教师)本科教学秘书辅助系统</a>
+        </div>
+        <ul class="nav navbar-nav pull-right">
+            <li id="personCenter">
+                <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+            </li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+        </ul>
+    </div>
+</nav>
 <div style="margin:100px auto;width: 500px;height: 500px">
 	<h1 style="color: #3c3c3c; text-shadow: 0 0 5px; letter-spacing: 1px; text-align: center">(教师)本科教学秘书辅助系统</h1>
 	<div style="margin: 50px auto; width: 300px;">
 		<a href="{% url 'teacher:Srtp_Home' %}" target="_blank" class="btn btn-primary btn-lg btn-block">srtp项目管理</a>
 		<br>
-        <a href="{% url 'teacher:Gra_Home' %}"  target="_blank" class="btn btn-primary btn-lg btn-block">教改/教研/教材项目管理</a>
+        <a href="{% url 'teacher:EduReform_home' %}"  target="_blank" class="btn btn-primary btn-lg btn-block">教改/教研/教材项目管理</a>
         <br>
 		<a href="{% url 'teacher:Gra_Home' %}"  target="_blank" class="btn btn-primary btn-lg btn-block">本科毕业设计项目管理</a>
 	</div>

@@ -32,4 +32,12 @@ urlpatterns = [
     url(r'^GraMidterm/$', views.teaGraMidtermView.as_view(), name='Gra_Midterm' ),
     url(r'^GraPaper/$', views.teaGraPaperView.as_view(), name='Gra_Paper'),
 
+    url(r'^EduReformHome/$', views.eduReformHomeView.as_view(), name='EduReform_home'),
+    url(r'^EduReformApply/$', views.eduReformApplyView.as_view(), name='EduReform_Apply'),
+    url(r'^EduReformManage/(?P<eduproject_id>\d+)/$', views.eduReformManageView.as_view(), name='EduReform_Manage'),
+
+    url(r'^EduReformInfo/(?P<eduproject_id>\d+)/$', views.eduReformInfoView.as_view(), name='EduReform_Info'),
+    url(r'^EduReformMidTermApply/(?P<eduproject_id>\d+)/$', views.eduReformMidTermApplyView.as_view(), name='EduReform_MidTermApply'),
+    url(r'^EduReformConcluApply/(?P<eduproject_id>\d+)/$', views.eduReformConcluApplyView.as_view(), name='EduReform_ConcluApply')
+
 ]

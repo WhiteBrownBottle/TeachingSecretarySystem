@@ -1,0 +1,97 @@
+<!-- 教改首页 -->
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>教师首页</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'teacher:EduReform_home' %}">计通学院教改/教研/教材管理平台</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="active"><a href="{% url 'teacher:EduReform_home' %}">消息通知</a> </li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">项目管理<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="{% url 'teacher:EduReform_Apply' %}" target="_blank">项目申请</a></li>
+                    <li class="divider" role="separator"></li>
+                    {% for eduproject in eduproject_view_list %}
+                    <li><a href="{% url 'teacher:EduReform_Manage' eduproject.eduproject_id %}">{{ eduproject.eduproject_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li id="personCenter">
+                <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+            </li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>通知公告</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="list-group">
+            {% for notification in notification_list.object_list %}
+            <a href="{% url 'teacher:Srtp_Notifi' notification.notifi_id %}" class="list-group-item">
+                <h4 class="list-group-item-heading">{{ notification.notifi_title }}</h4>
+                <small>{{ notification.notifi_date }}</small>
+            </a>
+            {% endfor %}
+        </div>
+        <div align="center">
+            <ul class="pagination">
+                {% if notification_list.has_previous %}
+                    <li class="long">
+                        <a href="?{{ notification_list.previous_page_number.querystring }}" class="btn btn-primary">上一页</a>
+                    </li>
+                {% endif %}
+
+                {% for page in notification_list.pages %}
+
+                {% if page %}
+                    {% ifequal page notification_list.number %}
+                    <li class="active">
+                        <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="?{{ page.querystring }}" class="btn btn-primary">{{ page }}</a>
+                    </li>
+                    {% endifequal %}
+                {% else %}
+                <li class="none">
+                    <a href="" class="btn btn-primary">...</a>
+                </li>
+                {% endif %}
+                {% endfor %}
+
+                {% if notification_list.has_next %}
+                    <li class="long">
+                    <a href="?{{ notification_list.next_page_number.querystring }}" class="btn btn-primary">下一页</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

@@ -156,18 +156,14 @@
     <script type="text/javascript">
         var member_num=2;
         function add_member(){
-            member_num = member_num + 1;
-            if(member_num > 5){
+            if(member_num >= 5){
                 alert("每个项目最多只能有5个成员（包括申请人）！");
                 return false;
             }
+            member_num = member_num + 1;
             $("#table_proApply").append('<tr><td style="font-weight: bold">学号</td><td><input type="text" style="background-color: white" name="number_' + member_num + '" id="number"></td><td style="font-weight: bold">姓名</td><td><input type="text" style="background-color: white" name="stuname_' + member_num + '" id="stuname"></td></tr>');
         }
         function pro_apply() {
-            if(document.getElementById("apply_file").value=='') {
-                alert("未上传申请书！");
-                return false;
-            }
             for(var i=0;i<document.getElementById("applyForm").elements.length-1;i++)
             {
                if(document.getElementById("applyForm").elements[i].value=="")
@@ -176,6 +172,19 @@
                   document.getElementById("applyForm").elements[i].focus();
                   return false;
                }
+            }
+            if(document.getElementById("apply_file").value=='') {
+                alert("未上传申请书！");
+                return false;
+            }
+            var beginDate=$("#begin").val();
+            var endDate=$("#end").val();
+            var d1 = new Date(beginDate.replace(/\-/g, "\/"));
+            var d2 = new Date(endDate.replace(/\-/g, "\/"));
+            if(d1 >=d2)
+            {
+                alert("开始时间不能等于或大于结束时间！");
+                return false;
             }
             if (confirm("确认提交吗？")) {
                 var form_data = new FormData(document.getElementById("applyForm"));
@@ -189,8 +198,9 @@
                     url: "/stu/SrtpProApply/", //请求url
                         success: function(data) {
                             if (data.status == 'success') {
-
-                        } else if (data.status == 'fail') {
+                                alert("提交成功!");
+                                window.close();
+                            } else if (data.status == 'fail') {
 
                         }
                     }
