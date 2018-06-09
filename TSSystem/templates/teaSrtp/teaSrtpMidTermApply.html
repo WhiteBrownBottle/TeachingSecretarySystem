@@ -29,7 +29,11 @@
                 <tr>
                     <td>{{ srtp_project.project_name }}</td>
                     <td>{{ midterm.midterm_deadline_date }}</td>
-                    <td><a style="color: blue" href="{{ midterm.midterm_file_url }}" target="_blank">{{ midterm.midterm_file_name }}</a></td>
+                    {% if midterm.midterm_file_name %}
+                        <td><a style="color: blue" href="{{ midterm.midterm_file_url }}" target="_blank">{{ midterm.midterm_file_name }}</a></td>
+                    {% else %}
+                        <td></td>
+                    {% endif %}
                     <td>{{ midterm.get_midterm_check_status_display }}</td>
                     <td id="midState">{{ midterm.get_midterm_check_point_display }}</td>
                     <td id="midPass">

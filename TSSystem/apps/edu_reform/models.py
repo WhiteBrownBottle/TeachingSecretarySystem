@@ -22,7 +22,7 @@ class EduProject(models.Model):
     eduproject_type = models.CharField(max_length=2, blank=False, null=False, choices=TYPE_CHOICE, default='zd', verbose_name=u'项目类别')
     eduproject_date_begin = models.DateField(default=timezone.now, verbose_name=u'起始日期')
     eduproject_date_end = models.DateField(default=timezone.now, verbose_name=u'结束日期')
-    eduproject_person_in_charge = models.OneToOneField(Teacher, blank=True, null=True, on_delete=models.CASCADE, verbose_name='项目负责人')
+    eduproject_person_in_charge = models.ForeignKey(Teacher, blank=True, null=True, on_delete=models.CASCADE, verbose_name='项目负责人')
     eduproject_appli_name = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书名称')
     eduproject_appli_url = models.CharField(max_length=100, blank=True, null=True, verbose_name=u'项目申请书路径')
     eduproject_member = models.CharField(null=True, blank=True, max_length=50, default="暂未填写", verbose_name='项目成员')

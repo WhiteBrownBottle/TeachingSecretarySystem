@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^SrtpNotification/(?P<notifi_id>\d+)/$', views.stuSrtpNotifiView.as_view(), name='Srtp_Notifi'),
     url(r'^SrtpSpecificInfo/(?P<project_id>\d+)/$', views.stuSrtpSpecificInfoView.as_view(), name='Srtp_SpecificInfo'),
 
+    url(r'^SrtpDeleteResult/$', views.stuSrtpDeleteResultView.as_view(), name='Srtp_DeleteResult'),
 
     url(r'^GraHome/$', views.stuGraHomeView.as_view(), name='Gra_Home'),
     url(r'^GraNotification/(?P<notifi_id>\d+)/$', views.stuGraNotifiView.as_view(), name='Gra_Notifi'),

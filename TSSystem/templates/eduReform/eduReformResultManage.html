@@ -82,7 +82,7 @@
                     </tr>
                     {% for eduresult in eduresult_list %}
                     <tr>
-                        <td>{{ eduresult.eduresult_name }}</td>
+                        <td id="{{ eduresult.id }}">{{ eduresult.eduresult_name }}</td>
                         <td>{{ eduresult.get_eduresult_type_display }}</td>
                         <td>{{ eduresult.eduresult_date }}</td>
                         <td>{{ eduresult.eduresult_master }}</td>
@@ -128,29 +128,36 @@
         return el;
     }
 
-    function removeTr(el) {
+    function removeTr(node) {
         var msg = "确定要删除吗？";
         if (confirm(msg) == true) {
-            el = getParent(el, 'TR');
-            var rowIndex = el.rowIndex;
-            el = getParent(el, 'TABLE');
-            el.deleteRow(rowIndex);
+            //el = getParent(el, 'TR');
+            //var rowIndex = el.rowIndex;
+            //el = getParent(el, 'TABLE');
+            //el.deleteRow(rowIndex);
+            var tr1 = node.parentNode.parentNode;
+            //alert(tr1.rowIndex);
+            result_id = tr1.cells[0].id;
+            $.ajax({
+            data:
+            {
+                 'result_id': result_id,
+            },
+            type: "post", //提交方式
+            dataType: "json", //数据类型
+            url: "/tea/EduReformDeleteResult/", //请求url
+            success: function(data) {
+                if (data.status == 'success') {
+                    alert("删除成功！");
+                    location.reload();
+                } else if (data.status == 'fail') {
+
+                }
+            }
+        })
         } else {
             return false;
         }
-    }
-
-    //获取文件真实路径
-    function getObjectURL(file) {
-        var url = null;
-        if (window.createObjcectURL != undefined) {
-            url = window.createOjcectURL(file);
-        } else if (window.URL != undefined) {
-            url = window.URL.createObjectURL(file);
-        } else if (window.webkitURL != undefined) {
-            url = window.webkitURL.createObjectURL(file);
-        }
-        return url;
     }
     </script>
 </body>

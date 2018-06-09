@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^SrtpNotification/(?P<notifi_id>\d+)/$', views.teaSrtpNotifiView.as_view(), name='Srtp_Notifi'),
     url(r'^SrtpSpecificInfo/(?P<project_id>\d+)/$', views.teaSrtpSpecificInfoView.as_view(), name='Srtp_SpecificInfo'),
 
+    url(r'^SrtpDeleteResult/$', views.teaSrtpDeleteResultView.as_view(), name='Srtp_DeleteResult'),
 
     url(r'^GraHome/$', views.teaGraHomeView.as_view(), name='Gra_Home'),
     url(r'^GraNotification/(?P<notifi_id>\d+)/$', views.teaGraNotifiView.as_view(), name='Gra_Notifi'),
@@ -40,6 +41,8 @@ urlpatterns = [
     url(r'^EduReformMidTermApply/(?P<eduproject_id>\d+)/$', views.eduReformMidTermApplyView.as_view(), name='EduReform_MidTermApply'),
     url(r'^EduReformConcluApply/(?P<eduproject_id>\d+)/$', views.eduReformConcluApplyView.as_view(), name='EduReform_ConcluApply'),
     url(r'^EduReformFundManage/(?P<eduproject_id>\d+)/$', views.eduReformFundManageView.as_view(), name='EduReform_FundManage'),
-    url(r'^EduReformResultManage/(?P<eduproject_id>\d+)/$', views.eduReformResultManageView.as_view(), name='EduReform_ResultManage')
+    url(r'^EduReformResultManage/(?P<eduproject_id>\d+)/$', views.eduReformResultManageView.as_view(), name='EduReform_ResultManage'),
+
+    url(r'^EduReformDeleteResult/$', views.eduReformDeleteResultView.as_view(), name='EduReform_DeleteResult')
 
 ]

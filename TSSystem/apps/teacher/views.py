@@ -196,6 +196,23 @@ class teaSrtpResultManageView(View):
         pass
 
 
+class teaSrtpDeleteResultView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            pass
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            result_id = request.POST.get('result_id', '')
+            Result.objects.get(id = result_id).delete()
+            return HttpResponse('{"status": "success", "msg": "删除成功"}', content_type='application/json')
+
+
 class teaSrtpAddtionFundsView(View):
 
     def get(self, request, project_id):
@@ -653,12 +670,6 @@ class eduReformManageView(View):
             return render(request, 'eduReform/eduReformManage.html', context={'edu_project': edu_project,
                                                                         'eduproject_view_list': eduproject_view_list})
 
-    def post(self, request, eduproject_id):
-        if session_judge_teacher(request):
-            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
-        else:
-            return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
-
 
 class eduReformMidTermApplyView(View):
 
@@ -700,11 +711,10 @@ class eduReformFundManageView(View):
         if session_judge_teacher(request):
             return HttpResponseRedirect('/')
         else:
-            teacher = Teacher.objects.get(teacher_id = request.session['user_id'])
-            edu_project = EduProject.objects.get(eduproject_person_in_charge_id = teacher.id)
+            edu_project = EduProject.objects.get(eduproject_id = eduproject_id)
             edufund_list = EduFund.objects.filter(eduproject_belong_id = edu_project.eduproject_id).order_by('edufund_date')
-            return render(request, 'eduReform/eduReformFundManage.html', context={'edufund_list': edufund_list,
-                                                                                  'edu_project': edu_project})
+            return render(request, 'eduReform/eduReformFundManage.html', context={'edu_project': edu_project,
+                                                                                  'edufund_list': edufund_list})
 
     def post(self, request, eduproject_id):
         if session_judge_teacher(request):
@@ -734,12 +744,11 @@ class eduReformResultManageView(View):
         if session_judge_teacher(request):
             return HttpResponseRedirect('/')
         else:
-            user_id = request.session['user_id']
-            teacher = Teacher.objects.get(teacher_id=user_id)
-            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
-            eduresult_list = EduResult.objects.filter(eduproject_belong_id=edu_project.eduproject_id).order_by('eduresult_date')
-            return render(request, 'eduReform/eduReformResultManage.html', context={'eduresult_list': eduresult_list,
-                                                                                    'edu_project': edu_project})
+            edu_project = EduProject.objects.get(eduproject_id = eduproject_id)
+            eduresult_list = EduResult.objects.filter(eduproject_belong_id = edu_project.eduproject_id).order_by('eduresult_date')
+            return render(request, 'eduReform/eduReformFundManage.html', context={'edu_project': edu_project,
+                                                                                  'eduresult_list': eduresult_list})
+
 
     def post(self, request, eduproject_id):
         if session_judge_teacher(request):
@@ -765,3 +774,17 @@ class eduReformResultManageView(View):
             eduresult.eduproject_belong = edu_project
             eduresult.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
+
+
+class eduReformDeleteResultView(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            pass
+
+    def post(self, request):
+        result_id = request.POST.get('result_id', '')
+        EduResult.objects.get(id = result_id).delete()
+        return HttpResponse('{"status": "success", "msg": "删除成功"}', content_type='application/json')

@@ -404,6 +404,23 @@ class stuSrtpResultManageView(View):
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
+class stuSrtpDeleteResultView(View):
+
+    def get(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            pass
+
+    def post(self, request):
+        if session_judge(request):
+            return HttpResponseRedirect('/')
+        else:
+            result_id = request.POST.get('result_id', '')
+            Result.objects.get(id = result_id).delete()
+            return HttpResponse('{"status": "success", "msg": "删除成功"}', content_type='application/json')
+
+
 class stuSrtpAddtionFundsView(View):
 
     def get(self, request):
@@ -515,7 +532,6 @@ class stuSrtpConcluApplyView(View):
             conclusion.project_belong = srtp_project
             conclusion.save()
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
-
 
 
 class stuGraHomeView(View):
