@@ -20,7 +20,7 @@ function login() {
     }
 
     if (document.getElementById("radio1").checked == false && document.getElementById("radio2").checked == false && document.getElementById("radio3").checked == false) {
-        alert('请选择身份');
+        swal("请选择身份","");
         flag = 'n';
     }
     if (flag == 'n') return false;
@@ -47,5 +47,43 @@ function login() {
 }
 
 function forgetPassword() {
-    alert("请联系管理员！");
+    form1.username.style.borderColor = '#dddddd';
+    var flag = 'y';
+
+    if (form1.username.value == "" && document.getElementById("radio1").checked == false && document.getElementById("radio2").checked == false && document.getElementById("radio3").checked == false) {
+        form1.username.style.borderColor = 'red';
+        swal("请填写您的用户名和选择身份!", "");
+        form1.username.focus();
+        return false;
+    }
+
+    if (form1.username.value == "") {
+        form1.username.style.borderColor = 'red';
+        swal("请填写您的用户名!","");
+        form1.username.focus();
+        flag = 'n';
+    }
+
+    if (document.getElementById("radio1").checked == false && document.getElementById("radio2").checked == false && document.getElementById("radio3").checked == false) {
+        swal("请选择身份","");
+        flag = 'n';
+    }
+    if (flag == 'n') return false;
+    swal("已向您的邮箱发送初始密码，请查看并及时修改！","","success");
+
+    $.ajax({
+        data: {
+            'username': document.getElementById("username").value
+        },
+        type: "post", //提交方式
+        dataType: "json", //数据类型
+        url: "//", //请求url
+        success: function(data) {
+            if (data.status == 'success') {
+            swal("已向您的邮箱发送初始密码，请查看并及时修改！","","success");
+            } else if (data.status == 'fail') {
+                swal(data.msg, "", "error");
+            }
+        }
+    });
 }
