@@ -157,6 +157,14 @@ EACHPAGE_NUMBER = 5
 DEFAULT_FILE_STORAGE = "utils.customfilefield.storage.FileStorage"
 
 
+EMAIL_HOST = "smtp.163.com"
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'kaoyanbao@163.com'
+EMAIL_HOST_PASSWORD = 'kaoyanbao123'
+EMAIL_USE_TLS = True
+EMAIL_FROM = 'kaoyanbao@163.com'
+
+
 
 
 

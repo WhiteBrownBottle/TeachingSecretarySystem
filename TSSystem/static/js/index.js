@@ -77,7 +77,7 @@ function forgetPassword() {
         },
         type: "post", //提交方式
         dataType: "json", //数据类型
-        url: "//", //请求url
+        url: "/forgetpwd/", //请求url
         success: function(data) {
             if (data.status == 'success') {
             swal("已向您的邮箱发送初始密码，请查看并及时修改！","","success");

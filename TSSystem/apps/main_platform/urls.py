@@ -16,8 +16,8 @@ urlpatterns = [
     url(r'^student/', views.StudentView.as_view(), name='stuIndex'),
     url(r'^teacher/', views.TeacherView.as_view(), name='teaIndex'),
 
-    url(r'^media/\w+/\d+\.\w+', views.fileDownloadView.as_view(), name='fileDownload')
+    url(r'^media/\w+/\d+\.\w+', views.fileDownloadView.as_view(), name='fileDownload'),
 
-
+    url(r'^forgetpwd/$', views.forgetpwdView.as_view(), name='forgetpwd'),
 
 ]

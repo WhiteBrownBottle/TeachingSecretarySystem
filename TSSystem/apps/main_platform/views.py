@@ -2,18 +2,16 @@ from django.shortcuts import render
 from django.views import View
 from student.models import Student
 from teacher.models import Teacher
-from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTerm, Conclusion
+from srtp_project.models import Project,Result, MidTerm, Conclusion
 from main_platform.models import Notification, NotifiFile
 from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
 from edu_reform.models import EduProject, EduMidTerm, EduConclusion, EduResult
 from utils.session_judge import session_judge, session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
+from utils.email_send import send_forgetpwd_email
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password, make_password
-import django.utils.timezone as timezone
-import time, datetime, os
-from django.db.models import Q
 from django.conf import settings
 from django.http import StreamingHttpResponse
 
@@ -247,6 +245,48 @@ class fileDownloadView(View):
 
     def post(self, request):
         pass
+
+
+class forgetpwdView(View):
+
+    def get(self, request):
+        print(request)
+
+    def post(self, request):
+        user_id = request.POST.get('username' '')
+        user_type = request.POST.get('identify', '')
+        if user_type != '2' and user_type != '3':
+            return HttpResponse('{"status": "fail", "msg": "未选择用户类型"}', content_type='application/json')
+        if user_id == '':
+            return HttpResponse('{"status": "fail", "msg": "未填写用户名"}', content_type='application/json')
+
+        if user_type == '2':
+            try:
+                teacher = Teacher.objects.get(teacher_id=user_id)
+            except Teacher.DoesNotExist:
+                return HttpResponse('{"status": "fail", "msg": "用户不存在"}', content_type='application/json')
+            teacher_email = teacher.teacher_email
+            send_forgetpwd_email(teacher_email, user_type, teacher)
+            return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % (user_type),
+                                content_type='application/json')
+        if user_type == '3':
+            try:
+                student = Student.objects.get(student_id=user_id)
+            except Student.DoesNotExist:
+                return HttpResponse('{"status": "fail", "msg": "用户不存在"}', content_type='application/json')
+            student_email = student.student_email
+            send_forgetpwd_email(student_email, user_type, student)
+            return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % (user_type),
+                                content_type='application/json')
+
+
+
+
+
+
+
+
+
 
 
 
