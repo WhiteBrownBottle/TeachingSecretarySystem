@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>计通学院开课通知</title>
+    <title>计通学院排课管理</title>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
     <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
@@ -16,19 +16,20 @@
 <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#">计通学院开课通知</a>
+            <a class="navbar-brand" href="#">计通学院排课管理</a>
         </div>
         <ul class="nav navbar-nav">
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">通知列表<b class="caret"></b></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">排课列表<b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">开课通知1</a></li>
-                    <li><a href="#">开课通知2</a></li>
-                    <li><a href="#">开课通知2</a></li>
+                    <li><a href="#">课程1</a></li>
+                    <li><a href="#">课程2</a></li>
+                    <li><a href="#">课程3</a></li>
                 </ul>
             </li>
         </ul>
         <ul class="nav navbar-nav pull-right">
+            <li><a href="{% url 'main_platform:teaIndex' %}">首页</a></li>
             <li id="personCenter">
                 <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
             </li>
@@ -37,9 +38,8 @@
     </div>
 </nav>
 <div style="margin: 10px 20px 0px 20px">
-    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">北京科技大学本科开课通知（理论教学）</h2>
-    <p>开课学院：计算机与通信工程学院</p>
-    <form action="stuSrtpProApply.html" method="post">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">计通学院本科开课通知（理论教学）</h2>
+    <form method="post" name="course_form">
         <table class="table table-striped">
             <tbody>
             <tr style="background-color:#b2dba1"><td colspan="8" align="center"><span style="font-weight: bold">课程信息表</span></td></tr>
@@ -58,10 +58,14 @@
                 <td>无线定位导航原理及应用</td>
                 <td>本专业选</td>
                 <td>32</td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="date" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white" name="experiment_period"></td>
+                <td><input type="text" style="background-color: white" name="design_period"></td>
+                <td><input type="text" style="background-color: white" name="pc_period"></td>
+                <td>
+                    <label>
+                        <input type="checkbox" id="z" value="z" name="exam">
+                    </label>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -90,79 +94,79 @@
             </tr>
             <tr>
                 <td style="font-weight: bold">讲课学时</td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-1"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-2"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-3"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-4"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-5"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-6"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-7"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-8"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-9"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-10"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-11"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-12"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-13"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-14"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-15"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="j-16"></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">实验学时</td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-1"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-2"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-3"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-4"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-5"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-6"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-7"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-8"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-9"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-10"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-11"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-12"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-13"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-14"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-15"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="s-16"></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">设计学时</td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-1"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-2"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-3"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-4"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-5"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-6"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-7"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-8"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-9"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-10"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-11"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-12"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-13"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-14"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-15"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="d-16"></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">上机学时</td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
-                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-1"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-2"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-3"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-4"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-5"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-6"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-7"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-8"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-9"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-10"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-11"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-12"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-13"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-14"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-15"></td>
+                <td><input type="text" style="background-color: white;width: 50%" name="p-16"></td>
             </tr>
             </tbody>
         </table>
@@ -176,34 +180,34 @@
                 <td style="font-weight: bold">学时</td>
             </tr>
             <tr>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white" name="teacher_name"></td>
+                <td><input type="text" style="background-color: white" name="period"></td>
+                <td><input type="text" style="background-color: white" name="teacher_2_name"></td>
+                <td><input type="text" style="background-color: white" name="period_2"></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">合班情况</td>
                 <td colspan="3">
-                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                    <textarea style="background-color: white; resize: none; width: 30%" name="heban"></textarea>
                 </td>
             </tr>
             <tr>
                 <td style="font-weight: bold">教室要求</td>
                 <td colspan="3">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 普通
+                        <input type="checkbox" id="inlineCheckbox1" value="option1" name="class-1"> 普通
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 多媒体
+                        <input type="checkbox" id="inlineCheckbox2" value="option2" name="class-2"> 多媒体
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 制图
+                        <input type="checkbox" id="inlineCheckbox3" value="option3" name="class-3"> 制图
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox4" value="option4"> 设计
+                        <input type="checkbox" id="inlineCheckbox4" value="option4" name="class-4"> 设计
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox5" value="option5"> 不排
+                        <input type="checkbox" id="inlineCheckbox5" value="option5" name="class-5"> 不排
                     </label>
 
                 </td>
@@ -216,34 +220,34 @@
                 <td style="font-weight: bold">学时</td>
             </tr>
             <tr>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
-                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white" name="teache_3_name"></td>
+                <td><input type="text" style="background-color: white" name="period"></td>
+                <td><input type="text" style="background-color: white" name="teacher_4_name"></td>
+                <td><input type="text" style="background-color: white" name="period"></td>
             </tr>
             <tr>
                 <td style="font-weight: bold">合班情况</td>
                 <td colspan="3">
-                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                    <textarea style="background-color: white; resize: none; width: 30%" name="heban_2"></textarea>
                 </td>
             </tr>
             <tr>
                 <td style="font-weight: bold">教室要求</td>
                 <td colspan="3">
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox6" value="option1"> 普通
+                        <input type="checkbox" id="inlineCheckbox6" value="option1" name="class2-1"> 普通
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox7" value="option2"> 多媒体
+                        <input type="checkbox" id="inlineCheckbox7" value="option2" name="class2-2"> 多媒体
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox8" value="option3"> 制图
+                        <input type="checkbox" id="inlineCheckbox8" value="option3" name="class2-3"> 制图
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox9" value="option4"> 设计
+                        <input type="checkbox" id="inlineCheckbox9" value="option4" name="class2-4"> 设计
                     </label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" id="inlineCheckbox10" value="option5"> 不排
+                        <input type="checkbox" id="inlineCheckbox10" value="option5" name="class2-5"> 不排
                     </label>
 
                 </td>
@@ -251,7 +255,7 @@
             <tr>
                 <td style="font-weight: bold">备注</td>
                 <td colspan="3">
-                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                    <textarea style="background-color: white; resize: none; width: 30%" name="remark"></textarea>
                 </td>
             </tr>
             </tbody>
@@ -267,8 +271,32 @@
             <tr><td>物联1502</td></tr>
             </tbody>
         </table>
-        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="button" class="btn btn-primary" onclick="tijiao()">提交</button>
     </form>
 </div>
+<script type="text/javascript">
+        function tijiao(){
+            if (confirm("确认提交吗？")) {
+                var form_data = new FormData(document.getElementById("course_form"));
+                $.ajax({
+                    data: form_data,
+                    type: "post", //提交方式
+                    processData: false,
+                     contentType: false,
+                    //dataType: "json", //数据类型
+                    url: "//", //请求url
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            alert("提交成功！");
+                        } else if (data.status == 'fail') {
+
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
+    </script>
 </body>
 </html>
