@@ -50,7 +50,7 @@
                 <td style="font-weight: bold; width: 10%">讲课学时</td>
             </tr>
             <tr>
-                <td name="course_id">4050642</td>
+                <td name="courseId" id="courseId">4050642</td>
                 <td>无线定位导航原理及应用</td>
                 <td>本专业选</td>
                 <td>32</td>
@@ -137,6 +137,7 @@
         function tijiao(){
             if (confirm("确认提交吗？")) {
                 var form_data = new FormData(document.getElementById("course_form"));
+                form_data.append('course_id',document.getElementById("courseId").value);
                 $.ajax({
                     data: form_data,
                     type: "post", //提交方式
