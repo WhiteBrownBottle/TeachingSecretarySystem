@@ -788,3 +788,15 @@ class eduReformDeleteResultView(View):
         result_id = request.POST.get('result_id', '')
         EduResult.objects.get(id = result_id).delete()
         return HttpResponse('{"status": "success", "msg": "删除成功"}', content_type='application/json')
+
+
+class courseArrangementHome(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            return render(request, 'courseArrangementHome.html')
+
+    def post(self, request):
+        pass

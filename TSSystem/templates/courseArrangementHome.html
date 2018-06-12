@@ -1,0 +1,274 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>计通学院开课通知</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/stuSrtpProManage.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">计通学院开课通知</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">通知列表<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">开课通知1</a></li>
+                    <li><a href="#">开课通知2</a></li>
+                    <li><a href="#">开课通知2</a></li>
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li id="personCenter">
+                <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+            </li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+        </ul>
+    </div>
+</nav>
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">北京科技大学本科开课通知（理论教学）</h2>
+    <p>开课学院：计算机与通信工程学院</p>
+    <form action="stuSrtpProApply.html" method="post">
+        <table class="table table-striped">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td colspan="8" align="center"><span style="font-weight: bold">课程信息表</span></td></tr>
+            <tr>
+                <td style="font-weight: bold; width: 10%">课程编号</td>
+                <td style="font-weight: bold; width: 10%">课程名称</td>
+                <td style="font-weight: bold; width: 10%">课程类别</td>
+                <td style="font-weight: bold; width: 10%">讲课学时</td>
+                <td style="font-weight: bold; width: 10%">实验学时</td>
+                <td style="font-weight: bold; width: 10%">设计学时</td>
+                <td style="font-weight: bold; width: 10%">上机学时</td>
+                <td style="font-weight: bold; width: 10%">暂定集中考试</td>
+            </tr>
+            <tr>
+                <td>4050642</td>
+                <td>无线定位导航原理及应用</td>
+                <td>本专业选</td>
+                <td>32</td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="date" style="background-color: white"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="table table-striped">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td colspan="17" align="center"><span style="font-weight: bold">教学进度表</span></td></tr>
+            <tr>
+                <td style="font-weight: bold;">教学方式</td>
+                <td style="font-weight: bold;width: 6%">第一周</td>
+                <td style="font-weight: bold;width: 6%">第二周</td>
+                <td style="font-weight: bold;width: 6%">第三周</td>
+                <td style="font-weight: bold;width: 6%">第四周</td>
+                <td style="font-weight: bold;width: 6%">第五周</td>
+                <td style="font-weight: bold;width: 6%">第六周</td>
+                <td style="font-weight: bold;width: 6%">第七周</td>
+                <td style="font-weight: bold;width: 6%">第八周</td>
+                <td style="font-weight: bold;width: 6%">第九周</td>
+                <td style="font-weight: bold;width: 6%">第十周</td>
+                <td style="font-weight: bold;width: 6%">第十一周</td>
+                <td style="font-weight: bold;width: 6%">第十二周</td>
+                <td style="font-weight: bold;width: 6%">第十三周</td>
+                <td style="font-weight: bold;width: 6%">第十四周</td>
+                <td style="font-weight: bold;width: 6%">第十五周</td>
+                <td style="font-weight: bold;width: 6%">第十六周</td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">讲课学时</td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">实验学时</td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">设计学时</td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">上机学时</td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+                <td><input type="text" style="background-color: white;width: 50%"></td>
+            </tr>
+            </tbody>
+        </table>
+        <br>
+        <table class="table table-striped">
+            <tbody>
+            <tr>
+                <td style="font-weight: bold">讲课主讲教师姓名</td>
+                <td style="font-weight: bold">学时</td>
+                <td style="font-weight: bold">讲课第二教师姓名</td>
+                <td style="font-weight: bold">学时</td>
+            </tr>
+            <tr>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">合班情况</td>
+                <td colspan="3">
+                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">教室要求</td>
+                <td colspan="3">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 普通
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 多媒体
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 制图
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox4" value="option4"> 设计
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox5" value="option5"> 不排
+                    </label>
+
+                </td>
+            </tr>
+            <tr style="height: 20px"></tr>
+            <tr>
+                <td style="font-weight: bold">其他学时主讲教师姓名</td>
+                <td style="font-weight: bold">学时</td>
+                <td style="font-weight: bold">其他学时第二教师姓名</td>
+                <td style="font-weight: bold">学时</td>
+            </tr>
+            <tr>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+                <td><input type="text" style="background-color: white"></td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">合班情况</td>
+                <td colspan="3">
+                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">教室要求</td>
+                <td colspan="3">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox6" value="option1"> 普通
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox7" value="option2"> 多媒体
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox8" value="option3"> 制图
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox9" value="option4"> 设计
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox10" value="option5"> 不排
+                    </label>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="font-weight: bold">备注</td>
+                <td colspan="3">
+                    <textarea style="background-color: white; resize: none; width: 30%"></textarea>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td><span style="font-weight: bold">开课班级</span></td></tr>
+            <tr><td>通信1501</td></tr>
+            <tr><td>通信1502</td></tr>
+            <tr><td>通信1503</td></tr>
+            <tr><td>通信1504</td></tr>
+            <tr><td>物联1501</td></tr>
+            <tr><td>物联1502</td></tr>
+            </tbody>
+        </table>
+        <button type="submit" class="btn btn-primary">提交</button>
+    </form>
+</div>
+</body>
+</html>
