@@ -8,6 +8,7 @@
     <script src="../../static/js/jquery-1.11.1.min.js"></script>
     <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
     <script src="../../static/js/jquery.backstretch.min.js"></script>
+    <script src="../../static/js/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -84,6 +85,7 @@
             dataType: "json", //数据类型
             url: "/modify/", //请求url
             success: function(data) {
+                swal("修改成功！", "", "success");
                 if (data.status == 'success') {
                     if(data.user_type == '2'){
                         window.top.document.location.href="{% url 'teacher:Srtp_Home' %}";
