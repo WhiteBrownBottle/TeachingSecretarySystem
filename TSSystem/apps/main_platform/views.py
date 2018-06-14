@@ -117,7 +117,7 @@ class ModifyView(View):
             if check_password(old_pass, teacher.teacher_password):
                 teacher.teacher_password = make_password(new_pass)
                 teacher.save()
-                return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % (user_type), content_type='application/json')
+                return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % '2', content_type='application/json')
             else:
                 return HttpResponse('{"status": "fail", "msg": "原密码不匹配"}', content_type='application/json')
         elif check_password('3', user_type):
@@ -130,7 +130,7 @@ class ModifyView(View):
             if check_password(old_pass, student.student_password):
                 student.student_password = make_password(new_pass)
                 student.save()
-                return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' %(user_type), content_type='application/json')
+                return HttpResponse('{"status": "success", "msg": "修改成功", "user_type": %s}' % '3', content_type='application/json')
             else:
                 return HttpResponse('{"status": "fail", "msg": "原密码不匹配"}', content_type='application/json')
 

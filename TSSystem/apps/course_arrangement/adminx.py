@@ -3,26 +3,26 @@
 
 import xadmin
 
-from .models import Course, CourseTime
+from .models import Selection, Course
 
 
-class CourseTimeAdmin(object):
+class SelectionAdmin(object):
 
-    list_display = ['course_weekday', 'course_time']
+    list_display = ['course_period', 'course_weekday', 'course_time', 'course_building', 'course_classroom', 'selection', 'is_empty']
 
-    search_fields = ['course_weekday', 'course_time']
+    search_fields = ['course_period', 'course_weekday', 'course_time', 'course_building', 'course_classroom', 'selection', 'is_empty']
 
-    list_filter = ['course_weekday', 'course_time']
+    list_filter = ['course_period', 'course_weekday', 'course_time', 'course_building', 'course_classroom', 'selection', 'is_empty']
 
 
 class CourseAdmin(object):
 
-    list_display = ['course_id', 'course_name', 'course_location', 'course_length']
+    list_display = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
 
-    search_fields = ['course_id', 'course_name', 'course_location', 'course_length']
+    search_fields = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
 
-    list_filter = ['course_id', 'course_name', 'course_location', 'course_length']
+    list_filter = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
 
 
-xadmin.site.register(CourseTime, CourseTimeAdmin)
+xadmin.site.register(Selection, SelectionAdmin)
 xadmin.site.register(Course, CourseAdmin)

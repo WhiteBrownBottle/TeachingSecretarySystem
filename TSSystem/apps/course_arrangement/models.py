@@ -1,74 +1,114 @@
 from django.db import models
+from teacher.models import Teacher
 
 # Create your models here.
 
 
-class CourseTime(models.Model):
+
+class Selection(models.Model):
+
+    COURSE_PERIOD_CHOICE = (
+        (1, '1-8'),
+        (2, '9-16'),
+    )
 
     COURSE_WEEKDAY_CHOICE = (
-        ('1', '星期一'),
-        ('2', '星期二'),
-        ('3', '星期三'),
-        ('4', '星期四'),
-        ('5', '星期五'),
+        (1, '星期一'),
+        (2, '星期二'),
+        (3, '星期三'),
+        (4, '星期四'),
+        (5, '星期五')
     )
 
-    COURSETIME_CHOICE = (
-        ('1', '第一节'),
-        ('2', '第二节'),
-        ('3', '第三节'),
-        ('4', '第四节'),
-        ('5', '第五节'),
-        ('6', '第六节')
+    COURSE_TIME_CHOICE = (
+        (1, '第一节'),
+        (2, '第二节'),
+        (3, '第三节'),
+        (4, '第四节'),
+        (5, '第五节'),
+        (6, '第六节')
     )
-    course_weekday = models.CharField(null=False, blank=False, choices=COURSE_WEEKDAY_CHOICE, max_length=1, default='1', verbose_name=u'上课时间(星期几)')
-    course_time = models.CharField(null=False, blank=False, choices=COURSETIME_CHOICE, max_length=1, default='1', verbose_name=u'上课时间(第几节）')
+
+
+    COURSE_BUILDING_CHOICE = (
+        (1, '逸夫楼'),
+        (2, '教学楼'),
+        (3, '机电楼'),
+    )
+
+    IS_EMPTY_CHOICE = (
+        (True, '可以分配'),
+        (False, '不可分配')
+    )
+
+    course_period = models.IntegerField(null=False, blank=False, choices=COURSE_PERIOD_CHOICE, default=1, verbose_name=u'课程周期')
+    course_weekday = models.IntegerField(null=False, blank=False, choices=COURSE_WEEKDAY_CHOICE, default=1, verbose_name=u'课程上课日')
+    course_time = models.IntegerField(null=False, blank=False, choices=COURSE_TIME_CHOICE, default=1, verbose_name=u'课程时间')
+    course_building = models.IntegerField(null=False, blank=False, choices=COURSE_BUILDING_CHOICE, default=1, verbose_name=u'课程建筑')
+    course_classroom = models.IntegerField(null=True, blank=True, default=999, verbose_name=u'上课教室')
+    selection = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='分配编号')
+    is_empty = models.BooleanField(choices=IS_EMPTY_CHOICE, default=True, verbose_name='分配情况')
 
     class Meta:
-        verbose_name = u'上课时间'
+        verbose_name = u'课程资源分配'
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '[%s: %s]' % (self.get_course_weekday_display(), self.get_course_time_display())
+        return '[%d %s]' %(self.selection, self.get_is_empty_display)
+
+    def save(self, *args, **kwargs):
+        period = str(self.course_period)
+        weekday = str(self.course_weekday)
+        time = str(self.course_time)
+        building = str(self.course_building)
+        selection = period + weekday + time + building + str(self.course_classroom)
+        self.selection = int(selection)
+        super(Selection, self).save(*args, **kwargs)
+
+
+
+
+
 
 
 class Course(models.Model):
 
-    WEEK_CHOICE = (
-        ('week1', '第一周'),
-        ('week2', '第二周'),
-        ('week3', '第三周'),
-        ('week4', '第四周'),
-        ('week5', '第五周'),
-        ('week6', '第六周'),
-        ('week7', '第七周'),
-        ('week8', '第八周'),
-        ('week9', '第九周'),
-        ('week10', '第十周'),
-        ('week11', '第十一周'),
-        ('week12', '第十二周'),
-        ('week13', '第十三周'),
-        ('week14', '第十四周'),
-        ('week15', '第十五周'),
-        ('week16', '第十六周')
+    #课程
+    COURSE_POINT_CHOICE = (
+        (3, 6),
+        (2, 32),
+        (1, 16)
     )
 
+    COURSE_TYPE_CHOICE = (
+        (5, '必修'),
+        (0, '专选')
+    )
 
-
-    course_id = models.IntegerField(null=False, blank=False, default=12345, verbose_name=u'课程编号')
-    course_name = models.CharField(null=False, blank=False, max_length=30, default="xx课程", verbose_name=u'课程名称')
-    course_location = models.CharField(null=False, blank=False, max_length=20, default='地点未知', verbose_name=u'课程地点')
-    course_point = models.IntegerField(null=False, blank=False, default=2, verbose_name=u'课程学分')
-    course_length = models.IntegerField(null=False, blank=False, default=32, verbose_name=u'课程学时')
-    course_startWeek = models.CharField(null=False, blank=False, choices=WEEK_CHOICE, max_length=6, default='week1', verbose_name=u'课程开始周')
-    course_endWeek = models.CharField(null=False, blank=False, choices=WEEK_CHOICE, max_length=6, default='week16', verbose_name=u'课程结束周')
-    course_time = models.ForeignKey(CourseTime, on_delete=models.CASCADE, verbose_name=u'上课时间(多选)')
-
+    course_id = models.AutoField(primary_key=True, unique=True, default=10000, verbose_name=u'课程编号')
+    course_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=u'课程名称')
+    course_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name=u'授课老师')
+    course_point = models.IntegerField(null=False, blank=False, default=1, choices=COURSE_POINT_CHOICE, verbose_name=u'课程学时')
+    course_type = models.IntegerField(null=False, blank=False, choices=COURSE_TYPE_CHOICE, default=0, verbose_name=u'课程类型')
+    course_capacity = models.IntegerField(null=False, blank=False, default=0, verbose_name=u'课程容量')
+    course_selection = models.ForeignKey(Selection, on_delete=models.CASCADE, verbose_name=u'资源分配')
+    course_priority = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='优先级')
 
     class Meta:
         verbose_name = u'课程信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return self.course_name
+        return '[%s %d]' %(self.course_name, self.course_point )
+
+    def save(self, *args, **kwargs):
+        self.course_priority = self.course_point * self.course_type + self.course_point
+        super(Course, self).save(*args, **kwargs)
+
+
+
+
+
+
+
 
