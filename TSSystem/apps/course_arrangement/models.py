@@ -1,5 +1,6 @@
 from django.db import models
 from teacher.models import Teacher
+from main_platform.models import Class
 
 # Create your models here.
 
@@ -54,15 +55,15 @@ class Selection(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '[%d %s]' %(self.selection, self.get_is_empty_display)
+        return '[%d]' %(self.selection)
 
     def save(self, *args, **kwargs):
-        period = str(self.course_period)
-        weekday = str(self.course_weekday)
-        time = str(self.course_time)
-        building = str(self.course_building)
-        selection = period + weekday + time + building + str(self.course_classroom)
-        self.selection = int(selection)
+        period = self.course_period * 1000000
+        weekday = self.course_weekday * 100000
+        time = self.course_time * 10000
+        building = self.course_building * 1000
+        selection = period + weekday + time + building + self.course_classroom
+        self.selection = selection
         super(Selection, self).save(*args, **kwargs)
 
 
@@ -75,9 +76,9 @@ class Course(models.Model):
 
     #课程
     COURSE_POINT_CHOICE = (
-        (3, 6),
-        (2, 32),
-        (1, 16)
+        (64, 64),
+        (32, 32),
+        (16, 16)
     )
 
     COURSE_TYPE_CHOICE = (
@@ -85,21 +86,22 @@ class Course(models.Model):
         (0, '专选')
     )
 
-    course_id = models.AutoField(primary_key=True, unique=True, default=10000, verbose_name=u'课程编号')
+    course_id = models.AutoField(primary_key=True, unique=True, verbose_name=u'课程编号')
     course_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=u'课程名称')
     course_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name=u'授课老师')
     course_point = models.IntegerField(null=False, blank=False, default=1, choices=COURSE_POINT_CHOICE, verbose_name=u'课程学时')
     course_type = models.IntegerField(null=False, blank=False, choices=COURSE_TYPE_CHOICE, default=0, verbose_name=u'课程类型')
     course_capacity = models.IntegerField(null=False, blank=False, default=0, verbose_name=u'课程容量')
-    course_selection = models.ForeignKey(Selection, on_delete=models.CASCADE, verbose_name=u'资源分配')
+    course_selection = models.ForeignKey(null=True, blank=True, Selection, on_delete=models.CASCADE, verbose_name=u'资源分配')
     course_priority = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='优先级')
+    course_class = models.ManyToManyField(Class, default='上课班级')
 
     class Meta:
         verbose_name = u'课程信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '[%s %d]' %(self.course_name, self.course_point )
+        return '[%s %d]' %(self.course_name, self.course_point)
 
     def save(self, *args, **kwargs):
         self.course_priority = self.course_point * self.course_type + self.course_point
