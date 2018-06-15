@@ -1,0 +1,45 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>计通学院排课管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+</head>
+
+<body>
+<nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="{% url 'teacher:CourseArrangement_Home' %}">计通学院排课管理</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">通知列表<b class="caret"></b></a>
+                <ul class="dropdown-menu">
+                    {% for course in course_list %}
+                    <li><a href="{% url 'teacher:CourseArrangement_Info' course.course_id %}" target="mainFrame">{{ course.course_name }}</a></li>
+                    {% endfor %}
+                </ul>
+            </li>
+        </ul>
+        <ul class="nav navbar-nav pull-right">
+            <li id="personCenter">
+                <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+            </li>
+            <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div >
+    <iframe name="mainFrame" width="100%" height="600px" scrolling="auto" frameborder="0" src="{% url 'teacher:CourseArrangement_Info' course.course_id %}"></iframe>
+</div>
+
+</body>
+</html>

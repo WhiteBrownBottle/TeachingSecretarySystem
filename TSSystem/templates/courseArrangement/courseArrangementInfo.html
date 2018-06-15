@@ -1,0 +1,181 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>计通学院排课管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert.min.js'%}"></script>
+</head>
+
+<body>
+<div style="margin: 10px 20px 0px 20px">
+    <h2 class="page-header" style="margin-left: 10px; margin-top: 0px" align="center">北京科技大学本科开课通知（理论教学）</h2>
+    <p>开课学院：计算机与通信工程学院</p>
+
+    <table class="table table-striped">
+        <tbody>
+        <tr style="background-color:#b2dba1"><td colspan="10" align="center"><span style="font-weight: bold">课程信息表</span></td></tr>
+        <tr>
+            <td style="font-weight: bold; width: 10%">课程编号</td>
+            <td style="font-weight: bold; width: 10%">课程名称</td>
+            <td style="font-weight: bold; width: 10%">课程类别</td>
+            <td style="font-weight: bold; width: 10%">讲课学时</td>
+            <td style="font-weight: bold; width: 10%">预期上课人数</td>
+        </tr>
+        <tr>
+            <td name="courseId" id="courseId">{{ course.course_id }}</td>
+            <td>{{ course.course_name }}</td>
+            <td>{{ course.get_course_type_display }}</td>
+            <td>{{ course.get_course_point_display }}</td>
+            <td>{{ course.course_capacity }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="post" name="course_form" id="course_form" enctype = "multipart/form-data">
+        <table class="table table-striped">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td align="center"><span style="font-weight: bold">开课班级</span></td></tr>
+            {% for class in course.course_class.all %}
+            <tr><td>{{ class.class_name }}</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <table class="table table-striped">
+            <tbody>
+            <tr style="background-color:#b2dba1"><td align="center" colspan="4"><span style="font-weight: bold">课程安排期望</span></td></tr>
+            <tr>
+                <td>
+                    <select class="form-control" name="period_1" id="period_1">
+                        <option value="1" name="1">1~8周</option>
+                        <option value="2" name="2">9~16周</option>
+                        <option value="3" name="3">1~16周</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="weekday_1" id="weekday_1">
+                        <option value="1" name="1">星期一</option>
+                        <option value="2" name="2">星期二</option>
+                        <option value="3" name="3">星期三</option>
+                        <option value="4" name="4">星期四</option>
+                        <option value="5" name="5">星期五</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="time_1" id="time_1">
+                        <option value="1" name="1">第一节</option>
+                        <option value="2" name="2">第二节</option>
+                        <option value="3" name="3">第三节</option>
+                        <option value="4" name="4">第四节</option>
+                        <option value="5" name="5">第五节</option>
+                        <option value="6" name="6">第六节</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="building_1" id="building_1">
+                        <option value="1" name="1">逸夫楼</option>
+                        <option value="2" name="2">教学楼</option>
+                        <option value="3" name="3">机电楼</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <select class="form-control" name="period_2" id="period_2">
+                        <option value="0" name="0">无</option>
+                        <option value="1" name="1">1~8周</option>
+                        <option value="2" name="2">9~16周</option>
+                        <option value="3" name="3">1~16周</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="weekday_2" id="weekday_2">
+                        <option value="0" name="0">无</option>
+                        <option value="1" name="1">星期一</option>
+                        <option value="2" name="2">星期二</option>
+                        <option value="3" name="3">星期三</option>
+                        <option value="4" name="4">星期四</option>
+                        <option value="5" name="5">星期五</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="time_2" id="time_2">
+                        <option value="0" name="0">无</option>
+                        <option value="1" name="1">第一节</option>
+                        <option value="2" name="2">第二节</option>
+                        <option value="3" name="3">第三节</option>
+                        <option value="4" name="4">第四节</option>
+                        <option value="5" name="5">第五节</option>
+                        <option value="6" name="6">第六节</option>
+                    </select>
+                </td>
+                <td>
+                    <select class="form-control" name="building_2" id="building_2">
+                        <option value="0" name="0">无</option>
+                        <option value="1" name="1">逸夫楼</option>
+                        <option value="2" name="2">教学楼</option>
+                        <option value="3" name="3">机电楼</option>
+                    </select>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <button type="button" class="btn btn-primary" onclick="tijiao()">提交</button>
+    </form>
+</div>
+<script type="text/javascript">
+        function tijiao() {
+            var flag = 0;
+            if ($('#period_2 option:selected').val() != 0 || $('#weekday_2 option:selected').val() != 0 || $('#time_2 option:selected').val() != 0 || $('#building_2 option:selected').val() != 0){
+                if ($('#period_2 option:selected').val() == 0 ) {
+                    alert("请选择上课周数！");
+                    flag = 1;
+                }
+                if ($('#weekday_2 option:selected').val() == 0 ) {
+                    alert("请选择上课日！");
+                    flag = 1;
+                }
+                if ($('#time_2 option:selected').val() == 0 ) {
+                    alert("请选择节数！");
+                    flag = 1;
+                }
+                if ($('#building_2 option:selected').val() == 0 ) {
+                    alert("请选择上课建筑！");
+                    flag = 1;
+                }
+            }
+
+            if (flag == 1) {
+                return false;
+            }
+
+            if (confirm("确认提交吗？")) {
+                var form_data = new FormData(document.getElementById("course_form"));
+                form_data.append('course_id',document.getElementById("courseId").innerHTML);
+                $.ajax({
+                    data: form_data,
+                    type: "post", //提交方式
+                    processData: false,  //不将data参数序列化处理
+                    contentType: false,  //避免JQuery对FormData操作，从而失去分界符
+                    //dataType: "json", //数据类型
+                    url: "/tea/CourseArrangementHome/", //请求url
+                    success: function(data) {
+                        if (data.status == 'success') {
+                            swal("提交成功！", "", "success");
+                        } else if (data.status == 'fail') {
+                            swal(data.msg, "", "error");
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

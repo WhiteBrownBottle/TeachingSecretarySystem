@@ -6,6 +6,7 @@ from srtp_project.models import Project, Schedule, Fund, Result, AddFund, MidTer
 from main_platform.models import Notification, NotifiFile
 from graduation_design.models import ModelFile, OpeningReport, MidtermReport, Dissertation
 from edu_reform.models import EduProject, EduMidTerm, EduConclusion, EduFund, EduResult
+from course_arrangement.models import Selection, Course
 from utils.session_judge import session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from django.http import HttpResponse, HttpResponseRedirect
@@ -796,7 +797,54 @@ class courseArrangementHome(View):
         if session_judge_teacher(request):
             return HttpResponseRedirect('/')
         else:
-            return render(request, 'courseArrangementHome.html')
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id = user_id)
+            try:
+                course = Course.objects.filter(Q(course_teacher_id = teacher.id)).first()
+                course_list = Course.objects.filter(Q(course_teacher_id = teacher.id)).order_by('course_id')
+            except Course.DoesNotExist:
+                course_list = None
+            return render(request, 'courseArrangement/courseArrangementHome.html', context={'course_list': course_list,
+                                                                                            'course': course})
+
+    def post(self, request):
+        if session_judge_teacher(request):
+            return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
+        else:
+            course_id = request.POST.get('course_id', '')
+            course = Course.objects.get(course_id = course_id)
+            course_point = course.course_point
+            period_1 = int(request.POST.get('period_1', ''))
+            period_2 = int(request.POST.get('period_2', ''))
+            point_temp = 0
+            if period_1 == 1 or period_1 == 2:
+                point_temp += 16
+            else:
+                point_temp += 32
+            if period_2 == 0:
+                point_temp += 0
+            elif period_2 == 1 or period_2 == 2:
+                point_temp += 16
+            else:
+                point_temp += 32
+            if point_temp != course_point:
+                return HttpResponse('{"status": "fail", "msg": "提交错误，学时不匹配"}', content_type='application/json')
+
+            period_list = [10, 20, 30, 11, 22, 33]
+            if (period_1 * 10 + period_2) not in period_list:
+                return HttpResponse('{"status": "fail", "msg": "请安排在相同周数"}', content_type='application/json')
+
+            return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
+
+
+class courseArrangementInfo(View):
+
+    def get(self, request, course_id):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            course = Course.objects.get(course_id = course_id)
+            return render(request, 'courseArrangement/courseArrangementInfo.html', context={'course': course})
 
     def post(self, request):
         pass
