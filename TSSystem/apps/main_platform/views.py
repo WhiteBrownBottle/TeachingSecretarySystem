@@ -9,6 +9,7 @@ from edu_reform.models import EduProject, EduMidTerm, EduConclusion, EduResult
 from utils.session_judge import session_judge, session_judge_teacher
 from utils.file_utils import file_iterator, file_upload
 from utils.email_send import send_forgetpwd_email
+# from utils.create_course_selection import creat_course_selection
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password, make_password
@@ -25,6 +26,8 @@ class IndexView(View):
     首页
     """
     def get(self, request):
+        # creat_course_selection()
+        # print(123)
         return render(request, 'index.html',)
 
 
