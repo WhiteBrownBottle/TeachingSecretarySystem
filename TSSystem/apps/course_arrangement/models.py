@@ -92,7 +92,7 @@ class Course(models.Model):
     course_point = models.IntegerField(null=False, blank=False, default=1, choices=COURSE_POINT_CHOICE, verbose_name=u'课程学时')
     course_type = models.IntegerField(null=False, blank=False, choices=COURSE_TYPE_CHOICE, default=0, verbose_name=u'课程类型')
     course_capacity = models.IntegerField(null=False, blank=False, default=0, verbose_name=u'课程容量')
-    course_selection = models.ForeignKey(null=True, blank=True, Selection, on_delete=models.CASCADE, verbose_name=u'资源分配')
+    course_selection = models.ForeignKey(Selection, null=True, blank=True, on_delete=models.CASCADE, verbose_name=u'资源分配')
     course_priority = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='优先级')
     course_class = models.ManyToManyField(Class, default='上课班级')
 

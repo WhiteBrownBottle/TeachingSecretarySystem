@@ -17,11 +17,11 @@ class SelectionAdmin(object):
 
 class CourseAdmin(object):
 
-    list_display = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
+    list_display = ['course_id', 'course_name', 'course_point', 'course_type', 'course_teacher', 'course_capacity', 'course_priority']
 
-    search_fields = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
+    search_fields = ['course_id', 'course_name', 'course_point', 'course_type', 'course_teacher', 'course_capacity', 'course_priority']
 
-    list_filter = ['course_id', 'course_name', 'course_point', 'course_type', 'course_capacity', 'course_priority']
+    list_filter = ['course_id', 'course_name', 'course_point', 'course_type', 'course_teacher', 'course_capacity', 'course_priority']
 
 
 xadmin.site.register(Selection, SelectionAdmin)
