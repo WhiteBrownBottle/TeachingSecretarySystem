@@ -42,6 +42,11 @@ class Selection(models.Model):
         (False, '不可分配')
     )
 
+    CAPACITY_CHOICE = (
+        (True, '大'),
+        (False, '小')
+    )
+
     course_period = models.IntegerField(null=False, blank=False, choices=COURSE_PERIOD_CHOICE, default=1, verbose_name=u'课程周期')
     course_weekday = models.IntegerField(null=False, blank=False, choices=COURSE_WEEKDAY_CHOICE, default=1, verbose_name=u'课程上课日')
     course_time = models.IntegerField(null=False, blank=False, choices=COURSE_TIME_CHOICE, default=1, verbose_name=u'课程时间')
@@ -49,6 +54,7 @@ class Selection(models.Model):
     course_classroom = models.IntegerField(null=True, blank=True, default=999, verbose_name=u'上课教室')
     selection = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='分配编号')
     is_empty = models.BooleanField(choices=IS_EMPTY_CHOICE, default=True, verbose_name='分配情况')
+    capacity =models.BooleanField(choices=CAPACITY_CHOICE, default=True, verbose_name='教室大小')
 
     class Meta:
         verbose_name = u'课程资源分配'
@@ -65,10 +71,6 @@ class Selection(models.Model):
         selection = period + weekday + time + building + self.course_classroom
         self.selection = selection
         super(Selection, self).save(*args, **kwargs)
-
-
-
-
 
 
 
@@ -92,7 +94,10 @@ class Course(models.Model):
     course_point = models.IntegerField(null=False, blank=False, default=1, choices=COURSE_POINT_CHOICE, verbose_name=u'课程学时')
     course_type = models.IntegerField(null=False, blank=False, choices=COURSE_TYPE_CHOICE, default=0, verbose_name=u'课程类型')
     course_capacity = models.IntegerField(null=False, blank=False, default=0, verbose_name=u'课程容量')
-    course_selection = models.ForeignKey(Selection, null=True, blank=True, on_delete=models.CASCADE, verbose_name=u'资源分配')
+    course_selection_1 = models.OneToOneField(Selection, null=True, blank=True, on_delete=models.CASCADE, related_name='资源分配1', verbose_name=u'资源分配1')
+    course_selection_2 = models.OneToOneField(Selection, null=True, blank=True, on_delete=models.CASCADE, related_name='资源分配2', verbose_name=u'资源分配2')
+    course_selection_3 = models.OneToOneField(Selection, null=True, blank=True, on_delete=models.CASCADE, related_name='资源分配3', verbose_name=u'资源分配3')
+    course_selection_4 = models.OneToOneField(Selection, null=True, blank=True, on_delete=models.CASCADE, related_name='资源分配4', verbose_name=u'资源分配4')
     course_priority = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='优先级')
     course_class = models.ManyToManyField(Class, default='上课班级')
 

@@ -803,6 +803,7 @@ class courseArrangementHome(View):
                 course = Course.objects.filter(Q(course_teacher_id = teacher.id)).first()
                 course_list = Course.objects.filter(Q(course_teacher_id = teacher.id)).order_by('course_id')
             except Course.DoesNotExist:
+                course = None
                 course_list = None
             return render(request, 'courseArrangement/courseArrangementHome.html', context={'course_list': course_list,
                                                                                             'course': course})
@@ -814,8 +815,14 @@ class courseArrangementHome(View):
             course_id = request.POST.get('course_id', '')
             course = Course.objects.get(course_id = course_id)
             course_point = course.course_point
-            period_1 = int(request.POST.get('period_1', ''))
-            period_2 = int(request.POST.get('period_2', ''))
+            period_1 = int(request.POST.get('period_1', '1'))
+            weekday_1 = int(request.POST.get('weekday_1', '1'))
+            time_1 = int(request.POST.get('time_1', '1'))
+            building_1 = int(request.POST.get('building_1', '1'))
+            period_2 = int(request.POST.get('period_2', '0'))
+            weekday_2 = int(request.POST.get('weekday_2', '0'))
+            time_2 = int(request.POST.get('time_2', '0'))
+            building_2 = int(request.POST.get('building_2', '0'))
             point_temp = 0
             if period_1 == 1 or period_1 == 2:
                 point_temp += 16
@@ -829,11 +836,48 @@ class courseArrangementHome(View):
                 point_temp += 32
             if point_temp != course_point:
                 return HttpResponse('{"status": "fail", "msg": "提交错误，学时不匹配"}', content_type='application/json')
-
             period_list = [10, 20, 30, 11, 22, 33]
             if (period_1 * 10 + period_2) not in period_list:
                 return HttpResponse('{"status": "fail", "msg": "请安排在相同周数"}', content_type='application/json')
-
+            if period_1 == 1 or period_1 == 2:
+                if building_1 == 1:
+                    course_classroom = 707
+                elif building_1 == 2:
+                    course_classroom = 505
+                elif building_1 == 3:
+                    course_classroom = 824
+                selection = Selection.objects.get(Q(course_period=period_1) & Q(course_weekday=weekday_1) & Q(course_time=time_1) & Q(course_building=building_1) & Q(course_classroom=course_classroom))
+                course.course_selection_1 = selection
+            if period_1 == 3:
+                if building_1 == 1:
+                    course_classroom = 707
+                elif building_1 == 2:
+                    course_classroom = 505
+                elif building_1 == 3:
+                    course_classroom = 824
+                selection_list = Selection.objects.filter(Q(course_weekday=weekday_1) & Q(course_time=time_1) & Q(course_building=building_1) & Q(course_classroom=course_classroom))
+                course.course_selection_1 = selection_list[0]
+                course.course_selection_2 = selection_list[1]
+            if period_2 == 1 or period_2 == 2:
+                if building_2 == 1:
+                    course_classroom = 707
+                elif building_2 == 2:
+                    course_classroom = 505
+                elif building_2 == 3:
+                    course_classroom = 824
+                selection = Selection.objects.get(Q(course_period=period_2) & Q(course_weekday=weekday_2) & Q(course_time=time_2) & Q(course_building=building_2) & Q(course_classroom=course_classroom))
+                course.course_selection_2 = selection
+            if period_2 == 3:
+                if building_2 == 1:
+                    course_classroom = 707
+                elif building_2 == 2:
+                    course_classroom = 505
+                elif building_2 == 3:
+                    course_classroom = 824
+                selection_list_2 = Selection.objects.filter(Q(course_weekday=weekday_2) & Q(course_time=time_2) & Q(course_building=building_2) & Q(course_classroom=course_classroom))
+                course.course_selection_3 = selection_list_2[0]
+                course.course_selection_4 = selection_list_2[1]
+            course.save()
             return HttpResponse('{"status": "success", "msg": "success"}', content_type='application/json')
 
 

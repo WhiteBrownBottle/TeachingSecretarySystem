@@ -38,7 +38,11 @@
 </nav>
 
 <div >
+    {% if course != null %}
     <iframe name="mainFrame" width="100%" height="600px" scrolling="auto" frameborder="0" src="{% url 'teacher:CourseArrangement_Info' course.course_id %}"></iframe>
+    {% else %}
+        <h1 align="center">您暂时无理论课教学安排</h1>
+    {% endif %}
 </div>
 
 </body>
