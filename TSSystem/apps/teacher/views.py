@@ -841,7 +841,7 @@ class courseArrangementHome(View):
                 return HttpResponse('{"status": "fail", "msg": "请安排在相同周数"}', content_type='application/json')
             if period_1 == 1 or period_1 == 2:
                 if building_1 == 1:
-                    course_classroom = 707
+                    course_classroom = 805
                 elif building_1 == 2:
                     course_classroom = 505
                 elif building_1 == 3:
@@ -850,7 +850,7 @@ class courseArrangementHome(View):
                 course.course_selection_1 = selection
             if period_1 == 3:
                 if building_1 == 1:
-                    course_classroom = 707
+                    course_classroom = 805
                 elif building_1 == 2:
                     course_classroom = 505
                 elif building_1 == 3:
@@ -860,7 +860,7 @@ class courseArrangementHome(View):
                 course.course_selection_2 = selection_list[1]
             if period_2 == 1 or period_2 == 2:
                 if building_2 == 1:
-                    course_classroom = 707
+                    course_classroom = 805
                 elif building_2 == 2:
                     course_classroom = 505
                 elif building_2 == 3:
@@ -869,7 +869,7 @@ class courseArrangementHome(View):
                 course.course_selection_2 = selection
             if period_2 == 3:
                 if building_2 == 1:
-                    course_classroom = 707
+                    course_classroom = 805
                 elif building_2 == 2:
                     course_classroom = 505
                 elif building_2 == 3:
