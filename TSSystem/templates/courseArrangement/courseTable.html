@@ -1,0 +1,199 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>计通学院排课管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <style type="text/css">
+        table {
+            /*为表格设置合并边框模型*/
+            border-collapse: collapse;
+            /*列宽由表格宽度和列宽度设定*/
+            table-layout: fixed;
+        }
+
+        td {
+            /*允许在单词内换行。*/
+            word-break: break-all;
+            /*设置宽度*/
+            width: 150px;
+        }
+
+        .td2{
+            word-break: break-all;
+            width: 50px;
+            background-color:#f5e79e;
+        }
+    </style>
+</head>
+
+<body onload="course()">
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">计通学院排课管理</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li class="active">
+                    <li><a href="{% url 'teacher:Course_Table' %}">我的课程表</a> </li>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">开课通知<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        {% for course in course_list %}
+                        <li><a href="{% url 'teacher:CourseArrangement_Home' course.course_id %}">{{ course.course_name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav pull-right">
+                <li id="personCenter">
+                    <a href="{% url 'teacher:Info' %}" target="_blank" onclick="enterCenter()">个人中心</a>
+                </li>
+                <li id="exit"><a href="{% url 'main_platform:logout' %}">安全退出</a></li>
+            </ul>
+        </div>
+    </nav>
+    <table frame="box" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="black" name="tbody" id="tbody">
+        <tr>
+            <td align="center" colspan="9" style="background-color:#f5e79e;"><h3>教师课程表（{{ teacher.teacher_name }}）</h3></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="2" class="td2">时间</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期一</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期二</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期三</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期四</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期五</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期六</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期日</td>
+        </tr>
+        <tr>
+            <td rowspan="2" align="center" class="td2">上午</td>
+            <td align="center" class="td2">一<br>8:00<br>|<br>9:35</td>
+            <td align="center">
+{#                WEB应用开发技术#}
+{#                <br>周一第1,2节{第1-16周}#}
+{#                <br>熊俊涛(熊俊涛)#}
+{#                <br>3502#}
+            </td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">二<br>9:55<br>|<br>11：30</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td rowspan="3" align="center" class="td2">下午</td>
+            <td align="center" class="td2">三<br>13:30<br>|<br>15:05</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">四<br>15:20<br>|<br>16:55</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">五<br>17:10<br>|<br>18:45</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td rowspan="1" align="center" class="td2">晚上</td>
+            <td align="center" class="td2">六<br>19:30<br>|<br>21:05</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        function course(){
+            var flag1 = 0;
+            var flag2 = 0;
+            {% for course in course_list %}
+                {% if course.is_arranged == True %}
+                    {% if course.course_selection_1.get_course_building_display == course.course_selection_2.get_course_building_display %}
+                        {% if course.course_selection_1.course_classroom == course.course_selection_2.course_classroom %}
+                            $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+1).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},1-16周)<br>");
+                            flag1 = 1
+                        {% endif %}
+                    {% endif %}
+                    {% if course.course_selection_3.get_course_building_display == course.course_selection_4.get_course_building_display %}
+                        {% if course.course_selection_3.course_classroom == course.course_selection_4.course_classroom %}
+                            $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+1).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_4.course_classroom }},1-16周)<br>");
+                            flag2 = 1
+                        {% endif %}
+                    {% endif %}
+                    if (flag1 == 0) {
+                        {% if course.course_selection_1 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+1).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},{{ course.course_selection_1.get_course_period_display }}周)<br>");
+                            //$("tbody").rows[].cells[]
+                        {% endif %}
+                        {% if course.course_selection_2 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_2.get_course_time_display }}+1).find("td").eq({{ course.course_selection_2.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_2.get_course_building_display }}{{ course.course_selection_2.course_classroom }},{{ course.course_selection_2.get_course_period_display }}周)<br>");
+                        {% endif %}
+                    }
+                    if (flag2 == 0) {
+                        {% if course.course_selection_3 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+1).find("td").eq({{ course.course_selection_3.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_3.course_classroom }},{{ course.course_selection_3.get_course_period_display }}周)<br>");
+                        {% endif %}
+                        {% if course.course_selection_4 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_4.get_course_time_display }}+1).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_4.get_course_building_display }}{{ course.course_selection_4.course_classroom }},{{ course.course_selection_4.get_course_period_display }}周)<br>");
+                        {% endif %}
+                    }
+                {% else %}
+                    {% if course.course_selection_1 == '' %}
+                        $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（请点击开课通知，阅读您的课程相关，并完成所有课程的安排期望）</h4>');
+                    {% else %}
+                        $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（您已提交所有课程的安排期望，请等待管理员完成排课）</h4>');
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+        }
+    </script>
+</body>
+
+</html>

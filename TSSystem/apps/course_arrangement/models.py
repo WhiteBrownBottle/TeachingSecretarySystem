@@ -14,20 +14,20 @@ class Selection(models.Model):
     )
 
     COURSE_WEEKDAY_CHOICE = (
-        (1, '星期一'),
-        (2, '星期二'),
-        (3, '星期三'),
-        (4, '星期四'),
-        (5, '星期五')
+        (1, '2'), #后面是星期
+        (2, '3'),
+        (3, '4'),
+        (4, '5'),
+        (5, '1')
     )
 
     COURSE_TIME_CHOICE = (
-        (1, '第一节'),
-        (2, '第二节'),
-        (3, '第三节'),
-        (4, '第四节'),
-        (5, '第五节'),
-        (6, '第六节')
+        (1, '2'), #后面是第几节
+        (2, '3'),
+        (3, '4'),
+        (4, '5'),
+        (5, '6'),
+        (6, '1')
     )
 
 
@@ -47,6 +47,8 @@ class Selection(models.Model):
         (False, '小')
     )
 
+
+
     course_period = models.IntegerField(null=False, blank=False, choices=COURSE_PERIOD_CHOICE, default=1, verbose_name=u'课程周期')
     course_weekday = models.IntegerField(null=False, blank=False, choices=COURSE_WEEKDAY_CHOICE, default=1, verbose_name=u'课程上课日')
     course_time = models.IntegerField(null=False, blank=False, choices=COURSE_TIME_CHOICE, default=1, verbose_name=u'课程时间')
@@ -54,7 +56,7 @@ class Selection(models.Model):
     course_classroom = models.IntegerField(null=True, blank=True, default=999, verbose_name=u'上课教室')
     selection = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='分配编号')
     is_empty = models.BooleanField(choices=IS_EMPTY_CHOICE, default=True, verbose_name='分配情况')
-    capacity =models.BooleanField(choices=CAPACITY_CHOICE, default=True, verbose_name='教室大小')
+    capacity = models.BooleanField(choices=CAPACITY_CHOICE, default=True, verbose_name='教室大小')
 
     class Meta:
         verbose_name = u'课程资源分配'
@@ -88,6 +90,11 @@ class Course(models.Model):
         (0, '专选')
     )
 
+    ARRANGED_CHOICE = (
+        (True, '本课已排'),
+        (False, '本课未排')
+    )
+
     course_id = models.AutoField(primary_key=True, unique=True, verbose_name=u'课程编号')
     course_name = models.CharField(null=True, blank=True, max_length=50, verbose_name=u'课程名称')
     course_teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE, verbose_name=u'授课老师')
@@ -100,6 +107,8 @@ class Course(models.Model):
     course_selection_4 = models.ForeignKey(Selection, null=True, blank=True, unique=False, on_delete=models.CASCADE, related_name='资源分配4', verbose_name=u'资源分配4')
     course_priority = models.IntegerField(null=True, blank=True, editable=False, default=0, verbose_name='优先级')
     course_class = models.ManyToManyField(Class, default='上课班级')
+    is_arranged = models.BooleanField(choices=ARRANGED_CHOICE, default=False, verbose_name='是否排课')
+
 
     class Meta:
         verbose_name = u'课程信息'

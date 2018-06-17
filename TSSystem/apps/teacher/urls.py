@@ -45,7 +45,8 @@ urlpatterns = [
 
     url(r'^EduReformDeleteResult/$', views.eduReformDeleteResultView.as_view(), name='EduReform_DeleteResult'),
 
-    url(r'^CourseArrangementHome/$', views.courseArrangementHome.as_view(), name='CourseArrangement_Home'),
-    url(r'^CourseArrangementInfo/(?P<course_id>\d+)$', views.courseArrangementInfo.as_view(), name='CourseArrangement_Info')
+    url(r'^CourseArrangementHome/(?P<course_id>\d+)$', views.courseArrangementHome.as_view(), name='CourseArrangement_Home'),
+    url(r'^CourseArrangementInfo/(?P<course_id>\d+)$', views.courseArrangementInfo.as_view(), name='CourseArrangement_Info'),
+    url(r'^CourseTable/$', views.courseTable.as_view(),name='Course_Table')
 
 ]

@@ -793,27 +793,29 @@ class eduReformDeleteResultView(View):
 
 class courseArrangementHome(View):
 
-    def get(self, request):
+    def get(self, request, course_id):
         if session_judge_teacher(request):
             return HttpResponseRedirect('/')
         else:
             user_id = request.session['user_id']
             teacher = Teacher.objects.get(teacher_id = user_id)
             try:
-                course = Course.objects.filter(Q(course_teacher_id = teacher.id)).first()
+                # course = Course.objects.filter(Q(course_teacher_id = teacher.id)).first()
                 course_list = Course.objects.filter(Q(course_teacher_id = teacher.id)).order_by('course_id')
             except Course.DoesNotExist:
-                course = None
+                # course = None
                 course_list = None
             return render(request, 'courseArrangement/courseArrangementHome.html', context={'course_list': course_list,
-                                                                                            'course': course})
+                                                                                            'course_id': course_id})
 
-    def post(self, request):
+    def post(self, request, course_id):
         if session_judge_teacher(request):
             return HttpResponse('{"status": "fail", "msg": "/"}', content_type='application/json')
         else:
             course_id = request.POST.get('course_id', '')
             course = Course.objects.get(course_id = course_id)
+            if course.course_selection_1 != None:
+                return HttpResponse('{"status": "fail", "msg": "您已经提交课程安排期望"}', content_type='application/json')
             course_point = course.course_point
             period_1 = int(request.POST.get('period_1', '1'))
             weekday_1 = int(request.POST.get('weekday_1', '1'))
@@ -889,6 +891,25 @@ class courseArrangementInfo(View):
         else:
             course = Course.objects.get(course_id = course_id)
             return render(request, 'courseArrangement/courseArrangementInfo.html', context={'course': course})
+
+    def post(self, request):
+        pass
+
+
+class courseTable(View):
+
+    def get(self, request):
+        if session_judge_teacher(request):
+            return HttpResponseRedirect('/')
+        else:
+            user_id = request.session['user_id']
+            teacher = Teacher.objects.get(teacher_id = user_id)
+            try:
+                course_list = Course.objects.filter(Q(course_teacher_id = teacher.id)).order_by('course_id')
+            except Course.DoesNotExist:
+                course_list = None
+            return render(request, 'courseArrangement/courseTable.html', context={'course_list': course_list,
+                                                                                  'teacher': teacher})
 
     def post(self, request):
         pass

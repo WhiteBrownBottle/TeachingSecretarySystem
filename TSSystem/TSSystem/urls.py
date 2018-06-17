@@ -16,15 +16,15 @@ Including another URLconf
 from django.urls import path
 import xadmin
 from django.conf.urls import url, include
-import main_platform.views as mp_views
+import course_arrangement.views as course_view
 
 
 urlpatterns = [
     url(r'^xadmin/', xadmin.site.urls),
     url(r'^ueditor/',include('DjangoUeditor.urls' )),
-    url(r'', include('main_platform.urls', namespace='main_platform')),
-    url(r'^login/$', mp_views.LoginView.as_view(), name = 'login'),
     url(r'^stu/', include('student.urls'), name='student'),
     url(r'^tea/', include('teacher.urls'), name='teacher'),
+    url(r'^course/', course_view.courseArrangementView.as_view(), name='course'),
+    url(r'', include('main_platform.urls', namespace='main_platform')),
 
 ]

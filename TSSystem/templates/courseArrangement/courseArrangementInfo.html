@@ -59,21 +59,21 @@
                 </td>
                 <td>
                     <select class="form-control" name="weekday_1" id="weekday_1">
-                        <option value="1" name="1">星期一</option>
-                        <option value="2" name="2">星期二</option>
-                        <option value="3" name="3">星期三</option>
-                        <option value="4" name="4">星期四</option>
-                        <option value="5" name="5">星期五</option>
+                        <option value="5" name="5">星期一</option>
+                        <option value="1" name="1">星期二</option>
+                        <option value="2" name="2">星期三</option>
+                        <option value="3" name="3">星期四</option>
+                        <option value="4" name="4">星期五</option>
                     </select>
                 </td>
                 <td>
                     <select class="form-control" name="time_1" id="time_1">
-                        <option value="1" name="1">第一节</option>
-                        <option value="2" name="2">第二节</option>
-                        <option value="3" name="3">第三节</option>
-                        <option value="4" name="4">第四节</option>
-                        <option value="5" name="5">第五节</option>
-                        <option value="6" name="6">第六节</option>
+                        <option value="6" name="6">第一节</option>
+                        <option value="1" name="1">第二节</option>
+                        <option value="2" name="2">第三节</option>
+                        <option value="3" name="3">第四节</option>
+                        <option value="4" name="4">第五节</option>
+                        <option value="5" name="5">第六节</option>
                     </select>
                 </td>
                 <td>
@@ -163,7 +163,7 @@
                     processData: false,  //不将data参数序列化处理
                     contentType: false,  //避免JQuery对FormData操作，从而失去分界符
                     //dataType: "json", //数据类型
-                    url: "/tea/CourseArrangementHome/", //请求url
+                    url: "/tea/CourseArrangementHome/{{ course.course_id }}", //请求url
                     success: function(data) {
                         if (data.status == 'success') {
                             swal("提交成功！", "", "success");
