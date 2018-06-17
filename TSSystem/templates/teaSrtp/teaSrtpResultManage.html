@@ -56,22 +56,22 @@
             //alert(tr1.rowIndex);
             result_id = tr1.cells[0].id;
             $.ajax({
-            data:
-            {
-                 'result_id': result_id,
-            },
-            type: "post", //提交方式
-            dataType: "json", //数据类型
-            url: "/tea/SrtpDeleteResult/", //请求url
-            success: function(data) {
-                if (data.status == 'success') {
-                    alert("删除成功！");
-                    location.reload();
-                } else if (data.status == 'fail') {
+                data:
+                {
+                     'result_id': result_id,
+                },
+                type: "post", //提交方式
+                dataType: "json", //数据类型
+                url: "/tea/SrtpDeleteResult/", //请求url
+                success: function(data) {
+                    if (data.status == 'success') {
+                        alert("删除成功！");
+                        location.reload();
+                    } else if (data.status == 'fail') {
 
+                    }
                 }
-            }
-        })
+            })
         } else {
             return false;
         }

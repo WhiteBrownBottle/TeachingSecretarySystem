@@ -77,12 +77,7 @@
         <tr>
             <td rowspan="2" align="center" class="td2">上午</td>
             <td align="center" class="td2">一<br>8:00<br>|<br>9:35</td>
-            <td align="center">
-{#                WEB应用开发技术#}
-{#                <br>周一第1,2节{第1-16周}#}
-{#                <br>熊俊涛(熊俊涛)#}
-{#                <br>3502#}
-            </td>
+            <td align="center"></td>
             <td align="center"></td>
             <td align="center"></td>
             <td align="center"></td>
@@ -147,6 +142,7 @@
         function course(){
             var flag1 = 0;
             var flag2 = 0;
+            var flag3 = 0;
             {% for course in course_list %}
                 {% if course.is_arranged == True %}
                     {% if course.course_selection_1.get_course_building_display == course.course_selection_2.get_course_building_display %}
@@ -185,10 +181,16 @@
                         {% endif %}
                     }
                 {% else %}
-                    {% if course.course_selection_1 == '' %}
-                        $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（请点击开课通知，阅读您的课程相关，并完成所有课程的安排期望）</h4>');
+                    {% if course.course_selection_1 == null %}
+                        if (flag3 == 0) {
+                            $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（请点击开课通知，阅读您的课程相关，并完成所有课程的安排期望）</h4>');
+                            flag3 = 1;
+                        }
                     {% else %}
-                        $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（您已提交所有课程的安排期望，请等待管理员完成排课）</h4>');
+                        if (flag3 == 0) {
+                            $("tbody").find("tr").eq(0).find("td").eq(0).append('<h4 style="color:red;">（您已提交所有课程的安排期望，请等待管理员完成排课）</h4>');
+                            flag3 = 1;
+                        }
                     {% endif %}
                 {% endif %}
             {% endfor %}

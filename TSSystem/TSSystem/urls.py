@@ -24,7 +24,8 @@ urlpatterns = [
     url(r'^ueditor/',include('DjangoUeditor.urls' )),
     url(r'^stu/', include('student.urls'), name='student'),
     url(r'^tea/', include('teacher.urls'), name='teacher'),
-    url(r'^course/', course_view.courseArrangementView.as_view(), name='course'),
+    url(r'^course/', course_view.courseArrangementAdminView.as_view(), name='course'),
+    url(r'^courseArrange/', course_view.courseArrangementView.as_view(), name='course'),
     url(r'', include('main_platform.urls', namespace='main_platform')),
 
 ]

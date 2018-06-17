@@ -48,3 +48,10 @@ def course_capacity():
     #     print(selection.selection)
     #     selection.save()
 
+    # selection_list = Selection.objects.all().order_by('id')
+    # for selection in selection_list:
+    #     if selection.is_empty == False:
+    #         selection.is_empty = True
+    #         print(selection.selection)
+    #         selection.save()
+

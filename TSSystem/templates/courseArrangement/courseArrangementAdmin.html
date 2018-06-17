@@ -1,0 +1,245 @@
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>计通学院排课管理</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/jquery.backstretch.min.js' %}"></script>
+    <script src="{% static 'js/sweetalert.min.js'%}"></script>
+    <style type="text/css">
+        table {
+            /*为表格设置合并边框模型*/
+            border-collapse: collapse;
+            /*列宽由表格宽度和列宽度设定*/
+            table-layout: fixed;
+        }
+
+        td {
+            /*允许在单词内换行。*/
+            word-break: break-all;
+            /*设置宽度*/
+            width: 150px;
+        }
+
+        .td2{
+            word-break: break-all;
+            width: 50px;
+            background-color:#f5e79e;
+        }
+    </style>
+</head>
+
+<body onload="GetTeacherCourse()">
+    <nav class="navbar navbar-default navbar-static-top navbar-inverse" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">计通学院排课管理</a>
+            </div>
+        </div>
+    </nav>
+
+    <div style="margin-left: 30px">
+        {% if all_teacher_is_submit == 0 %}
+            <h4><b>有教师尚未提交课程安排期望，请等待全部提交后再自动排课</b></h4>
+        {% else %}
+            {% if is_arranged == 0 %}
+                <h4 id="p1"><b>还未排课，请点击排课按钮进行排课</b>
+                    <button type="button" class="btn btn-success" style="height: 30px; margin: 0 20px 0 20px" onclick="arrange_course()">自动排课</button>
+                </h4>
+            {% else %}
+                <h4>已完成自动排课，可查询教师课程表
+                    <button type="button" class="btn btn-success" style="height: 30px; margin-left: 20px" onclick="arrange_course()">自动排课</button>
+                </h4>
+            {% endif %}
+        {% endif %}
+    </div>
+
+    <table class="table table-hover">
+        <tr style="background-color:#b2dba1">
+            <td colspan="4"><span style="font-weight: bold"><h4><b>查询教师课程表</b></h4></span></td>
+        </tr>
+    </table>
+
+    <div style="margin-left: 30px">
+        <h5>请选择教师：
+            <select style="width: 10%; height: 30px" id="teacher_selected">
+                {% for teacher in teacher_list %}
+                    <option value="{{ teacher.teacher_id }}" name="{{ teacher.teacher_id }}" id="{{ teacher.teacher_id }}">{{ teacher.teacher_name }}</option>
+                {% endfor %}
+            </select>
+            <button type="button" class="btn btn-success" style="height: 30px; margin-left: 20px" onclick="course()">查询</button>
+        </h5>
+    </div>
+
+    <table frame="box" border="1" align="center" cellpadding="0" cellspacing="0" bordercolor="black" name="tbody" id="tbody">
+        <tr>
+            <td align="center" colspan="8" style="background-color:#f5e79e;"><h3>教师课程表（{{ teacher.teacher_name }}）</h3></td>
+        </tr>
+        <tr>
+            <td align="center" colspan="1" class="td2">时间</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期一</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期二</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期三</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期四</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期五</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期六</td>
+            <td align="center" width="150px" style="background-color:#f5e79e;">星期日</td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">一<br>8:00<br>|<br>9:35</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">二<br>9:55<br>|<br>11：30</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">三<br>13:30<br>|<br>15:05</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">四<br>15:20<br>|<br>16:55</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">五<br>17:10<br>|<br>18:45</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+        <tr>
+            <td align="center" class="td2">六<br>19:30<br>|<br>21:05</td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+            <td align="center"></td>
+        </tr>
+    </table>
+    <script type="text/javascript">
+        function GetTeacherCourse(){
+            {% for course in course_list %}
+                var flag1 = 0;
+                var flag2 = 0;
+                {% if course.is_arranged == True %}
+                    {% if course.course_selection_1.get_course_building_display == course.course_selection_2.get_course_building_display %}
+                        {% if course.course_selection_1.course_classroom == course.course_selection_2.course_classroom %}
+                            $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+2).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},1-16周)<br>");
+                            flag1 = 1;
+                        {% endif %}
+                    {% endif %}
+                    {% if course.course_selection_3.get_course_building_display == course.course_selection_4.get_course_building_display %}
+                        {% if course.course_selection_3.course_classroom == course.course_selection_4.course_classroom %}
+                            $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+2).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_4.course_classroom }},1-16周)<br>");
+                            flag2 = 1
+                        {% endif %}
+                    {% endif %}
+                    if (flag1 == 0) {
+                        {% if course.course_selection_1 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+2).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},{{ course.course_selection_1.get_course_period_display }}周)<br>");
+                            //$("tbody").rows[].cells[]
+                        {% endif %}
+                        {% if course.course_selection_2 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_2.get_course_time_display }}+2).find("td").eq({{ course.course_selection_2.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_2.get_course_building_display }}{{ course.course_selection_2.course_classroom }},{{ course.course_selection_2.get_course_period_display }}周)<br>");
+                        {% endif %}
+                    }
+                    if (flag2 == 0) {
+                        {% if course.course_selection_3 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+2).find("td").eq({{ course.course_selection_3.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_3.course_classroom }},{{ course.course_selection_3.get_course_period_display }}周)<br>");
+                        {% endif %}
+                        {% if course.course_selection_4 != null%}
+                            $("tbody").find("tr").eq({{ course.course_selection_4.get_course_time_display }}+3).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
+                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_4.get_course_building_display }}{{ course.course_selection_4.course_classroom }},{{ course.course_selection_4.get_course_period_display }}周)<br>");
+                        {% endif %}
+                    }
+                {% endif %}
+            {% endfor %}
+        }
+    
+        function course(){
+            $.ajax({
+                data:
+                {
+                     'teacher_id': document.getElementById("teacher_selected").value,
+                },
+                type: "post", //提交方式
+                dataType: "json", //数据类型
+                url: "/course/", //请求url
+                success: function(data) {
+                    if (data.status == 'success') {
+                        location.reload();
+                    } else if (data.status == 'fail') {
+                        swal(data.msg,"","error");
+                    }
+                }
+
+            })
+
+        }
+
+        function arrange_course() {
+            $("#p1").append('<b style="color:red">自动排课中，请稍后  <progress></b>');
+            $.ajax({
+                data:
+                {
+                     'test': "test",
+                },
+                type: "post", //提交方式
+                dataType: "json", //数据类型
+                url: "/courseArrange/", //请求url
+                success: function(data) {
+                    if (data.status == 'success') {
+                        alert("自动排课已完成");
+                        location.reload();
+                    } else if (data.status == 'fail') {
+                        swal(data.msg,"","error");
+                    }
+                }
+
+            })
+
+        }
+    </script>
+</body>
+
+</html>

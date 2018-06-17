@@ -14,7 +14,7 @@ class Selection(models.Model):
     )
 
     COURSE_WEEKDAY_CHOICE = (
-        (1, '2'), #后面是星期
+        (1, '2'), #后面是星期几
         (2, '3'),
         (3, '4'),
         (4, '5'),
@@ -75,7 +75,6 @@ class Selection(models.Model):
         super(Selection, self).save(*args, **kwargs)
 
 
-
 class Course(models.Model):
 
     #课程
@@ -122,9 +121,12 @@ class Course(models.Model):
         super(Course, self).save(*args, **kwargs)
 
 
+class GetTeacherCourse(models.Model):
+
+    teacher_id = models.IntegerField(null=False, blank=False, default=0, unique=True, verbose_name=u'所查询的教师编号')
 
 
-
-
-
+    class Meta:
+        verbose_name = u'所查询的教师编号'
+        verbose_name_plural = verbose_name
 
