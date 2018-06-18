@@ -29,7 +29,7 @@ class EduProject(models.Model):
     eduproject_select_result = models.CharField(null=True, blank=True, max_length=20, default="暂无", verbose_name='项目评选结果')
 
     class Meta:
-        verbose_name = u'教改/教研/教材项目信息'
+        verbose_name = u'教改-教研-教材项目信息'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -52,7 +52,7 @@ class EduMidTerm(models.Model):
     edumidterm_check_status = models.CharField(blank=False, null=False, choices=CHECK_STATUS, max_length=1, default='0', verbose_name=u'审核状态')
 
     class Meta:
-        verbose_name = u'教改/教研/教材项目中期检查'
+        verbose_name = u'教改-教研-教材项目中期检查'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -75,7 +75,7 @@ class EduConclusion(models.Model):
                                             verbose_name=u'审核状态')
 
     class Meta:
-        verbose_name = u'教改/教研/教材项目结题'
+        verbose_name = u'教改-教研-教材项目结题'
         verbose_name_plural = verbose_name
 
     def __str__(self):

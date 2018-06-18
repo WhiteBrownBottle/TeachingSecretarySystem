@@ -620,7 +620,10 @@ class stuGraProposalView(View):
             openingreport.file_url = file_detail[1]
             openingreport.student_belong = student
             openingreport.teacher_to = teacher
-            openingreport.save()
+            try:
+                openingreport.save()
+            except:
+                return HttpResponse('{"status": "fail", "msg": "你已经提交开题报告"}', content_type='application/json')
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
@@ -649,7 +652,10 @@ class stuGraMidtermView(View):
             midtermreport.file_url = file_detail[1]
             midtermreport.student_belong = student
             midtermreport.teacher_to = teacher
-            midtermreport.save()
+            try:
+                midtermreport.save()
+            except:
+                return HttpResponse('{"status": "fail", "msg": "你已经提交中期报告"}', content_type='application/json')
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 
@@ -678,7 +684,10 @@ class stuGraPaperView(View):
             dissertation.file_url = file_detail[1]
             dissertation.student_belong = student
             dissertation.teacher_to = teacher
-            dissertation.save()
+            try:
+                dissertation.save()
+            except:
+                return HttpResponse('{"status": "fail", "msg": "你已经提交毕业设计论文"}', content_type='application/json')
             return HttpResponse('{"status": "success", "msg": "添加成功"}', content_type='application/json')
 
 

@@ -43,10 +43,10 @@ def send_forgetpwd_email(email, user_type, object):
             pass
 
     if user_type == '3':
-        object.teacher_password = make_password(random_pwd)
+        object.student_password = make_password(random_pwd)
         object.save()
         email_title = "找回密码(学生）——本科教学秘书辅助系统 "
-        email_body = "您的密码已被格式化为%s, 请登陆后自行修改".format(random_pwd)
+        email_body = "您的密码已被格式化为{0}, 请登陆后自行修改".format(random_pwd)
         send_status = send_mail(email_title, email_body, settings.EMAIL_FROM, [email])
 
         if send_status:

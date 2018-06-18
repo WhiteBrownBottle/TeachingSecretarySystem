@@ -728,7 +728,7 @@ class eduReformFundManageView(View):
             edufund_type = request.POST.get('leibie', '12')
             edufund_num = int(request.POST.get('jine', ''))
             teacher = Teacher.objects.get(teacher_id=request.session['user_id'])
-            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
+            edu_project = EduProject.objects.get(eduproject_id=eduproject_id)
             edufund = EduFund()
             edufund.edufund_name = edufund_name
             edufund.edufund_type = edufund_type
@@ -747,7 +747,7 @@ class eduReformResultManageView(View):
         else:
             edu_project = EduProject.objects.get(eduproject_id = eduproject_id)
             eduresult_list = EduResult.objects.filter(eduproject_belong_id = edu_project.eduproject_id).order_by('eduresult_date')
-            return render(request, 'eduReform/eduReformFundManage.html', context={'edu_project': edu_project,
+            return render(request, 'eduReform/eduReformResultManage.html', context={'edu_project': edu_project,
                                                                                   'eduresult_list': eduresult_list})
 
 
@@ -764,7 +764,7 @@ class eduReformResultManageView(View):
             eduresult_file = request.FILES.get('file')
             edufile_detail = file_upload(eduresult_file, 'EduResult')
             teacher = Teacher.objects.get(teacher_id=request.session['user_id'])
-            edu_project = EduProject.objects.get(eduproject_person_in_charge_id=teacher.id)
+            edu_project = EduProject.objects.get(eduproject_id=eduproject_id)
             eduresult = EduResult()
             eduresult.eduresult_name = eduresult_name
             eduresult.eduresult_type = eduresult_type

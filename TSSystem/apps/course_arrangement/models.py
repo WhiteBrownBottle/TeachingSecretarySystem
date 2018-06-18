@@ -1,6 +1,8 @@
 from django.db import models
 from teacher.models import Teacher
 from main_platform.models import Class
+from teacher.models import Teacher
+from datetime import date
 
 # Create your models here.
 
@@ -63,7 +65,41 @@ class Selection(models.Model):
         verbose_name_plural = verbose_name
 
     def __str__(self):
-        return '[%d]' %(self.selection)
+        if self.course_period == 1:
+            period = "1-8周"
+        else:
+            period = "9-16周"
+        if self.course_weekday == 1:
+            weekday = "星期二"
+        elif self.course_weekday == 2:
+            weekday = "星期三"
+        elif self.course_weekday == 3:
+            weekday = "星期四"
+        elif self.course_weekday == 4:
+            weekday = "星期五"
+        elif self.course_weekday == 5:
+            weekday = "星期一"
+        if self.course_time == 1:
+            time = "第2节"
+        elif self.course_time == 2:
+            time = "第3节"
+        elif self.course_time == 3:
+            time = "第4节"
+        elif self.course_time == 4:
+            time = "第5节"
+        elif self.course_time == 5:
+            time = "第6节"
+        elif self.course_time == 6:
+            time = "第1节"
+        if self.course_building == 1:
+            building = "逸夫楼"
+        elif self.course_building == 2:
+            building = "教学楼"
+        elif self.course_building == 3:
+            building = "机电楼"
+
+        temp = weekday + time + "," +building + str(self.course_classroom) + "," + period
+        return temp
 
     def save(self, *args, **kwargs):
         period = self.course_period * 1000000
@@ -117,7 +153,20 @@ class Course(models.Model):
         return '[%s %d]' %(self.course_name, self.course_point)
 
     def save(self, *args, **kwargs):
-        self.course_priority = self.course_point * self.course_type + self.course_point
+        teacher = self.course_teacher
+        teacher_birth_date = teacher.teacher_birth_date
+        today = date.today()
+        try:
+            birthday = teacher_birth_date.replace(year=today.year)
+        except ValueError:
+            # raised when birth date is February 29
+            # and the current year is not a leap year
+            birthday = teacher_birth_date.replace(year=today.year, day=teacher_birth_date.day - 1)
+        if birthday > today:
+            age = int(today.year - teacher_birth_date.year - 1)
+        else:
+            age = int(today.year - teacher_birth_date.year)
+        self.course_priority = self.course_point * self.course_type + self.course_point + age
         super(Course, self).save(*args, **kwargs)
 
 
