@@ -147,16 +147,24 @@
                 {% if course.is_arranged == True %}
                     {% if course.course_selection_1.get_course_building_display == course.course_selection_2.get_course_building_display %}
                         {% if course.course_selection_1.course_classroom == course.course_selection_2.course_classroom %}
-                            $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+1).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
-                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},1-16周)<br>");
-                            flag1 = 1
+                            {% if course.course_selection_1.get_course_time_display == course.course_selection_2.get_course_time_display %}
+                                {% if course.course_selection_1.get_course_weekday_display == course.course_selection_2.get_course_weekday_display %}
+                                    $("tbody").find("tr").eq({{ course.course_selection_1.get_course_time_display }}+2).find("td").eq({{ course.course_selection_1.get_course_weekday_display }}).append
+                                    ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_1.get_course_building_display }}{{ course.course_selection_1.course_classroom }},1-16周)<br>");
+                                    flag1 = 1;
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                     {% if course.course_selection_3.get_course_building_display == course.course_selection_4.get_course_building_display %}
                         {% if course.course_selection_3.course_classroom == course.course_selection_4.course_classroom %}
-                            $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+1).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
-                            ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_4.course_classroom }},1-16周)<br>");
-                            flag2 = 1
+                            {% if course.course_selection_3.get_course_time_display == course.course_selection_4.get_course_time_display %}
+                                {% if course.course_selection_3.get_course_weekday_display == course.course_selection_4.get_course_weekday_display %}
+                                    $("tbody").find("tr").eq({{ course.course_selection_3.get_course_time_display }}+2).find("td").eq({{ course.course_selection_4.get_course_weekday_display }}).append
+                                    ("{{ course.course_name }}<br>{{ teacher.teacher_name }}<br>({{ course.course_selection_3.get_course_building_display }}{{ course.course_selection_4.course_classroom }},1-16周)<br>");
+                                    flag2 = 1;
+                                {% endif %}
+                            {% endif %}
                         {% endif %}
                     {% endif %}
                     if (flag1 == 0) {

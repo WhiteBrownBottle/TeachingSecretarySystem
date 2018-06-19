@@ -30,7 +30,7 @@ class IndexView(View):
         # creat_course_selection()
         # print(123)
         # course_capacity()
-        # print(123)
+        # print("完成")
         return render(request, 'index.html',)
 
 

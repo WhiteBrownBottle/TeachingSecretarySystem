@@ -1,4 +1,5 @@
 from course_arrangement.models import Selection
+from course_arrangement.models import Course
 from django.db.models import Q
 
 def course_capacity():
@@ -54,4 +55,10 @@ def course_capacity():
     #         selection.is_empty = True
     #         print(selection.selection)
     #         selection.save()
+    # course_list = Course.objects.all().order_by('course_id')
+    # for course in course_list:
+    #     if course.is_arranged == True:
+    #         course.is_arranged = False
+    #         print(course.course_name)
+    #         course.save()
 
